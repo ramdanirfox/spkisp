@@ -1,0 +1,11 @@
+<configuration>
+<appender name="CUSTOM_APPENDER" class="app.netlify.spkisp_ramdani.utils.UtilsAppender">
+ <encoder>
+  <pattern>%date %level [%thread] %logger{36} - %msg%n</pattern>
+ </encoder>
+</appender>
+
+<root level="info">
+  <appender-ref ref="CUSTOM_APPENDER" />
+</root>
+</configuration>
