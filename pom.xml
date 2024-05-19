@@ -11,6 +11,13 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <exec.mainClass>app.netlify.spkisp_ramdani.spkisp_ramdani</exec.mainClass>
     </properties>
+    <repositories>
+        <repository>
+            <id>oss.sonatype.org</id>
+            <name>Sonatype OSSRH</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
     <dependencies>
         <!-- ORDER OF DEPENDENCY MATTERS -->
         <dependency> 
@@ -32,6 +39,26 @@
             <groupId>aurelienribon.slidinglayout</groupId>
             <artifactId>sliding-layout</artifactId>
             <version>1.1.1</version>
+        </dependency>
+        <dependency>
+           <groupId>io.github.andrewauclair</groupId>
+           <artifactId>modern-docking-ui</artifactId>
+            <version>0.11.3</version>
+        </dependency>
+        <dependency>
+           <groupId>io.github.andrewauclair</groupId>
+           <artifactId>modern-docking-api</artifactId>
+            <version>0.11.3</version>
+        </dependency>
+        <dependency>
+           <groupId>io.github.andrewauclair</groupId>
+           <artifactId>modern-docking-single-app</artifactId>
+            <version>0.11.3</version>
+        </dependency>
+        <dependency>
+           <groupId>io.github.andrewauclair</groupId>
+           <artifactId>modern-docking-multi-app</artifactId>
+            <version>0.11.3</version>
         </dependency>
     </dependencies>
     <build>
