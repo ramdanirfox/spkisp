@@ -15,6 +15,6 @@ target/
 *.class
 
 # Package Files #
-*.jar
+# *.jar
 *.war
 *.ear
