@@ -10,6 +10,8 @@ import ModernDocking.app.Docking;
 import ModernDocking.app.RootDockingPanel;
 import app.netlify.spkisp_ramdani.panels.PanelDocking;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 
 
 /**
@@ -91,8 +93,13 @@ public class FormPengaturan extends javax.swing.JFrame {
         Docking.initialize(this);
         RootDockingPanel root = new RootDockingPanel(this);
         this.add(root, BorderLayout.CENTER);
-        PanelDocking helloWorld = new PanelDocking("Hello World");
-        Docking.dock(helloWorld, this);
+        PanelDocking panelDock = new PanelDocking("Pengaturan");
+        PanelDocking panelDock2 = new PanelDocking("Lain Lain");
+//        panelDock.setBackground(Color.GRAY);
+//        panelDock.setFont(Font.getFont("monospace"));
+        Docking.dock(panelDock, this);
+        Docking.dock(panelDock2, this);
+        Docking.newWindow(panelDock2);
         pack();
         
     }

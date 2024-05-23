@@ -21,7 +21,7 @@ public class PanelDocking extends javax.swing.JPanel implements Dockable {
     public PanelDocking(String txxt) {
         initComponents();
         this.text = txxt;
-        UtilsStatic.LOGGER.info("Registered DockingPanel");
+        UtilsStatic.LOGGER.info("Registered DockingPanel : " + txxt);
         Docking.registerDockable(this);
     }
 
@@ -36,10 +36,18 @@ public class PanelDocking extends javax.swing.JPanel implements Dockable {
 
         jButton1 = new javax.swing.JButton();
         kButton1 = new com.k33ptoo.components.KButton();
+        jButton2 = new javax.swing.JButton();
 
         jButton1.setText("Pilih Tema");
 
         kButton1.setText("Hijau");
+
+        jButton2.setText("Keluar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -52,7 +60,10 @@ public class PanelDocking extends javax.swing.JPanel implements Dockable {
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jButton2)))
                 .addContainerGap(192, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -62,9 +73,16 @@ public class PanelDocking extends javax.swing.JPanel implements Dockable {
                 .addComponent(jButton1)
                 .addGap(30, 30, 30)
                 .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(124, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
        @Override
@@ -78,6 +96,7 @@ public class PanelDocking extends javax.swing.JPanel implements Dockable {
         }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private com.k33ptoo.components.KButton kButton1;
     // End of variables declaration//GEN-END:variables
 }

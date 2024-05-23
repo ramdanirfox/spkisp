@@ -5,8 +5,10 @@
 package app.netlify.spkisp_ramdani.forms;
 
 import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -31,33 +33,35 @@ public class FormLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        kButton1 = new com.k33ptoo.components.KButton();
+        kGradientPanel2 = new com.k33ptoo.components.KGradientPanel();
         kGradientPanel1 = new com.k33ptoo.components.KGradientPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
+        kButton1 = new com.k33ptoo.components.KButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        kButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 255, 204), 2, true));
-        kButton1.setText("Masuk");
-        kButton1.setToolTipText("");
-        kButton1.setkIndicatorThickness(6);
-        kButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton1ActionPerformed(evt);
-            }
-        });
+        kGradientPanel2.setkEndColor(new java.awt.Color(204, 204, 204));
+        kGradientPanel2.setkStartColor(new java.awt.Color(102, 102, 102));
+        kGradientPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        kGradientPanel1.setBackground(transparan);
         kGradientPanel1.setkEndColor(java.awt.SystemColor.windowBorder);
         kGradientPanel1.setkStartColor(new java.awt.Color(153, 153, 153));
 
+        jTextPane1.setToolTipText("");
         jScrollPane1.setViewportView(jTextPane1);
 
+        jTextPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane2.setViewportView(jTextPane2);
+        jTextPane2.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
@@ -68,37 +72,60 @@ public class FormLogin extends javax.swing.JFrame {
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32))
+                .addGap(41, 41, 41))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(25, 25, 25))
         );
+
+        kGradientPanel2.add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 53, 222, -1));
+
+        kButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 255, 204), 2, true));
+        kButton1.setText("Masuk");
+        kButton1.setToolTipText("");
+        kButton1.setkHoverEndColor(new java.awt.Color(0, 153, 153));
+        kButton1.setkHoverForeGround(new java.awt.Color(255, 255, 255));
+        kButton1.setkHoverStartColor(new java.awt.Color(0, 153, 153));
+        kButton1.setkIndicatorThickness(6);
+        kButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton1ActionPerformed(evt);
+            }
+        });
+        kGradientPanel2.add(kButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 208, -1, -1));
+
+        jLabel1.setBackground(new java.awt.Color(0, 102, 255));
+        jLabel1.setIcon(gbrBackground);
+        jLabel1.setToolTipText("");
+        jLabel1.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentRemoved(java.awt.event.ContainerEvent evt) {
+                jLabel1ComponentRemoved(evt);
+            }
+        });
+        kGradientPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 26, 600, 300));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Sistem Pendukung Keputusan ISP");
+        kGradientPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, -1));
+
+        jLabel3.setText("2024 Ramdani");
+        kGradientPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(199, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(kButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(16, 16, 16))
+            .addComponent(kGradientPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(65, Short.MAX_VALUE)
-                .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+            .addComponent(kGradientPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -108,6 +135,10 @@ public class FormLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         new FormMenuUtama().setVisible(true);
     }//GEN-LAST:event_kButton1ActionPerformed
+
+    private void jLabel1ComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jLabel1ComponentRemoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1ComponentRemoved
 
     /**
      * @param args the command line arguments
@@ -146,6 +177,8 @@ public class FormLogin extends javax.swing.JFrame {
     }
     
     UtilsGlobal spkUtil = new UtilsGlobal();
+    Color transparan = new Color(1f, 1f, 1f, .0f);
+    ImageIcon gbrBackground = new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/background.png")).getImage().getScaledInstance(350, 200, 100));
     private void decorateWindow() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
@@ -154,11 +187,15 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
     private com.k33ptoo.components.KButton kButton1;
     private com.k33ptoo.components.KGradientPanel kGradientPanel1;
+    private com.k33ptoo.components.KGradientPanel kGradientPanel2;
     // End of variables declaration//GEN-END:variables
 }
