@@ -6,12 +6,17 @@ package app.netlify.spkisp_ramdani.forms;
 
 //import ModernDocking.api.DockingAPI;
 
+import ModernDocking.DockingRegion;
 import ModernDocking.app.Docking;
 import ModernDocking.app.RootDockingPanel;
 import app.netlify.spkisp_ramdani.panels.PanelDocking;
+import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
+import app.netlify.spkisp_ramdani.utils.UtilsStatic;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 
 /**
@@ -89,19 +94,36 @@ public class FormPengaturan extends javax.swing.JFrame {
         });
     }
     
-    public void prepareDocking() {
+    UtilsGlobal spkUtil = new UtilsGlobal();
+    public void prepareDocking() {    
         Docking.initialize(this);
         RootDockingPanel root = new RootDockingPanel(this);
         this.add(root, BorderLayout.CENTER);
-        PanelDocking panelDock = new PanelDocking("Pengaturan");
-        PanelDocking panelDock2 = new PanelDocking("Lain Lain");
+        PanelDocking panelDock = new PanelDocking("Pengaturan", "pengaturan" + Math.random());
+        PanelDocking panelDock2 = new PanelDocking("Lain Lain", "lainlain" + Math.random());
+        PanelDocking panelDock3 = new PanelDocking("Sampingan", "sampingan" + Math.random());
 //        panelDock.setBackground(Color.GRAY);
 //        panelDock.setFont(Font.getFont("monospace"));
         Docking.dock(panelDock, this);
-        Docking.dock(panelDock2, this);
-        Docking.newWindow(panelDock2);
-        pack();
-        
+//        Docking.newWindow(panelDock2);
+//        pack();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                UtilsStatic.LOGGER.info("sizeFrame" + self.getSize());
+                Docking.dock(panelDock2, self, DockingRegion.EAST);
+                Docking.dock(panelDock3, self, DockingRegion.SOUTH);
+                self.pack();
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        self.setTitle("Setelan");
+                        setIconImage(Toolkit.getDefaultToolkit().getImage(spkUtil.getAsset("logo.png")));
+                        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                        Dimension frameSize = self.getSize();
+                        setLocation((screenSize.width - frameSize.width)/2,(screenSize.height-frameSize.height)/2);
+                }});
+                
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

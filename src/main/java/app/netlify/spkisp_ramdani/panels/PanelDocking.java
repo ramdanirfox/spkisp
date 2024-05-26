@@ -6,7 +6,12 @@ package app.netlify.spkisp_ramdani.panels;
 
 import ModernDocking.Dockable;
 import ModernDocking.app.Docking;
+import app.netlify.spkisp_ramdani.models.ModelTema;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
+import java.awt.Color;
+import java.util.ArrayList;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  *
@@ -14,15 +19,19 @@ import app.netlify.spkisp_ramdani.utils.UtilsStatic;
  */
 public class PanelDocking extends javax.swing.JPanel implements Dockable {
     private final String text;
+    private final String dockId;
+    
     
     /**
      * Creates new form PanelDocking
      */
-    public PanelDocking(String txxt) {
-        initComponents();
+    public PanelDocking(String txxt, String dockId) {
         this.text = txxt;
-        UtilsStatic.LOGGER.info("Registered DockingPanel : " + txxt);
+        this.dockId = dockId;
         Docking.registerDockable(this);
+        initComponents();
+        UtilsStatic.LOGGER.info("Registered DockingPanel : " + txxt);
+        fnCariTemaTerpasang();
     }
 
     /**
@@ -34,13 +43,15 @@ public class PanelDocking extends javax.swing.JPanel implements Dockable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        kButton1 = new com.k33ptoo.components.KButton();
         jButton2 = new javax.swing.JButton();
-
-        jButton1.setText("Pilih Tema");
-
-        kButton1.setText("Hijau");
+        jPanel1 = new javax.swing.JPanel();
+        bGtk = new com.k33ptoo.components.KButton();
+        bWindows = new com.k33ptoo.components.KButton();
+        bNimbus = new com.k33ptoo.components.KButton();
+        bMacosx = new com.k33ptoo.components.KButton();
+        bMotif = new com.k33ptoo.components.KButton();
+        bMetal = new com.k33ptoo.components.KButton();
+        bWindowsclassic = new com.k33ptoo.components.KButton();
 
         jButton2.setText("Keluar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -49,33 +60,111 @@ public class PanelDocking extends javax.swing.JPanel implements Dockable {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pilih Tema"));
+
+        bGtk.setText("CDE");
+
+        bWindows.setText("Windows");
+        bWindows.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bWindowsActionPerformed(evt);
+            }
+        });
+
+        bNimbus.setText("Nimbus");
+        bNimbus.setEnabled(false);
+        bNimbus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bNimbusActionPerformed(evt);
+            }
+        });
+
+        bMacosx.setText("Mac OS X");
+        bMacosx.setEnabled(false);
+
+        bMotif.setText("Motif");
+        bMotif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bMotifActionPerformed(evt);
+            }
+        });
+
+        bMetal.setText("Metal");
+        bMetal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bMetalActionPerformed(evt);
+            }
+        });
+
+        bWindowsclassic.setText("Win Classic");
+        bWindowsclassic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bWindowsclassicActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(bGtk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bMotif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(bWindows, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bWindowsclassic, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addComponent(bNimbus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(bMacosx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bMetal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(17, 17, 17))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bNimbus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bWindows, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bWindowsclassic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bMacosx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bMetal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bGtk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bMotif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(46, 46, 46))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton2)))
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jButton1)
-                .addGap(30, 30, 30)
-                .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -84,19 +173,171 @@ public class PanelDocking extends javax.swing.JPanel implements Dockable {
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void bNimbusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNimbusActionPerformed
+        // TODO add your handling code here:
+        fnPilihTema("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+    }//GEN-LAST:event_bNimbusActionPerformed
+
+    private void bWindowsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bWindowsActionPerformed
+        // TODO add your handling code here:
+        fnPilihTema("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+    }//GEN-LAST:event_bWindowsActionPerformed
+
+    private void bMotifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMotifActionPerformed
+        // TODO add your handling code here
+        fnPilihTema("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+    }//GEN-LAST:event_bMotifActionPerformed
+
+    private void bMetalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMetalActionPerformed
+        // TODO add your handling code here:
+        fnPilihTema("javax.swing.plaf.metal.MetalLookAndFeel");
+    }//GEN-LAST:event_bMetalActionPerformed
+
+    private void bWindowsclassicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bWindowsclassicActionPerformed
+        // TODO add your handling code here:
+        fnPilihTema("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+    }//GEN-LAST:event_bWindowsclassicActionPerformed
+
 
        @Override
         public String getPersistentID() {
-            return text;
+            return dockId;
         }
 
         @Override
         public String getTabText() {
             return text;
         }
+        
+        @Override
+	public boolean isPinningAllowed() {
+		return true;
+	}
+        
+        @Override
+	public boolean isMinMaxAllowed() {
+		return true;
+	}
+        
+        @Override
+	public boolean getHasMoreOptions() {
+		return true;
+	}
+        
+        @Override
+	public void addMoreOptions(JPopupMenu menu) {
+		menu.add(new JMenuItem("Menu Satu"));
+		menu.add(new JMenuItem("Menu Dua"));
+	}
+        
+        private void fnCariTemaTerpasang() {
+          ArrayList<ModelTema> daftarTema = new ArrayList<>();
+          for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            UtilsStatic.LOGGER.info("Tema : " + info.getName() + " ==== " + info.getClassName());
+            daftarTema.add(new ModelTema(info.getName(), info.getClassName()));
+            boolean flag = false;
+            switch(info.getName()) {
+                case "Windows":
+                    kSetEnabled(bWindows, flag);
+                    break;
+                case "Windows Classic":
+                    kSetEnabled(bWindowsclassic, flag);
+                    break;
+                case "CDE/Motif":
+                    kSetEnabled(bMotif, flag);
+                    break;
+                case "Metal":
+                    kSetEnabled(bMetal, flag);
+                    break;
+                case "Nimbus":
+                    kSetEnabled(bNimbus, flag);
+                    break;
+                default:
+                    break;
+            }
+          }
+        }
+        
+        public static void fnPilihTema(String kelasTema) {
+            try {
+                javax.swing.UIManager.setLookAndFeel(kelasTema);    
+            } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Form_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+    //            java.util.logging.Logger.getLogger(Form_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+    //            java.util.logging.Logger.getLogger(Form_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+    //            java.util.logging.Logger.getLogger(Form_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            
+        }
+        
+        public static void fnSetelTema() {
+         
+         try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                switch(info.getName()) {
+                    case "Windows":
+                        javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+                        System.out.println("Tema terpilih : " + info.getName());
+                        break;
+                    case "Mac OS X":
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        System.out.println("Tema terpilih : " + info.getName());
+                        break;
+                    case "GTK+":
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        System.out.println("Tema terpilih : " + info.getName());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Form_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+               UtilsStatic.LOGGER.error(ex.getMessage());
+        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Form_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+               UtilsStatic.LOGGER.error(ex.getMessage());
+        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Form_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+               UtilsStatic.LOGGER.error(ex.getMessage());
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Form_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+               UtilsStatic.LOGGER.error(ex.getMessage());
+        }
+         
+//         else if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+       }
+        
+    private void kSetEnabled(com.k33ptoo.components.KButton btn, boolean flag) {
+        if (flag) {
+            btn.setkStartColor(Color.GREEN);
+            btn.setkForeGround(Color.GRAY);
+//            btn.setkEndColor(darkGreyTranslucent);
+        }
+        else {
+            Color dg = Color.darkGray;
+            Color darkGreyTranslucent = new Color(dg.getRed() / 256, dg.getGreen() / 256, dg.getBlue() / 256, .5f);
+            btn.setkStartColor(dg);
+            btn.setkForeGround(Color.GRAY);
+            btn.setkEndColor(darkGreyTranslucent);
+//            btn.setkFillButton(false);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private com.k33ptoo.components.KButton bGtk;
+    private com.k33ptoo.components.KButton bMacosx;
+    private com.k33ptoo.components.KButton bMetal;
+    private com.k33ptoo.components.KButton bMotif;
+    private com.k33ptoo.components.KButton bNimbus;
+    private com.k33ptoo.components.KButton bWindows;
+    private com.k33ptoo.components.KButton bWindowsclassic;
     private javax.swing.JButton jButton2;
-    private com.k33ptoo.components.KButton kButton1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
