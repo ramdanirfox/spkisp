@@ -16,10 +16,11 @@ import org.slf4j.LoggerFactory;
  */
 public class UtilsStatic {
     private static Connection conn;
+    private static String logData = "";
     public static final Logger LOGGER = LoggerFactory.getLogger(UtilsStatic.class);
     public static PanelDocking panelDock;
     public static PanelDocking panelDock2;
-    private static UtilsGlobal gUtil = new UtilsGlobal();
+    public static UtilsGlobal gUtil = new UtilsGlobal();
 //    private static ArrayList collectedLogs;
     
     public static void populateDockablePanels() {
@@ -36,6 +37,14 @@ public class UtilsStatic {
     
     public static Connection getConn() {
         return conn;
+    }
+    
+    public static void appendLogData(String s) {
+        logData += "\n" + s;
+    }
+    
+    public static String getLogData() {
+        return logData;
     }
     
     public static void test() {

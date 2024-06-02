@@ -95,11 +95,23 @@ public class FormPengaturan extends javax.swing.JFrame {
     }
     
     UtilsGlobal spkUtil = new UtilsGlobal();
-    public void prepareDocking() {    
+    public void prepareDocking() {
+        UtilsStatic.LOGGER.info("Membuka Pengaturan...");
         Docking.initialize(this);
-        RootDockingPanel root = new RootDockingPanel(this);
-        this.add(root, BorderLayout.CENTER);
+        UtilsStatic.LOGGER.info("Docking initialized...");
+        RootDockingPanel root = null;
+        try {
+            root = new RootDockingPanel(this);    
+        }
+        catch (Throwable e) {
+            UtilsStatic.LOGGER.info("Error when init RootDockPanel : " + e.getMessage());
+        }
+        
+        UtilsStatic.LOGGER.info("Root Docking initialized...");
+//        this.add(root, BorderLayout.CENTER);
+        getContentPane().add(root, BorderLayout.CENTER);
         PanelDocking panelDock = new PanelDocking("Pengaturan", "pengaturan" + Math.random());
+        UtilsStatic.LOGGER.info("Panel Docking 1 Initialized...");
         PanelDocking panelDock2 = new PanelDocking("Lain Lain", "lainlain" + Math.random());
         PanelDocking panelDock3 = new PanelDocking("Sampingan", "sampingan" + Math.random());
 //        panelDock.setBackground(Color.GRAY);

@@ -16,6 +16,7 @@ public class UtilsAppender extends AppenderBase<ILoggingEvent> {
     @Override
     protected void append(ILoggingEvent e) {
         System.out.println(e.getLevel() + " --- " + e.getMessage());
+        UtilsStatic.appendLogData(e.getMessage());
     }
     
 }

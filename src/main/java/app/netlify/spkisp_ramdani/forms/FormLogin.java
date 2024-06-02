@@ -103,6 +103,7 @@ public class FormLogin extends javax.swing.JFrame {
         );
 
         kButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 255, 204), 2, true));
+        kButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background.png"))); // NOI18N
         kButton1.setText("Masuk");
         kButton1.setToolTipText("");
         kButton1.setkHoverEndColor(new java.awt.Color(0, 153, 153));

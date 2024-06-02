@@ -15,4 +15,8 @@ public class UtilsGlobal {
         UtilsStatic.LOGGER.info("Mengambil Asset : " + assetPath);
         return getClass().getResource("/app/netlify/spkisp_ramdani/assets/" + assetPath);
     }
+    
+    public String getReport(String reportName) {
+        return "src/main/java/app/netlify/spkisp_ramdani/assets/reports/" + reportName;
+    }
 }

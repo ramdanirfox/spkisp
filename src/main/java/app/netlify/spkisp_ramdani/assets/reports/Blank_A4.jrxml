@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.5.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0eef9bb9-bc9c-40ca-a0eb-e5d46ee95fa3">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ispdb"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="YWt1biAsMTUsMTUsNDEwOTU3OWItM2U0ZC00NTU1LTljZjMtMDVkYzkyZGYzYjI5Ow=="/>
+	<queryString>
+		<![CDATA[SELECT 
+nama as nama,
+sandi as sandi,
+alamat as alamat,
+telepon as telepon,
+email as email
+FROM akun]]>
+	</queryString>
+	<field name="nama" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="akun"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="nama"/>
+		<property name="net.sf.jasperreports.sql.field.column.label" value="nama"/>
+	</field>
+	<field name="sandi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sandi"/>
+		<property name="com.jaspersoft.studio.field.label" value="sandi"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="akun"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="sandi"/>
+		<property name="net.sf.jasperreports.sql.field.column.label" value="sandi"/>
+	</field>
+	<field name="alamat" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="alamat"/>
+		<property name="com.jaspersoft.studio.field.label" value="alamat"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="akun"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="alamat"/>
+		<property name="net.sf.jasperreports.sql.field.column.label" value="alamat"/>
+	</field>
+	<field name="telepon" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="telepon"/>
+		<property name="com.jaspersoft.studio.field.label" value="telepon"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="akun"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="telepon"/>
+		<property name="net.sf.jasperreports.sql.field.column.label" value="telepon"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="email"/>
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="akun"/>
+		<property name="net.sf.jasperreports.sql.field.column.name" value="email"/>
+		<property name="net.sf.jasperreports.sql.field.column.label" value="email"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="4" width="168" height="16" uuid="73b4ea20-7e72-4533-9f1e-37fd1c031c60"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT. BRAINCODE SOLUTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="16" width="408" height="58" uuid="0d203eae-8ab0-4dc9-85f4-9823abd17f21"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<text><![CDATA[Prince Center Building, 5th Floor Suite 503. Jl Jenderal Sudirman
+Kavling 3-4, Karet, RT.10 /RW.1 Jakarta Barat
+Telp : (021) 5737326
+Website : www.braincodesolution.com]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-8" y="78" width="571" height="1" uuid="4a24d86f-339f-4b4b-8322-dbe5ff865b80"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="426" y="0" width="130" height="75" uuid="8e6eeac9-c834-4e87-b0a3-70940a9931f7"/>
+				<imageExpression><![CDATA["logo_bc.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="15" width="160" height="26" uuid="5622bb9a-c684-4652-b9f0-cebe2c19e41f"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[LAPORAN DATA AKUN]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="18" width="100" height="20" uuid="dd5cf58a-daec-4ab5-ac82-760d19055401"/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="18" width="100" height="20" uuid="9c969c2e-4af0-4622-b433-ace30a5b9e3c"/>
+				<text><![CDATA[Alamat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="18" width="100" height="20" uuid="c6fef6d4-ba3b-429b-8fe0-5fc2ced44f8d"/>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-8" y="40" width="571" height="1" uuid="14d1ebc9-3486-40e0-bcac-4fba522e3012"/>
+			</line>
+			<line>
+				<reportElement x="-8" y="10" width="571" height="1" uuid="eed1bdc1-6d62-41d0-a1f9-93cc13ad5dfa"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="0" width="100" height="20" uuid="ed2c02c4-f3ed-496d-ac86-5a7ccb4dab42">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nama}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="47" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="420" y="12" width="142" height="20" uuid="56ba040c-9b4d-4120-9787-1c4422939908"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm", new Locale("id", "ID")).format(new java.util.Date());
+]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="6" width="571" height="1" uuid="7d037e31-5e76-427f-aad9-0fb56b7339f6"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="300" y="12" width="100" height="20" uuid="e79cf63b-894d-4146-96e4-8607284102b6"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Tanggal Cetak : ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
