@@ -186,8 +186,8 @@ public class FormTable extends javax.swing.JFrame {
     UtilsKoneksi spkKoneksi = new UtilsKoneksi();
     UtilsGlobal spkUtil = new UtilsGlobal();
     private void fnPerbaruiTabel() {
-        UtilsStatic.LOGGER.info("tabel" +  fnDapatkanKolom(jTable1.getModel()).toString());
-        model = new DefaultTableModel(new Object[][] {}, fnDapatkanKolom(jTable1.getModel())) {
+        UtilsStatic.LOGGER.info("tabel" +  spkUtil.fnDapatkanKolom(jTable1.getModel()).toString());
+        model = new DefaultTableModel(new Object[][] {}, spkUtil.fnDapatkanKolom(jTable1.getModel())) {
             @Override
             public Class getColumnClass(int column)
             {
@@ -213,14 +213,6 @@ public class FormTable extends javax.swing.JFrame {
        
         
         jTable1.setDefaultEditor(Object.class, null);
-    }
-    
-    private Object[] fnDapatkanKolom(TableModel model) {
-        Object[] daftarKolom = new Object[model.getColumnCount()];
-        for (int i = 0; i < model.getColumnCount(); i++) {
-            daftarKolom[i] = model.getColumnName(i);
-        }
-        return daftarKolom;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

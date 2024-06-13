@@ -4,8 +4,11 @@
  */
 package app.netlify.spkisp_ramdani.forms;
 
+import app.netlify.spkisp_ramdani.models.ModelExternalListener;
+import app.netlify.spkisp_ramdani.panels.PanelAlternatif;
 import app.netlify.spkisp_ramdani.panels.PanelBeranda;
 import app.netlify.spkisp_ramdani.panels.PanelKriteria;
+import app.netlify.spkisp_ramdani.panels.PanelMenu;
 import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
 import aurelienribon.slidinglayout.SLAnimator;
@@ -33,6 +36,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
     public FormMenuUtama() {
         initComponents();
         decorateWindow();
+        fnSetupMenu();
     }
 
     /**
@@ -43,6 +47,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         sLPanel2 = new aurelienribon.slidinglayout.SLPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -55,9 +60,10 @@ public class FormMenuUtama extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        kButton7 = new com.k33ptoo.components.KButton();
         jPanel2 = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Pendukung Keputusan ISP");
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
@@ -66,6 +72,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 jPanel1MouseEntered(evt);
             }
         });
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         kButton1.setBorder(null);
         kButton1.setIcon(iconLogo);
@@ -75,6 +82,14 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 kButton1ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 49;
+        gridBagConstraints.ipady = 29;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 20, 0, 0);
+        jPanel1.add(kButton1, gridBagConstraints);
 
         kButton2.setBorder(null);
         kButton2.setText("Perhitungan");
@@ -83,6 +98,14 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 kButton2ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 27;
+        gridBagConstraints.ipady = 29;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 20, 0, 0);
+        jPanel1.add(kButton2, gridBagConstraints);
 
         kButton3.setBorder(null);
         kButton3.setText("Nilai Bobot");
@@ -91,6 +114,14 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 kButton3ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 33;
+        gridBagConstraints.ipady = 29;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 20, 0, 0);
+        jPanel1.add(kButton3, gridBagConstraints);
 
         kButton4.setBorder(null);
         kButton4.setText("Data Kriteria");
@@ -99,6 +130,14 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 kButton4ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 28;
+        gridBagConstraints.ipady = 29;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 20, 0, 0);
+        jPanel1.add(kButton4, gridBagConstraints);
 
         kButton5.setBorder(null);
         kButton5.setText("Riwayat");
@@ -107,6 +146,14 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 kButton5ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipadx = 51;
+        gridBagConstraints.ipady = 29;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 20, 0, 0);
+        jPanel1.add(kButton5, gridBagConstraints);
 
         kButton6.setBorder(null);
         kButton6.setText("Profil");
@@ -115,6 +162,14 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 kButton6ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 64;
+        gridBagConstraints.ipady = 29;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 20, 0, 0);
+        jPanel1.add(kButton6, gridBagConstraints);
 
         jButton3.setText("Pengaturan");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -122,6 +177,14 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(72, 21, 6, 14);
+        jPanel1.add(jButton3, gridBagConstraints);
 
         jButton2.setIcon(UtilsStatic.getResizedIcon("logo.png"));
         jButton2.setText("x");
@@ -130,6 +193,12 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(23, 90, 0, 0);
+        jPanel1.add(jButton2, gridBagConstraints);
 
         jButton4.setText("Log");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -137,57 +206,31 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 62, 0, 0);
+        jPanel1.add(jButton4, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(kButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(14, 14, 14))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addGap(4, 4, 4)
-                .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(kButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addContainerGap())
-        );
+        kButton7.setBorder(null);
+        kButton7.setText("Alternatif");
+        kButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton7ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 43;
+        gridBagConstraints.ipady = 29;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 20, 0, 0);
+        jPanel1.add(kButton7, gridBagConstraints);
 
         sLPanel2.add(jPanel1);
-        jPanel1.setBounds(10, 10, 140, 470);
+        jPanel1.setBounds(0, 0, 140, 600);
 
         jPanel2.setBackground(new java.awt.Color(204, 255, 51));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -197,23 +240,17 @@ public class FormMenuUtama extends javax.swing.JFrame {
         });
         jPanel2.setLayout(new java.awt.GridBagLayout());
         sLPanel2.add(jPanel2);
-        jPanel2.setBounds(160, 10, 720, 470);
+        jPanel2.setBounds(160, 0, 720, 600);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(sLPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(sLPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(sLPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(sLPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
         );
 
         pack();
@@ -270,6 +307,11 @@ public class FormMenuUtama extends javax.swing.JFrame {
         // TODO add your handling code here:
         (new FormTampilanLog()).setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void kButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton7ActionPerformed
+        // TODO add your handling code here:
+        fnGantiMenu(new PanelAlternatif());
+    }//GEN-LAST:event_kButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,29 +373,57 @@ public class FormMenuUtama extends javax.swing.JFrame {
 //        sLPanel2.repaint();
     }
     
+    private void fnSetupMenu() {
+        jPanel1.removeAll();
+        PanelMenu reChange2 = new PanelMenu();
+        JScrollPane reChangeScroll = new javax.swing.JScrollPane(reChange2);
+//        reChangeScroll.setBorder(null);
+        java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.ipady = 0;
+        jPanel1.add(reChangeScroll, gridBagConstraints);
+        reChange2.fnAttachListener(new ModelExternalListener<String>() {
+            @Override
+            public void listen(String param) {
+                super.listen(param); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+                UtilsStatic.LOGGER.info("Tes Call " + param);
+                if (param.equals("Alternatif")) { fnGantiMenu(new PanelAlternatif()); }
+                if (param.equals("Beranda")) { fnGantiMenu(new PanelBeranda()); }
+            }
+        });
+//        invalidate(); // Changed here
+//        repaint(); // Changed
+    }
+    
     private void openPanelForce() {
 //        if (!"unstable".equals(sLPanelState) && !"opened".equals(sLPanelState)) {
 //            sLPanelState = "unstable";
             SLConfig showCfg = new SLConfig(sLPanel2)
-                            .gap(10, 0)
-                            .row(1f).col(200).col(1f)
-                            .place(0, 0, jPanel1)
-                            .place(0, 1, jPanel2);
+                            .gap(0, 10)
+                            .row(1f).col(200)
+                            .place(0, 0, jPanel1);
                sLPanel2.createTransition()
                 .push(new SLKeyframe(showCfg, 1f)
-                        .setEndSide(SLSide.LEFT)
+                        .setEndSide(SLSide.RIGHT, jPanel2)
                         .setCallback(new SLKeyframe.Callback() {@Override public void done() {
                             java.awt.EventQueue.invokeLater(new Runnable() {
                                 public void run() {
                                 UtilsStatic.LOGGER.info("Panel Shown Refreshing");
                                 sLPanelState = "opened";
                                 SLConfig showCfg2 = new SLConfig(sLPanel2)
-                                            .gap(10, 10)
+                                            .gap(0, 0)
                                             .row(1f).col(200).col(1f)
                                             .place(0, 0, jPanel1)
                                             .place(0, 1, jPanel2);
                                sLPanel2.createTransition()
                                 .push(new SLKeyframe(showCfg2, 1f)
+                                        .setStartSide(SLSide.LEFT, jPanel2)
                                         .setEndSide(SLSide.LEFT)
                                         .setCallback(new SLKeyframe.Callback() {@Override public void done() {
                                                 UtilsStatic.LOGGER.info("Panel Shown Refresh Done");
@@ -372,7 +442,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
         if (!"unstable".equals(sLPanelState) && !"opened".equals(sLPanelState)) {
             sLPanelState = "unstable";
             SLConfig showCfg = new SLConfig(sLPanel2)
-                            .gap(10, 10)
+                            .gap(0, 0)
                             .row(1f).col(200).col(1f)
                             .place(0, 0, jPanel1)
                             .place(0, 1, jPanel2);
@@ -392,7 +462,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
         if (!"unstable".equals(sLPanelState) && !"closed".equals(sLPanelState)) {
             sLPanelState = "unstable";
               SLConfig showCfg = new SLConfig(sLPanel2)
-                            .gap(10, 10)
+                            .gap(0, 0)
                             .row(1f).col(60).col(1f)
                             .place(0, 0, jPanel1)
                             .place(0, 1, jPanel2);
@@ -418,11 +488,12 @@ public class FormMenuUtama extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(spkUtil.getAsset("logo.png")));
         
         SLConfig mainCfg = new SLConfig(sLPanel2)
-			.gap(10, 10)
+			.gap(0, 0)
 			.row(1f).col(60).col(4f)
 			.place(0, 0, jPanel1)
 			.place(0, 1, jPanel2);
         
+        SLAnimator.stop();
         SLAnimator.start();
         sLPanel2.setTweenManager(SLAnimator.createTweenManager());
         sLPanel2.initialize(mainCfg);
@@ -444,6 +515,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton kButton4;
     private com.k33ptoo.components.KButton kButton5;
     private com.k33ptoo.components.KButton kButton6;
+    private com.k33ptoo.components.KButton kButton7;
     private aurelienribon.slidinglayout.SLPanel sLPanel2;
     // End of variables declaration//GEN-END:variables
     
