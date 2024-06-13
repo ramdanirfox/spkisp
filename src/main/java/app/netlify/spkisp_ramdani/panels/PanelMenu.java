@@ -40,8 +40,10 @@ public class PanelMenu extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         bBeranda = new com.k33ptoo.components.KButton();
         jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         bAlternatif = new com.k33ptoo.components.KButton();
         jPanel5 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         bNilaiBobot = new com.k33ptoo.components.KButton();
 
         addContainerListener(new java.awt.event.ContainerAdapter() {
@@ -55,7 +57,7 @@ public class PanelMenu extends javax.swing.JPanel {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Ikon");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 33, -1, -1));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 31, -1, -1));
 
         bBeranda.setText("Beranda");
         bBeranda.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +73,9 @@ public class PanelMenu extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(204, 255, 153));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel2.setText("Ikon");
+        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
         bAlternatif.setText("Alternatif");
         bAlternatif.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +89,9 @@ public class PanelMenu extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(204, 255, 153));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setText("Ikon");
+        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         bNilaiBobot.setText("Nilai Bobot");
         jPanel5.add(bNilaiBobot, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
@@ -162,6 +170,8 @@ public class PanelMenu extends javax.swing.JPanel {
     private com.k33ptoo.components.KButton bBeranda;
     private com.k33ptoo.components.KButton bNilaiBobot;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
