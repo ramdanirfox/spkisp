@@ -5,11 +5,15 @@
 package app.netlify.spkisp_ramdani.panels;
 
 import app.netlify.spkisp_ramdani.models.ModelExternalListener;
+import app.netlify.spkisp_ramdani.models.ModelMenuPage;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
 import aurelienribon.slidinglayout.SLAnimator;
 import aurelienribon.slidinglayout.SLConfig;
 import aurelienribon.slidinglayout.SLKeyframe;
 import aurelienribon.slidinglayout.SLSide;
+import java.awt.Color;
+import java.util.ArrayList;
+import javax.swing.JPanel;
 
 /**
  *
@@ -17,6 +21,7 @@ import aurelienribon.slidinglayout.SLSide;
  */
 public class PanelMenu extends javax.swing.JPanel {
     ModelExternalListener extListener;
+    ArrayList<ModelMenuPage> menuList = new ArrayList<ModelMenuPage>();
     /**
      * Creates new form PanelMenu
      */
@@ -33,18 +38,17 @@ public class PanelMenu extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         sLPanel1 = new aurelienribon.slidinglayout.SLPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        pBeranda = new javax.swing.JPanel();
+        iBeranda = new javax.swing.JLabel();
         bBeranda = new com.k33ptoo.components.KButton();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        pAlternatif = new javax.swing.JPanel();
+        iAlternatif = new javax.swing.JLabel();
         bAlternatif = new com.k33ptoo.components.KButton();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        bNilaiBobot = new com.k33ptoo.components.KButton();
+        pKriteria = new javax.swing.JPanel();
+        iKriteria = new javax.swing.JLabel();
+        bKriteria = new com.k33ptoo.components.KButton();
 
         addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
@@ -53,11 +57,11 @@ public class PanelMenu extends javax.swing.JPanel {
         });
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-        jPanel3.setBackground(new java.awt.Color(204, 255, 153));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pBeranda.setBackground(new java.awt.Color(204, 255, 153));
+        pBeranda.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Ikon");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 31, -1, -1));
+        iBeranda.setText("Ikon");
+        pBeranda.add(iBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 31, -1, -1));
 
         bBeranda.setText("Beranda");
         bBeranda.addActionListener(new java.awt.event.ActionListener() {
@@ -65,16 +69,16 @@ public class PanelMenu extends javax.swing.JPanel {
                 bBerandaActionPerformed(evt);
             }
         });
-        jPanel3.add(bBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
+        pBeranda.add(bBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
-        sLPanel1.add(jPanel3);
-        jPanel3.setBounds(30, 20, 200, 80);
+        sLPanel1.add(pBeranda);
+        pBeranda.setBounds(30, 20, 200, 80);
 
-        jPanel4.setBackground(new java.awt.Color(204, 255, 153));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pAlternatif.setBackground(new java.awt.Color(204, 255, 153));
+        pAlternatif.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setText("Ikon");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+        iAlternatif.setText("Ikon");
+        pAlternatif.add(iAlternatif, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         bAlternatif.setText("Alternatif");
         bAlternatif.addActionListener(new java.awt.event.ActionListener() {
@@ -82,22 +86,22 @@ public class PanelMenu extends javax.swing.JPanel {
                 bAlternatifActionPerformed(evt);
             }
         });
-        jPanel4.add(bAlternatif, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
+        pAlternatif.add(bAlternatif, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
-        sLPanel1.add(jPanel4);
-        jPanel4.setBounds(30, 110, 200, 80);
+        sLPanel1.add(pAlternatif);
+        pAlternatif.setBounds(30, 110, 200, 80);
 
-        jPanel5.setBackground(new java.awt.Color(204, 255, 153));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pKriteria.setBackground(new java.awt.Color(204, 255, 153));
+        pKriteria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setText("Ikon");
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+        iKriteria.setText("Ikon");
+        pKriteria.add(iKriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
-        bNilaiBobot.setText("Nilai Bobot");
-        jPanel5.add(bNilaiBobot, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
+        bKriteria.setText("Kriteria");
+        pKriteria.add(bKriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
-        sLPanel1.add(jPanel5);
-        jPanel5.setBounds(30, 200, 200, 80);
+        sLPanel1.add(pKriteria);
+        pKriteria.setBounds(30, 200, 200, 80);
 
         add(sLPanel1);
     }// </editor-fold>//GEN-END:initComponents
@@ -113,6 +117,7 @@ public class PanelMenu extends javax.swing.JPanel {
 
     private void bBerandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBerandaActionPerformed
         // TODO add your handling code here:
+//        fnTestTransition2();
     }//GEN-LAST:event_bBerandaActionPerformed
 
     private void decorateWindow() {
@@ -121,44 +126,119 @@ public class PanelMenu extends javax.swing.JPanel {
 			.row(1f)
                         .row(1f)
                         .row(1f).col(200) // to 60
-			 .place(0, 0, jPanel3)
-			 .place(1, 0, jPanel4)
-                         .place(2, 0, jPanel5);
+			 .place(0, 0, pBeranda)
+			 .place(1, 0, pAlternatif)
+                         .place(2, 0, pKriteria);
         SLAnimator.stop();
         SLAnimator.start();
         sLPanel1.setTweenManager(SLAnimator.createTweenManager());
         sLPanel1.initialize(mainCfg);
     
-        bBeranda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                extListener.listen("Beranda");
-            }
-        });
         
-        bAlternatif.addActionListener(new java.awt.event.ActionListener() {
+        fnRegisterMenu(new ModelMenuPage(bBeranda.getText(), "Beranda", "", bBeranda, pBeranda, iBeranda));
+        fnRegisterMenu(new ModelMenuPage(bAlternatif.getText(), "Alternatif", "", bAlternatif, pAlternatif, iAlternatif));
+        fnRegisterMenu(new ModelMenuPage(bKriteria.getText(), "Kriteria", "", bKriteria, pKriteria, iAlternatif));
+    }
+    
+    private void fnRegisterMenu(ModelMenuPage menuPage) {
+        menuList.add(menuPage);
+        menuPage.elmButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                extListener.listen("Alternatif");
+                extListener.listen(menuPage.id);
+                fnSelectMenu(menuPage.id);
             }
         });
     }
     
+    private void fnMenuSelectedById() {
+        
+    }
+    
     private void testTransition() {
+        
+        UtilsStatic.LOGGER.info("Test Transition 1"); 
             SLConfig showCfg = new SLConfig(sLPanel1)
-                            .gap(0, 0)
-//                            .row(1f)
+                            .gap(0, (int) Math.ceil(Math.random() * 10))
+                            .row(1f)
                             .row(1f)
                             .row(1f).col(200)
-                            .place(0, 0, jPanel3)
-                            .place(1, 0, jPanel4);
-//                            .place(2, 0, jPanel5);
+                            .place(0, 0, pBeranda)
+                            .place(1, 0, pAlternatif)
+                            .place(2, 0, pKriteria);
                sLPanel1.createTransition()
                 .push(new SLKeyframe(showCfg, 0.5f)
-                        .setEndSide(SLSide.LEFT)
+                        .setEndSide(SLSide.RIGHT)
                         .setCallback(new SLKeyframe.Callback() {@Override public void done() {
-                                UtilsStatic.LOGGER.info("Inner Panel Shown");
+                                UtilsStatic.LOGGER.info("Inner Panel Transited");
                         }}))
                 .play();
-                UtilsStatic.LOGGER.info("Opening Panel"); 
+                UtilsStatic.LOGGER.info("Opening Inner Panel 1"); 
+    }
+       
+       private void fnSelectMenu(String menuName) {
+           ModelMenuPage foundMenu = null;
+           for (ModelMenuPage menuItem: menuList) {
+               if (menuItem.id.equals(menuName)) {
+                   foundMenu = menuItem;
+               }
+           }
+           if (foundMenu != null) {
+               fnSelectMenuByModel(foundMenu);
+           }
+       }
+       
+       private void fnSelectMenuByModel(ModelMenuPage menuItem) {
+           PanelMenu self = this;
+           self.setLayout(null);
+           javax.swing.JPanel emptyPanel = new javax.swing.JPanel();
+           emptyPanel.setBackground(Color.LIGHT_GRAY);
+           UtilsStatic.LOGGER.info("[UPD] Test Transition 2"); 
+           SLConfig showCfg = fnBuildSlConfigA(menuItem, emptyPanel);
+               sLPanel1.createTransition()
+                .push(new SLKeyframe(showCfg, 1f)
+                        .setStartSide(SLSide.LEFT, emptyPanel)
+                        .setEndSide(SLSide.RIGHT, menuItem.elmPanel)
+                        .setCallback(new SLKeyframe.Callback() {@Override public void done() {
+                                java.awt.EventQueue.invokeLater(new Runnable() {
+                                public void run() {
+                                    SLConfig endCfg = fnBuildSlConfigA(menuItem, null);
+                                    menuItem.elmPanel.setBackground(Color.GREEN);
+                                   sLPanel1.createTransition()
+                                    .push(new SLKeyframe(endCfg, 1f)
+                                           .setStartSideForNewCmps(SLSide.RIGHT)
+                                           .setEndSide(SLSide.RIGHT, emptyPanel)
+                                    .setCallback(new SLKeyframe.Callback() {@Override public void done() {
+                                        UtilsStatic.LOGGER.info("Inner Panel Slickback TS2");
+                                        self.setLayout(new javax.swing.BoxLayout(self, javax.swing.BoxLayout.LINE_AXIS));
+                                        self.invalidate();
+                                        self.repaint();
+                                     }})).play();
+                                   UtilsStatic.LOGGER.info("[UPD] Inner Panel Setup Finish TS2");
+                                }
+                                });
+                        }}))
+                .play();
+                UtilsStatic.LOGGER.info("Opening Inner Panel 2"); 
+    }
+       
+    private SLConfig fnBuildSlConfigA(ModelMenuPage mnu, JPanel emptyPanel) {
+        SLConfig showCfg = new SLConfig(sLPanel1).gap(0, 0);
+        for (ModelMenuPage menuList1 : menuList) {
+            showCfg = showCfg.row(1f);
+//            if (emptyPanel == null) {
+                menuList1.elmPanel.setBackground(new java.awt.Color(204,255,153));
+//            }
+        }
+        showCfg = showCfg.col(200);
+        for (int i=0; i < menuList.size(); i++) {
+            ModelMenuPage menuItemLoop = menuList.get(i);
+            showCfg = showCfg.place(i,0, menuItemLoop.elmPanel);
+            if (mnu.id.equals(menuItemLoop.id) && emptyPanel != null) {
+                showCfg = showCfg.place(i,0, emptyPanel);
+            }
+        }
+        return showCfg;
     }
     
     public void fnAttachListener(ModelExternalListener<String> param) {
@@ -168,13 +248,13 @@ public class PanelMenu extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.k33ptoo.components.KButton bAlternatif;
     private com.k33ptoo.components.KButton bBeranda;
-    private com.k33ptoo.components.KButton bNilaiBobot;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private com.k33ptoo.components.KButton bKriteria;
+    private javax.swing.JLabel iAlternatif;
+    private javax.swing.JLabel iBeranda;
+    private javax.swing.JLabel iKriteria;
+    private javax.swing.JPanel pAlternatif;
+    private javax.swing.JPanel pBeranda;
+    private javax.swing.JPanel pKriteria;
     private aurelienribon.slidinglayout.SLPanel sLPanel1;
     // End of variables declaration//GEN-END:variables
 }

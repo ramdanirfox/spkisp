@@ -349,13 +349,21 @@ public class FormMenuUtama extends javax.swing.JFrame {
     }
     
     public void fnGantiMenu(JPanel konten) {
-        jPanel2.removeAll();
+     
+         // Changed
+//        sLPanel2.createTransition().play();
+        openPanelForce(konten);
+//        sLPanel2.repaint();
+    }
+    
+    public void fnGantiMenuUnstable(JPanel konten) {
+       jPanel2.removeAll();
         JPanel reChange2 = konten;
         JScrollPane reChangeScroll = new javax.swing.JScrollPane(reChange2);
         reChangeScroll.setBorder(null);
-//        reChange2.setBackground(Color.white);
-//        reChange2.setSize(jPanel2.getWidth(), jPanel2.getHeight());
-//        reChange2.setBounds(0, 0, 240, 225);
+    //        reChange2.setBackground(Color.white);
+    //        reChange2.setSize(jPanel2.getWidth(), jPanel2.getHeight());
+    //        reChange2.setBounds(0, 0, 240, 225);
         java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -368,9 +376,6 @@ public class FormMenuUtama extends javax.swing.JFrame {
         jPanel2.add(reChangeScroll, gridBagConstraints);
         invalidate(); // Changed here
         repaint(); // Changed
-//        sLPanel2.createTransition().play();
-        openPanelForce();
-//        sLPanel2.repaint();
     }
     
     private void fnSetupMenu() {
@@ -397,13 +402,12 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 if (param.equals("Beranda")) { fnGantiMenu(new PanelBeranda()); }
             }
         });
-//        invalidate(); // Changed here
-//        repaint(); // Changed
     }
     
-    private void openPanelForce() {
+    private void openPanelForce(JPanel konten) {
 //        if (!"unstable".equals(sLPanelState) && !"opened".equals(sLPanelState)) {
 //            sLPanelState = "unstable";
+            javax.swing.JFrame self = this;
             SLConfig showCfg = new SLConfig(sLPanel2)
                             .gap(0, 10)
                             .row(1f).col(200)
@@ -414,6 +418,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
                         .setCallback(new SLKeyframe.Callback() {@Override public void done() {
                             java.awt.EventQueue.invokeLater(new Runnable() {
                                 public void run() {
+                                fnGantiMenuUnstable(konten);
                                 UtilsStatic.LOGGER.info("Panel Shown Refreshing");
                                 sLPanelState = "opened";
                                 SLConfig showCfg2 = new SLConfig(sLPanel2)

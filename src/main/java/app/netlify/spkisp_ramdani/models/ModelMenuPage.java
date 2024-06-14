@@ -13,8 +13,20 @@ import javax.swing.JPanel;
  * @author iramd
  */
 public class ModelMenuPage {
+    public String name;
+    public String id;
     public String urlIkon;
     public KButton elmButton;
     public JPanel elmPanel;
     public JLabel elmLabel;
+    
+    public ModelMenuPage(String pname, String pid, String purlIkon, KButton pelmButton, JPanel pelmPanel, JLabel pelmLabel) {
+        this.name = pname;
+        this.id = pid;
+        this.urlIkon = purlIkon;
+        this.elmButton = pelmButton;
+        this.elmPanel = pelmPanel;
+        this.elmLabel = pelmLabel;
+    }
+    
 }
