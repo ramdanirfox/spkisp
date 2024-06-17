@@ -49,6 +49,12 @@ public class PanelMenu extends javax.swing.JPanel {
         pKriteria = new javax.swing.JPanel();
         iKriteria = new javax.swing.JLabel();
         bKriteria = new com.k33ptoo.components.KButton();
+        pProsesData = new javax.swing.JPanel();
+        iProsesData = new javax.swing.JLabel();
+        bProsesData = new com.k33ptoo.components.KButton();
+        pLaporan = new javax.swing.JPanel();
+        iLaporan = new javax.swing.JLabel();
+        bLaporan = new com.k33ptoo.components.KButton();
 
         addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
@@ -64,6 +70,8 @@ public class PanelMenu extends javax.swing.JPanel {
         pBeranda.add(iBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 31, -1, -1));
 
         bBeranda.setText("Beranda");
+        bBeranda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bBeranda.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         bBeranda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bBerandaActionPerformed(evt);
@@ -81,6 +89,8 @@ public class PanelMenu extends javax.swing.JPanel {
         pAlternatif.add(iAlternatif, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         bAlternatif.setText("Alternatif");
+        bAlternatif.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bAlternatif.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         bAlternatif.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bAlternatifActionPerformed(evt);
@@ -98,10 +108,50 @@ public class PanelMenu extends javax.swing.JPanel {
         pKriteria.add(iKriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
         bKriteria.setText("Kriteria");
+        bKriteria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bKriteria.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         pKriteria.add(bKriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pKriteria);
         pKriteria.setBounds(30, 200, 200, 80);
+
+        pProsesData.setBackground(new java.awt.Color(204, 255, 153));
+        pProsesData.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        iProsesData.setText("Ikon");
+        pProsesData.add(iProsesData, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
+        bProsesData.setText("Proses Data");
+        bProsesData.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bProsesData.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        bProsesData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bProsesDataActionPerformed(evt);
+            }
+        });
+        pProsesData.add(bProsesData, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
+
+        sLPanel1.add(pProsesData);
+        pProsesData.setBounds(30, 290, 200, 80);
+
+        pLaporan.setBackground(new java.awt.Color(204, 255, 153));
+        pLaporan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        iLaporan.setText("Ikon");
+        pLaporan.add(iLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
+        bLaporan.setText("Laporan");
+        bLaporan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bLaporan.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        bLaporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLaporanActionPerformed(evt);
+            }
+        });
+        pLaporan.add(bLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
+
+        sLPanel1.add(pLaporan);
+        pLaporan.setBounds(30, 380, 200, 80);
 
         add(sLPanel1);
     }// </editor-fold>//GEN-END:initComponents
@@ -119,6 +169,14 @@ public class PanelMenu extends javax.swing.JPanel {
         // TODO add your handling code here:
 //        fnTestTransition2();
     }//GEN-LAST:event_bBerandaActionPerformed
+
+    private void bProsesDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bProsesDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bProsesDataActionPerformed
+
+    private void bLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLaporanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bLaporanActionPerformed
 
     private void decorateWindow() {
     SLConfig mainCfg = new SLConfig(sLPanel1)
@@ -138,6 +196,10 @@ public class PanelMenu extends javax.swing.JPanel {
         fnRegisterMenu(new ModelMenuPage(bBeranda.getText(), "Beranda", "", bBeranda, pBeranda, iBeranda));
         fnRegisterMenu(new ModelMenuPage(bAlternatif.getText(), "Alternatif", "", bAlternatif, pAlternatif, iAlternatif));
         fnRegisterMenu(new ModelMenuPage(bKriteria.getText(), "Kriteria", "", bKriteria, pKriteria, iAlternatif));
+        fnRegisterMenu(new ModelMenuPage(bProsesData.getText(), "Proses Data", "", bProsesData, pProsesData, iProsesData));
+        fnRegisterMenu(new ModelMenuPage(bLaporan.getText(), "Laporan", "", bLaporan, pLaporan, iLaporan));
+        
+        fnSelectMenu("Beranda");
     }
     
     private void fnRegisterMenu(ModelMenuPage menuPage) {
@@ -249,12 +311,18 @@ public class PanelMenu extends javax.swing.JPanel {
     private com.k33ptoo.components.KButton bAlternatif;
     private com.k33ptoo.components.KButton bBeranda;
     private com.k33ptoo.components.KButton bKriteria;
+    private com.k33ptoo.components.KButton bLaporan;
+    private com.k33ptoo.components.KButton bProsesData;
     private javax.swing.JLabel iAlternatif;
     private javax.swing.JLabel iBeranda;
     private javax.swing.JLabel iKriteria;
+    private javax.swing.JLabel iLaporan;
+    private javax.swing.JLabel iProsesData;
     private javax.swing.JPanel pAlternatif;
     private javax.swing.JPanel pBeranda;
     private javax.swing.JPanel pKriteria;
+    private javax.swing.JPanel pLaporan;
+    private javax.swing.JPanel pProsesData;
     private aurelienribon.slidinglayout.SLPanel sLPanel1;
     // End of variables declaration//GEN-END:variables
 }

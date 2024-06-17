@@ -4,17 +4,60 @@
  */
 package app.netlify.spkisp_ramdani.panels;
 
+import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
+import app.netlify.spkisp_ramdani.utils.UtilsKoneksi;
+import app.netlify.spkisp_ramdani.utils.UtilsStatic;
+import javax.swing.Icon;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author iramd
  */
 public class PanelKriteria extends javax.swing.JPanel {
-
+    private DefaultTableModel model;
     /**
      * Creates new form PanelKriteria
      */
     public PanelKriteria() {
         initComponents();
+        fnPerbaruiTabel();
+        spkKoneksi.init();
+    }
+    
+    UtilsKoneksi spkKoneksi = new UtilsKoneksi();
+    UtilsGlobal spkUtil = new UtilsGlobal();
+    private void fnPerbaruiTabel() {
+        UtilsStatic.LOGGER.info("tabel" +  spkUtil.fnDapatkanKolom(jTable1.getModel()).toString());
+        model = new DefaultTableModel(new Object[][] {}, spkUtil.fnDapatkanKolom(jTable1.getModel())) {
+            @Override
+            public Class getColumnClass(int column)
+            {
+                switch (column)
+                {
+                    case 0: return Icon.class;
+                    default: return super.getColumnClass(column);
+                }
+            }
+        };
+        
+        model.getDataVector().removeAllElements();
+        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
+        int[][] infoKolom = spkUtil.fnDapatkanInfoKolom(jTable1);
+        
+        Object[] obj = new Object[5];
+                obj[0] = iconLogo;
+                obj[1] = "1";
+                obj[2] = "C1";
+                obj[3] = "Harga";
+                obj[4] = "Cost";
+        model.addRow(obj);
+        model.addRow(obj);
+        model.addRow(obj);
+        model.addRow(obj);
+        jTable1.setModel(model);
+        spkUtil.fnKembalikanInfoKolom(jTable1, infoKolom);
+        jTable1.setDefaultEditor(Object.class, null);
     }
 
     /**
@@ -26,94 +69,50 @@ public class PanelKriteria extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
-        jCheckBox9 = new javax.swing.JCheckBox();
-        jCheckBox10 = new javax.swing.JCheckBox();
+        sLPanel1 = new aurelienribon.slidinglayout.SLPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
-        jCheckBox1.setText("Kriteria1");
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "", "No", "ID Kriteria", "Nama Kriteria", "Sifat"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(40);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(40);
+        }
 
-        jCheckBox2.setText("Kriteria2");
-
-        jCheckBox3.setText("Kriteria3");
-
-        jCheckBox4.setText("Kriteria4");
-
-        jCheckBox5.setText("Kriteria5");
-
-        jCheckBox6.setText("Kriteria1");
-
-        jCheckBox7.setText("Kriteria2");
-
-        jCheckBox8.setText("Kriteria3");
-
-        jCheckBox9.setText("Kriteria4");
-
-        jCheckBox10.setText("Kriteria5");
+        sLPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(50, 10, 452, 402);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox10)
-                    .addComponent(jCheckBox9)
-                    .addComponent(jCheckBox8)
-                    .addComponent(jCheckBox7)
-                    .addComponent(jCheckBox6)
-                    .addComponent(jCheckBox5)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox1))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addComponent(sLPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox10)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addComponent(sLPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private aurelienribon.slidinglayout.SLPanel sLPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -46,22 +46,28 @@ public class PanelAlternatif extends javax.swing.JPanel {
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "", "Kode Alternatif"
+                "", "No", "ID Alternatif", "Provider", "Kategori", "Jenis Paket"
             }
         ));
         jTable1.setColumnSelectionAllowed(true);
         jTable1.setIntercellSpacing(new java.awt.Dimension(10, 10));
         jTable1.setRowHeight(40);
+        jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jTable1MouseMoved(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMaxWidth(40);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(40);
         }
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -79,6 +85,11 @@ public class PanelAlternatif extends javax.swing.JPanel {
         gridBagConstraints.gridy = 1;
         add(jButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseMoved
+        // TODO add your handling code here:
+//        UtilsStatic.LOGGER.info(jTable1.columnAtPoint(evt.getPoint()) + "");
+    }//GEN-LAST:event_jTable1MouseMoved
 
     UtilsKoneksi spkKoneksi = new UtilsKoneksi();
     UtilsGlobal spkUtil = new UtilsGlobal();
@@ -100,11 +111,13 @@ public class PanelAlternatif extends javax.swing.JPanel {
         javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
         int[][] infoKolom = spkUtil.fnDapatkanInfoKolom(jTable1);
         
-        Object[] obj = new Object[4];
+        Object[] obj = new Object[6];
                 obj[0] = iconLogo;
-                obj[1] = "Dua";
-                obj[2] = "Tiga";
-                obj[3] = "Empat";
+                obj[1] = 1;
+                obj[2] = "A1";
+                obj[3] = "IndiHome";
+                obj[4] = "P1 Internet";
+                obj[5] = "Maxi";
         model.addRow(obj);
         model.addRow(obj);
         model.addRow(obj);
