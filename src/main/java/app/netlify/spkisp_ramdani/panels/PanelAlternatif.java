@@ -58,11 +58,6 @@ public class PanelAlternatif extends javax.swing.JPanel {
         jTable1.setColumnSelectionAllowed(true);
         jTable1.setIntercellSpacing(new java.awt.Dimension(10, 10));
         jTable1.setRowHeight(40);
-        jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jTable1MouseMoved(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
@@ -85,11 +80,6 @@ public class PanelAlternatif extends javax.swing.JPanel {
         gridBagConstraints.gridy = 1;
         add(jButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTable1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseMoved
-        // TODO add your handling code here:
-//        UtilsStatic.LOGGER.info(jTable1.columnAtPoint(evt.getPoint()) + "");
-    }//GEN-LAST:event_jTable1MouseMoved
 
     UtilsKoneksi spkKoneksi = new UtilsKoneksi();
     UtilsGlobal spkUtil = new UtilsGlobal();

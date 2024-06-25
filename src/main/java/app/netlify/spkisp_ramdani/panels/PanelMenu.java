@@ -55,7 +55,13 @@ public class PanelMenu extends javax.swing.JPanel {
         pLaporan = new javax.swing.JPanel();
         iLaporan = new javax.swing.JLabel();
         bLaporan = new com.k33ptoo.components.KButton();
+        pProfil = new javax.swing.JPanel();
+        iProfil = new javax.swing.JLabel();
+        bProfil = new com.k33ptoo.components.KButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
+        setMinimumSize(new java.awt.Dimension(16, 16));
         addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
                 formComponentAdded(evt);
@@ -153,7 +159,44 @@ public class PanelMenu extends javax.swing.JPanel {
         sLPanel1.add(pLaporan);
         pLaporan.setBounds(30, 380, 200, 80);
 
+        pProfil.setBackground(new java.awt.Color(204, 255, 153));
+        pProfil.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        iProfil.setText("Ikon");
+        pProfil.add(iProfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
+        bProfil.setText("Profil");
+        bProfil.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bProfil.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        bProfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bProfilActionPerformed(evt);
+            }
+        });
+        pProfil.add(bProfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
+
+        sLPanel1.add(pProfil);
+        pProfil.setBounds(30, 470, 200, 80);
+
         add(sLPanel1);
+
+        jLabel1.setMinimumSize(new java.awt.Dimension(0, 0));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(576, Short.MAX_VALUE))
+        );
+
+        add(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
@@ -178,6 +221,10 @@ public class PanelMenu extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_bLaporanActionPerformed
 
+    private void bProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bProfilActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bProfilActionPerformed
+
     private void decorateWindow() {
     SLConfig mainCfg = new SLConfig(sLPanel1)
 			.gap(1, 0)
@@ -195,15 +242,19 @@ public class PanelMenu extends javax.swing.JPanel {
         
         fnRegisterMenu(new ModelMenuPage(bBeranda.getText(), "Beranda", "", bBeranda, pBeranda, iBeranda));
         fnRegisterMenu(new ModelMenuPage(bAlternatif.getText(), "Alternatif", "", bAlternatif, pAlternatif, iAlternatif));
-        fnRegisterMenu(new ModelMenuPage(bKriteria.getText(), "Kriteria", "", bKriteria, pKriteria, iAlternatif));
+        fnRegisterMenu(new ModelMenuPage(bKriteria.getText(), "Kriteria", "", bKriteria, pKriteria, iKriteria));
         fnRegisterMenu(new ModelMenuPage(bProsesData.getText(), "Proses Data", "", bProsesData, pProsesData, iProsesData));
         fnRegisterMenu(new ModelMenuPage(bLaporan.getText(), "Laporan", "", bLaporan, pLaporan, iLaporan));
+        fnRegisterMenu(new ModelMenuPage(bProfil.getText(), "Profil", "", bProfil, pProfil, iProfil));
         
         fnSelectMenu("Beranda");
     }
     
     private void fnRegisterMenu(ModelMenuPage menuPage) {
         menuList.add(menuPage);
+        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
+        menuPage.elmLabel.setText("");
+        menuPage.elmLabel.setIcon(iconLogo);
         menuPage.elmButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,16 +363,21 @@ public class PanelMenu extends javax.swing.JPanel {
     private com.k33ptoo.components.KButton bBeranda;
     private com.k33ptoo.components.KButton bKriteria;
     private com.k33ptoo.components.KButton bLaporan;
+    private com.k33ptoo.components.KButton bProfil;
     private com.k33ptoo.components.KButton bProsesData;
     private javax.swing.JLabel iAlternatif;
     private javax.swing.JLabel iBeranda;
     private javax.swing.JLabel iKriteria;
     private javax.swing.JLabel iLaporan;
+    private javax.swing.JLabel iProfil;
     private javax.swing.JLabel iProsesData;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pAlternatif;
     private javax.swing.JPanel pBeranda;
     private javax.swing.JPanel pKriteria;
     private javax.swing.JPanel pLaporan;
+    private javax.swing.JPanel pProfil;
     private javax.swing.JPanel pProsesData;
     private aurelienribon.slidinglayout.SLPanel sLPanel1;
     // End of variables declaration//GEN-END:variables

@@ -5,6 +5,7 @@
 package app.netlify.spkisp_ramdani.forms;
 
 import app.netlify.spkisp_ramdani.models.ModelExternalListener;
+import app.netlify.spkisp_ramdani.models.ModelNotifikasi;
 import app.netlify.spkisp_ramdani.panels.PanelAlternatif;
 import app.netlify.spkisp_ramdani.panels.PanelBeranda;
 import app.netlify.spkisp_ramdani.panels.PanelKriteria;
@@ -31,7 +32,7 @@ import javax.swing.JScrollPane;
  * @author iramd
  */
 public class FormMenuUtama extends javax.swing.JFrame {
-
+    javax.swing.Timer pewaktu;
     /**
      * Creates new form FormMenuUtama
      */
@@ -39,6 +40,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
         initComponents();
         decorateWindow();
         fnSetupMenu();
+        fnSetupNotification();
     }
 
     /**
@@ -64,6 +66,10 @@ public class FormMenuUtama extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         kButton7 = new com.k33ptoo.components.KButton();
         jPanel2 = new javax.swing.JPanel();
+        kGradientPanel1 = new com.k33ptoo.components.KGradientPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Pendukung Keputusan ISP");
@@ -236,6 +242,9 @@ public class FormMenuUtama extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 255, 51));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel2MouseEntered(evt);
             }
@@ -243,6 +252,49 @@ public class FormMenuUtama extends javax.swing.JFrame {
         jPanel2.setLayout(new java.awt.GridBagLayout());
         sLPanel2.add(jPanel2);
         jPanel2.setBounds(160, 0, 720, 600);
+
+        kGradientPanel1.setkEndColor(new java.awt.Color(204, 255, 204));
+        kGradientPanel1.setkStartColor(new java.awt.Color(204, 255, 204));
+
+        jLabel1.setText("Pesan");
+
+        jLabel2.setText("Close");
+
+        jLabel3.setText("Ikon");
+
+        javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
+        kGradientPanel1.setLayout(kGradientPanel1Layout);
+        kGradientPanel1Layout.setHorizontalGroup(
+            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 744, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(14, 14, 14))
+            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                    .addGap(29, 29, 29)
+                    .addComponent(jLabel3)
+                    .addContainerGap(828, Short.MAX_VALUE)))
+        );
+        kGradientPanel1Layout.setVerticalGroup(
+            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addContainerGap(8, Short.MAX_VALUE))
+            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                    .addContainerGap(8, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addContainerGap()))
+        );
+
+        sLPanel2.add(kGradientPanel1);
+        kGradientPanel1.setBounds(0, 610, 880, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -314,6 +366,10 @@ public class FormMenuUtama extends javax.swing.JFrame {
         // TODO add your handling code here:
         fnGantiMenu(new PanelAlternatif());
     }//GEN-LAST:event_kButton7ActionPerformed
+
+    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -404,8 +460,17 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 else if (param.equals("Beranda")) { fnGantiMenu(new PanelBeranda()); }
                 else if (param.equals("Kriteria")) { fnGantiMenu(new PanelKriteria()); }
                 else if (param.equals("Proses Data")) { fnGantiMenu(new PanelProsesData()); }
-                else if (param.equals("Laporan")) { fnGantiMenu(new PanelLaporan()); }
+                else if (param.equals("Laporan")) {  fnGantiMenu(new PanelLaporan());  }
+                else if (param.equals("Profil")) {  openNotificationPanel("Coba");}
                 else  { UtilsStatic.LOGGER.info("Menu Tidak Diketahui : " + param); }
+            }
+        });
+    }
+    
+    private void fnSetupNotification() {
+        UtilsStatic.registerNotificationListener(new ModelExternalListener<ModelNotifikasi>() {
+            public void listen(ModelNotifikasi n) {
+                openNotificationPanel(n.pesan);
             }
         });
     }
@@ -469,6 +534,69 @@ public class FormMenuUtama extends javax.swing.JFrame {
         }
     }
     
+    private void openNotificationPanel(String pesan) {
+        // col width must read current stat of panel is close or openc
+         int colWIdth = "opened".equals(sLPanelState) ? 200 : 40;
+         String previousState = sLPanelState;
+         if (!"unstable".equals(sLPanelState)) {
+            sLPanelState = "unstable";
+            SLConfig showCfg = new SLConfig(sLPanel2)
+                            .gap(0, 0)
+                            .row(30).row(1f).col(1f)
+                            .beginGrid(0, 0)
+                                .row(1f).col(1f)
+                                .place(0,0, kGradientPanel1)
+                            .endGrid()
+                            .beginGrid(1, 0)
+                                .row(1f).col(colWIdth).col(1f)
+                                .place(0, 0, jPanel1)
+                                .place(0, 1, jPanel2)
+                            .endGrid();
+                            
+               sLPanel2.createTransition()
+                .push(new SLKeyframe(showCfg, 0.5f)
+                        .setStartSide(SLSide.TOP)
+                        .setCallback(new SLKeyframe.Callback() {@Override public void done() {
+                                UtilsStatic.LOGGER.info("Panel " + previousState);
+                                sLPanelState = previousState;
+                                pewaktu = new javax.swing.Timer(3000, new java.awt.event.ActionListener() {
+                                    @Override
+                                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                        pewaktu.stop();
+                                        closeNotificationPanel();
+                                    }
+                                });
+                                pewaktu.start();
+                        }}))
+                .play();
+                UtilsStatic.LOGGER.info("Opening Panel"); 
+        }
+    }
+    
+    private void closeNotificationPanel() {
+        // col width must read current stat of panel is close or openc
+         int colWIdth = "opened".equals(sLPanelState) ? 200 : 40;
+         String previousState = sLPanelState;
+         if (!"unstable".equals(sLPanelState)) {
+            sLPanelState = "unstable";
+            SLConfig showCfg = new SLConfig(sLPanel2)
+                            .gap(0, 0)
+                            .row(1f).col(200).col(1f)
+                            .place(0, 0, jPanel1)
+                            .place(0, 1, jPanel2);
+                            
+               sLPanel2.createTransition()
+                .push(new SLKeyframe(showCfg, 0.5f)
+                        .setStartSide(SLSide.TOP)
+                        .setCallback(new SLKeyframe.Callback() {@Override public void done() {
+                                UtilsStatic.LOGGER.info("Panel " + previousState);
+                                sLPanelState = previousState;
+                        }}))
+                .play();
+                UtilsStatic.LOGGER.info("Opening Panel"); 
+        }
+    }
+    
     private void closePanel() {
         if (!"unstable".equals(sLPanelState) && !"closed".equals(sLPanelState)) {
             sLPanelState = "unstable";
@@ -518,6 +646,9 @@ public class FormMenuUtama extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private com.k33ptoo.components.KButton kButton1;
@@ -527,6 +658,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton kButton5;
     private com.k33ptoo.components.KButton kButton6;
     private com.k33ptoo.components.KButton kButton7;
+    private com.k33ptoo.components.KGradientPanel kGradientPanel1;
     private aurelienribon.slidinglayout.SLPanel sLPanel2;
     // End of variables declaration//GEN-END:variables
     

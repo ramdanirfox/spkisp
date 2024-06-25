@@ -4,10 +4,16 @@
  */
 package app.netlify.spkisp_ramdani.panels;
 
+import app.netlify.spkisp_ramdani.models.ModelMenuPage;
 import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
 import app.netlify.spkisp_ramdani.utils.UtilsKoneksi;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
+import aurelienribon.slidinglayout.SLAnimator;
+import aurelienribon.slidinglayout.SLConfig;
+import aurelienribon.slidinglayout.SLKeyframe;
+import aurelienribon.slidinglayout.SLSide;
 import javax.swing.Icon;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,7 +28,9 @@ public class PanelKriteria extends javax.swing.JPanel {
     public PanelKriteria() {
         initComponents();
         fnPerbaruiTabel();
+        decorateWindow();
         spkKoneksi.init();
+        
     }
     
     UtilsKoneksi spkKoneksi = new UtilsKoneksi();
@@ -59,6 +67,55 @@ public class PanelKriteria extends javax.swing.JPanel {
         spkUtil.fnKembalikanInfoKolom(jTable1, infoKolom);
         jTable1.setDefaultEditor(Object.class, null);
     }
+    
+    private void decorateWindow() {
+    JPanel editorPane = new PanelEditData();
+    SLConfig mainCfg = new SLConfig(sLPanel2)
+			.gap(0, 0)
+			.row(1f)
+                            .col(1f).col(200)// to 60
+			 .place(0, 0, kGradientPanel1)
+			 .place(0, 1, editorPane);
+//        SLAnimator.stop();
+//        SLAnimator.start();
+        sLPanel2.setTweenManager(SLAnimator.createTweenManager());
+        sLPanel2.initialize(mainCfg);
+        PanelKriteria self = this;
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                 jPanel1.removeAll();
+        //        jPanel1.setLayout(null);
+                jPanel1.add(new PanelEditData());
+//                jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+                jPanel1.invalidate();
+                jPanel1.repaint();
+                self.invalidate();
+                self.repaint();
+                UtilsStatic.LOGGER.info("Remove panel content");
+
+             sLPanel2.createTransition()
+             .push(new SLKeyframe(mainCfg, 1f)
+             .setCallback(new SLKeyframe.Callback() {@Override public void done() {
+                 UtilsStatic.LOGGER.info("Inner Panel Slickback TS2");
+              }})).play();
+            }});
+        
+    }
+    
+    private void fnTransition() {
+        SLConfig mainCfg = new SLConfig(sLPanel2)
+			.gap(0, 0)
+			.row(1f)
+                            .col(1f)
+			 .place(0, 0, kGradientPanel1);
+        
+     sLPanel2.createTransition()
+             .push(new SLKeyframe(mainCfg, 1f)
+              
+             .setCallback(new SLKeyframe.Callback() {@Override public void done() {
+                 UtilsStatic.LOGGER.info("Finish Transition");
+              }})).play();   
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,9 +126,32 @@ public class PanelKriteria extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        sLPanel1 = new aurelienribon.slidinglayout.SLPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        componentMoverUtil1 = new com.k33ptoo.utils.ComponentMoverUtil();
+        sLPanel2 = new aurelienribon.slidinglayout.SLPanel();
+        kGradientPanel1 = new com.k33ptoo.components.KGradientPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        jFormattedTextField1.setText("jFormattedTextField1");
+
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
+
+        sLPanel2.setTweenManager(null);
+
+        kGradientPanel1.setkEndColor(new java.awt.Color(255, 255, 255));
+        kGradientPanel1.setkStartColor(new java.awt.Color(204, 204, 255));
+        kGradientPanel1.setMinimumSize(new java.awt.Dimension(100, 100));
+        kGradientPanel1.setLayout(new java.awt.BorderLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -84,35 +164,57 @@ public class PanelKriteria extends javax.swing.JPanel {
                 "", "No", "ID Kriteria", "Nama Kriteria", "Sifat"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMaxWidth(40);
             jTable1.getColumnModel().getColumn(1).setMaxWidth(40);
         }
 
-        sLPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(50, 10, 452, 402);
+        kGradientPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(sLPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(sLPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        jButton1.setText("jButton1");
+        kGradientPanel1.add(jButton1, java.awt.BorderLayout.PAGE_START);
+
+        sLPanel2.add(kGradientPanel1);
+        kGradientPanel1.setBounds(10, 10, 550, 520);
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setLayout(null);
+
+        jLabel1.setText("Editor Show Here");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(88, 235, 91, 16);
+
+        sLPanel2.add(jPanel1);
+        jPanel1.setBounds(580, 10, 260, 520);
+
+        add(sLPanel2);
+        sLPanel2.getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        fnTransition();
+        UtilsStatic.LOGGER.info("Waaaawww");
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.k33ptoo.utils.ComponentMoverUtil componentMoverUtil1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private aurelienribon.slidinglayout.SLPanel sLPanel1;
+    private javax.swing.JTextArea jTextArea1;
+    private com.k33ptoo.components.KGradientPanel kGradientPanel1;
+    private aurelienribon.slidinglayout.SLPanel sLPanel2;
     // End of variables declaration//GEN-END:variables
 }

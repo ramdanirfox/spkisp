@@ -4,6 +4,8 @@
  */
 package app.netlify.spkisp_ramdani.utils;
 
+import app.netlify.spkisp_ramdani.models.ModelExternalListener;
+import app.netlify.spkisp_ramdani.models.ModelNotifikasi;
 import app.netlify.spkisp_ramdani.panels.PanelDocking;
 import java.sql.Connection;
 import javax.swing.ImageIcon;
@@ -21,6 +23,7 @@ public class UtilsStatic {
     public static PanelDocking panelDock;
     public static PanelDocking panelDock2;
     public static UtilsGlobal gUtil = new UtilsGlobal();
+    public static ModelExternalListener<ModelNotifikasi> notifListener;
 //    private static ArrayList collectedLogs;
     
     public static void populateDockablePanels() {
@@ -29,6 +32,14 @@ public class UtilsStatic {
     public static ImageIcon getResizedIcon(String iconPath) {
         ImageIcon gbrBackground = new ImageIcon(new javax.swing.ImageIcon(gUtil.getAsset(iconPath)).getImage().getScaledInstance(16, 16, 16));
         return gbrBackground;
+    }
+    
+    public static void registerNotificationListener(ModelExternalListener<ModelNotifikasi> listener) {
+        notifListener = listener;
+    }
+    
+    public static void pushNotification(ModelNotifikasi n) {
+        notifListener.listen(n);
     }
     
     public static void setConn(Connection param) {

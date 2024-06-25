@@ -89,9 +89,6 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseMoved"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
