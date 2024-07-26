@@ -5,6 +5,7 @@
 package app.netlify.spkisp_ramdani;
 
 import app.netlify.spkisp_ramdani.forms.FormLogin;
+import app.netlify.spkisp_ramdani.utils.UtilsKoneksi;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
 
 /**
@@ -14,11 +15,13 @@ import app.netlify.spkisp_ramdani.utils.UtilsStatic;
 public class spkisp_ramdani {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        System.out.println(     "Hello World!");
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 fnSetelTema();
+                UtilsStatic.connUtil = new UtilsKoneksi();
+                UtilsStatic.connUtil.init();
                 new FormLogin().setVisible(true);
             }
         });

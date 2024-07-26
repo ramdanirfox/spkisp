@@ -4,20 +4,26 @@
  */
 package app.netlify.spkisp_ramdani.panels;
 
+import app.netlify.spkisp_ramdani.models.ModelExternalListener;
+import app.netlify.spkisp_ramdani.models.ModelInputAbstrak;
 import app.netlify.spkisp_ramdani.models.ModelNotifikasi;
+import app.netlify.spkisp_ramdani.utils.UtilsAutoCompleteExtension;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
  * @author iramd
  */
 public class PanelEditData extends javax.swing.JPanel {
-
+    ModelExternalListener<String> extListener;
     /**
      * Creates new form PanelEditData
      */
     public PanelEditData() {
         initComponents();
+        putCmps();
     }
 
     /**
@@ -29,22 +35,23 @@ public class PanelEditData extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        sLPanel1 = new aurelienribon.slidinglayout.SLPanel();
+        jToolBar1 = new javax.swing.JToolBar();
         kGradientPanel1 = new com.k33ptoo.components.KGradientPanel();
         kButton1 = new com.k33ptoo.components.KButton();
         kButton2 = new com.k33ptoo.components.KButton();
         kButton3 = new com.k33ptoo.components.KButton();
         kButton4 = new com.k33ptoo.components.KButton();
+        kButton7 = new com.k33ptoo.components.KButton();
         kGradientPanel2 = new com.k33ptoo.components.KGradientPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        kButton5 = new com.k33ptoo.components.KButton();
-        kButton6 = new com.k33ptoo.components.KButton();
+
+        jToolBar1.setRollover(true);
 
         kGradientPanel1.setkEndColor(new java.awt.Color(255, 255, 255));
         kGradientPanel1.setkStartColor(new java.awt.Color(204, 204, 204));
 
-        kButton1.setText("Edit");
+        kButton1.setText("Reset");
+        kButton1.setkEndColor(new java.awt.Color(255, 204, 255));
+        kButton1.setkStartColor(new java.awt.Color(255, 102, 153));
         kButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kButton1ActionPerformed(evt);
@@ -54,6 +61,8 @@ public class PanelEditData extends javax.swing.JPanel {
         kButton2.setText("Tambah");
 
         kButton3.setText("Hapus");
+        kButton3.setkEndColor(new java.awt.Color(255, 255, 204));
+        kButton3.setkStartColor(new java.awt.Color(255, 102, 0));
         kButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kButton3ActionPerformed(evt);
@@ -61,9 +70,20 @@ public class PanelEditData extends javax.swing.JPanel {
         });
 
         kButton4.setText("Perbarui");
+        kButton4.setkEndColor(new java.awt.Color(51, 255, 255));
+        kButton4.setkStartColor(new java.awt.Color(51, 102, 255));
         kButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kButton4ActionPerformed(evt);
+            }
+        });
+
+        kButton7.setText("X");
+        kButton7.setkHoverEndColor(new java.awt.Color(255, 51, 153));
+        kButton7.setkStartColor(new java.awt.Color(255, 102, 102));
+        kButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton7ActionPerformed(evt);
             }
         });
 
@@ -71,7 +91,7 @@ public class PanelEditData extends javax.swing.JPanel {
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+            .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -79,11 +99,17 @@ public class PanelEditData extends javax.swing.JPanel {
                     .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(kButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
+                .addComponent(kButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(kButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -91,77 +117,28 @@ public class PanelEditData extends javax.swing.JPanel {
                 .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(kButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
-
-        sLPanel1.add(kGradientPanel1);
-        kGradientPanel1.setBounds(0, 0, 200, 190);
 
         kGradientPanel2.setkEndColor(new java.awt.Color(255, 255, 255));
         kGradientPanel2.setkStartColor(new java.awt.Color(204, 204, 204));
-
-        jTextField1.setText("Field 1");
-
-        jLabel1.setText("Field 1");
-
-        kButton5.setText("Tambah");
-        kButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton5ActionPerformed(evt);
-            }
-        });
-
-        kButton6.setText("Perbarui");
-        kButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton6ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout kGradientPanel2Layout = new javax.swing.GroupLayout(kGradientPanel2);
-        kGradientPanel2.setLayout(kGradientPanel2Layout);
-        kGradientPanel2Layout.setHorizontalGroup(
-            kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(38, Short.MAX_VALUE))
-        );
-        kGradientPanel2Layout.setVerticalGroup(
-            kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(kGradientPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
-                .addComponent(kButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(kButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        sLPanel1.add(kGradientPanel2);
-        kGradientPanel2.setBounds(0, 200, 200, 330);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sLPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sLPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(kGradientPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -171,33 +148,56 @@ public class PanelEditData extends javax.swing.JPanel {
 
     private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
             // TODO add your handling code here:
-            UtilsStatic.pushNotification(new ModelNotifikasi("Menghapus..", "delete", 1000));
+            UtilsStatic.pushNotification(new ModelNotifikasi("Menghapus.." + Math.random(), "delete", 1000));
     }//GEN-LAST:event_kButton3ActionPerformed
 
     private void kButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_kButton4ActionPerformed
 
-    private void kButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton5ActionPerformed
+    private void kButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton7ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_kButton5ActionPerformed
+        broadcastAction("close");
+    }//GEN-LAST:event_kButton7ActionPerformed
 
-    private void kButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kButton6ActionPerformed
-
+    public void listenAction(ModelExternalListener<String> l) {
+        extListener = l;
+    }
+    
+    private void broadcastAction(String action) {
+        extListener.listen(action);
+    }
+    
+    private void putCmps() {
+        for (int i = 0; i < 9 ; i++) {
+            javax.swing.JTextField iText = new JTextField();
+            new UtilsAutoCompleteExtension(iText, new String[]{"Uhh", "Huyy"});
+            javax.swing.JLabel iLabel = new JLabel();
+            iLabel.setText("Field " + i);
+            iText.setPreferredSize(new java.awt.Dimension(180, 20));
+            iLabel.setPreferredSize(new java.awt.Dimension(180, 20));
+            kGradientPanel2.add(iLabel);
+            kGradientPanel2.add(iText);
+        }
+        
+        ModelInputAbstrak i1 = new ModelInputAbstrak("text", "Tulisan", "field1", "Field Satu");
+        kGradientPanel2.add(i1.getIText());
+        ModelInputAbstrak i2 = new ModelInputAbstrak("autocomplete", "Halo", "field2", "Field Dua");
+        i2.initPilihan(new String[]{"Halo", "Dunia"}, new String[]{"satu", "dua"});
+        kGradientPanel2.add(i2.getIText());
+        ModelInputAbstrak i3 = new ModelInputAbstrak("select", "Ipsum", "field3", "Field Tiga");
+        i3.initPilihan(new String[]{"Lorem", "Ipsum"}, new String[]{"lor", "sum"});
+        kGradientPanel2.add(i3.getISelect());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JToolBar jToolBar1;
     private com.k33ptoo.components.KButton kButton1;
     private com.k33ptoo.components.KButton kButton2;
     private com.k33ptoo.components.KButton kButton3;
     private com.k33ptoo.components.KButton kButton4;
-    private com.k33ptoo.components.KButton kButton5;
-    private com.k33ptoo.components.KButton kButton6;
+    private com.k33ptoo.components.KButton kButton7;
     private com.k33ptoo.components.KGradientPanel kGradientPanel1;
     private com.k33ptoo.components.KGradientPanel kGradientPanel2;
-    private aurelienribon.slidinglayout.SLPanel sLPanel1;
     // End of variables declaration//GEN-END:variables
 }

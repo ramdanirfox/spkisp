@@ -10,6 +10,7 @@ import ModernDocking.DockingRegion;
 import ModernDocking.app.Docking;
 import ModernDocking.app.RootDockingPanel;
 import app.netlify.spkisp_ramdani.panels.PanelDocking;
+import app.netlify.spkisp_ramdani.panels.PanelLogAplikasi;
 import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
 import java.awt.BorderLayout;
@@ -110,10 +111,10 @@ public class FormPengaturan extends javax.swing.JFrame {
         UtilsStatic.LOGGER.info("Root Docking initialized...");
 //        this.add(root, BorderLayout.CENTER);
         getContentPane().add(root, BorderLayout.CENTER);
-        PanelDocking panelDock = new PanelDocking("Pengaturan", "pengaturan" + Math.random());
+        PanelDocking panelDock = new PanelDocking("Tema", "tema" + Math.random());
         UtilsStatic.LOGGER.info("Panel Docking 1 Initialized...");
-        PanelDocking panelDock2 = new PanelDocking("Lain Lain", "lainlain" + Math.random());
-        PanelDocking panelDock3 = new PanelDocking("Sampingan", "sampingan" + Math.random());
+        PanelLogAplikasi panelDock2 = new PanelLogAplikasi("Log Aplikasi", "lainlain" + Math.random());
+//        PanelDocking panelDock3 = new PanelDocking("Sampingan", "sampingan" + Math.random());
 //        panelDock.setBackground(Color.GRAY);
 //        panelDock.setFont(Font.getFont("monospace"));
         Docking.dock(panelDock, this);
@@ -123,7 +124,7 @@ public class FormPengaturan extends javax.swing.JFrame {
             public void run() {
                 UtilsStatic.LOGGER.info("sizeFrame" + self.getSize());
                 Docking.dock(panelDock2, self, DockingRegion.EAST);
-                Docking.dock(panelDock3, self, DockingRegion.SOUTH);
+//                Docking.dock(panelDock3, self, DockingRegion.SOUTH);
                 self.pack();
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {

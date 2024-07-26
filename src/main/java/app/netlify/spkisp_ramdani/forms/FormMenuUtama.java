@@ -67,9 +67,9 @@ public class FormMenuUtama extends javax.swing.JFrame {
         kButton7 = new com.k33ptoo.components.KButton();
         jPanel2 = new javax.swing.JPanel();
         kGradientPanel1 = new com.k33ptoo.components.KGradientPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lNotif = new javax.swing.JLabel();
+        cNotif = new javax.swing.JLabel();
+        iNotif = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Pendukung Keputusan ISP");
@@ -256,41 +256,34 @@ public class FormMenuUtama extends javax.swing.JFrame {
         kGradientPanel1.setkEndColor(new java.awt.Color(204, 255, 204));
         kGradientPanel1.setkStartColor(new java.awt.Color(204, 255, 204));
 
-        jLabel1.setText("Pesan");
+        lNotif.setText("Pesan");
 
-        jLabel2.setText("Close");
+        cNotif.setText("Close");
 
-        jLabel3.setText("Ikon");
+        iNotif.setText("Ikon");
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
+                .addComponent(iNotif)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lNotif)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 744, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(cNotif)
                 .addGap(14, 14, 14))
-            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                    .addGap(29, 29, 29)
-                    .addComponent(jLabel3)
-                    .addContainerGap(828, Short.MAX_VALUE)))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(lNotif)
+                    .addComponent(cNotif)
+                    .addComponent(iNotif))
                 .addContainerGap(8, Short.MAX_VALUE))
-            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                    .addContainerGap(8, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addContainerGap()))
         );
 
         sLPanel2.add(kGradientPanel1);
@@ -460,8 +453,9 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 else if (param.equals("Beranda")) { fnGantiMenu(new PanelBeranda()); }
                 else if (param.equals("Kriteria")) { fnGantiMenu(new PanelKriteria()); }
                 else if (param.equals("Proses Data")) { fnGantiMenu(new PanelProsesData()); }
-                else if (param.equals("Laporan")) {  fnGantiMenu(new PanelLaporan());  }
-                else if (param.equals("Profil")) {  openNotificationPanel("Coba");}
+                else if (param.equals("Laporan")) {  fnGantiMenu(new PanelLaporan()); }
+                else if (param.equals("Profil")) {  openNotificationPanel("Coba"); }
+                else if (param.equals("_menu")) {  closePanel(); }
                 else  { UtilsStatic.LOGGER.info("Menu Tidak Diketahui : " + param); }
             }
         });
@@ -470,7 +464,9 @@ public class FormMenuUtama extends javax.swing.JFrame {
     private void fnSetupNotification() {
         UtilsStatic.registerNotificationListener(new ModelExternalListener<ModelNotifikasi>() {
             public void listen(ModelNotifikasi n) {
-                openNotificationPanel(n.pesan);
+                if (!notifState.equals("open")) {
+                    readNextNotification();
+                }
             }
         });
     }
@@ -504,6 +500,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
                                         .setCallback(new SLKeyframe.Callback() {@Override public void done() {
                                                 UtilsStatic.LOGGER.info("Panel Shown Refresh Done");
                                                 sLPanelState = "opened";
+                                                
                                         }}))
                                 .play();
                                 UtilsStatic.LOGGER.info("Opening Panel (Forced)"); 
@@ -535,6 +532,10 @@ public class FormMenuUtama extends javax.swing.JFrame {
     }
     
     private void openNotificationPanel(String pesan) {
+        notifState = "open";
+        lNotif.setText(pesan);
+        iNotif.setText("I");
+        cNotif.setText("X");
         // col width must read current stat of panel is close or openc
          int colWIdth = "opened".equals(sLPanelState) ? 200 : 40;
          String previousState = sLPanelState;
@@ -563,7 +564,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
                                     @Override
                                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                                         pewaktu.stop();
-                                        closeNotificationPanel();
+                                        readNextNotification();
                                     }
                                 });
                                 pewaktu.start();
@@ -573,9 +574,36 @@ public class FormMenuUtama extends javax.swing.JFrame {
         }
     }
     
+    private void readNextNotification() {
+        UtilsStatic.LOGGER.info("MAsuksini");
+        if (!UtilsStatic.notifPool.isEmpty()) {
+            ModelNotifikasi currentNotif = UtilsStatic.notifPool.remove(0);
+            if (!"open".equals(notifState)) {
+                openNotificationPanel(currentNotif.pesan);
+            }
+            else {
+                lNotif.setText(currentNotif.pesan);
+                iNotif.setText(">");
+                cNotif.setText("X");
+                pewaktu = new javax.swing.Timer(currentNotif.waktuMilis, new java.awt.event.ActionListener() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        pewaktu.stop();
+                        readNextNotification();
+                    }
+                });
+                pewaktu.start();
+            }
+        }
+        else {
+            closeNotificationPanel();
+        }
+    }
+    
     private void closeNotificationPanel() {
+        notifState = "closed";
         // col width must read current stat of panel is close or openc
-         int colWIdth = "opened".equals(sLPanelState) ? 200 : 40;
+         int colWIdth = "opened".equals(sLPanelState) ? 200 : 50;
          String previousState = sLPanelState;
          if (!"unstable".equals(sLPanelState)) {
             sLPanelState = "unstable";
@@ -617,7 +645,8 @@ public class FormMenuUtama extends javax.swing.JFrame {
         }
     }
     
-    String sLPanelState = "closed";
+    String sLPanelState = "open";
+    String notifState = "closed"; // closed, open
     UtilsGlobal spkUtil = new UtilsGlobal();
     javax.swing.ImageIcon iconLogo = new javax.swing.ImageIcon(spkUtil.getAsset("logo.png"));
     private void decorateWindow() {
@@ -643,12 +672,11 @@ public class FormMenuUtama extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cNotif;
+    private javax.swing.JLabel iNotif;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private com.k33ptoo.components.KButton kButton1;
@@ -659,6 +687,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton kButton6;
     private com.k33ptoo.components.KButton kButton7;
     private com.k33ptoo.components.KGradientPanel kGradientPanel1;
+    private javax.swing.JLabel lNotif;
     private aurelienribon.slidinglayout.SLPanel sLPanel2;
     // End of variables declaration//GEN-END:variables
     

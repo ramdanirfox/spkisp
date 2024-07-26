@@ -4,6 +4,7 @@
  */
 package app.netlify.spkisp_ramdani.utils;
 
+import app.netlify.spkisp_ramdani.models.ModelExternalListener;
  import java.sql.Connection;
  import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -58,6 +59,19 @@ public class UtilsKoneksi {
           // if the error message is "out of memory",
           // it probably means no database file is found
           e.printStackTrace(System.err);
+        }
+    }
+    
+    public void sqlQuery(String qry, ModelExternalListener<ResultSet> fnRs) {
+        try {
+            PreparedStatement ps = connRef.prepareStatement(qry);
+//            ps.setString(1, "dede");
+            ResultSet rs = ps.executeQuery();
+            rs.getMetaData().getColumnCount();
+            fnRs.listen(rs);
+        }
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
         }
     }
 }

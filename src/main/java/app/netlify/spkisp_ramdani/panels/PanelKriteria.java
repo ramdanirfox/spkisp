@@ -4,6 +4,7 @@
  */
 package app.netlify.spkisp_ramdani.panels;
 
+import app.netlify.spkisp_ramdani.models.ModelExternalListener;
 import app.netlify.spkisp_ramdani.models.ModelMenuPage;
 import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
 import app.netlify.spkisp_ramdani.utils.UtilsKoneksi;
@@ -12,7 +13,12 @@ import aurelienribon.slidinglayout.SLAnimator;
 import aurelienribon.slidinglayout.SLConfig;
 import aurelienribon.slidinglayout.SLKeyframe;
 import aurelienribon.slidinglayout.SLSide;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import javax.swing.Icon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
  * @author iramd
  */
 public class PanelKriteria extends javax.swing.JPanel {
+    PanelEditData editPanel;
     private DefaultTableModel model;
     /**
      * Creates new form PanelKriteria
@@ -29,11 +36,8 @@ public class PanelKriteria extends javax.swing.JPanel {
         initComponents();
         fnPerbaruiTabel();
         decorateWindow();
-        spkKoneksi.init();
-        
     }
     
-    UtilsKoneksi spkKoneksi = new UtilsKoneksi();
     UtilsGlobal spkUtil = new UtilsGlobal();
     private void fnPerbaruiTabel() {
         UtilsStatic.LOGGER.info("tabel" +  spkUtil.fnDapatkanKolom(jTable1.getModel()).toString());
@@ -53,23 +57,39 @@ public class PanelKriteria extends javax.swing.JPanel {
         javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
         int[][] infoKolom = spkUtil.fnDapatkanInfoKolom(jTable1);
         
-        Object[] obj = new Object[5];
+        try {
+            PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement("SELECT * FROM kriteria");
+//            ps.setString(1, "dede");
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsm = rs.getMetaData();
+            while (rs.next()) {
+                Object[] obj = new Object[5];
                 obj[0] = iconLogo;
-                obj[1] = "1";
-                obj[2] = "C1";
-                obj[3] = "Harga";
-                obj[4] = "Cost";
-        model.addRow(obj);
-        model.addRow(obj);
-        model.addRow(obj);
-        model.addRow(obj);
+                obj[1] = rs.getString(1);
+                obj[2] = rs.getString(2);
+                obj[3] = rs.getString(3);
+                obj[4] = rs.getString(4);
+                model.addRow(obj);
+//                System.out.println();
+            }
+        }
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
+        }
+        
         jTable1.setModel(model);
         spkUtil.fnKembalikanInfoKolom(jTable1, infoKolom);
         jTable1.setDefaultEditor(Object.class, null);
     }
     
     private void decorateWindow() {
-    JPanel editorPane = new PanelEditData();
+    PanelEditData editorPane = new PanelEditData();
+    editorPane.listenAction(new ModelExternalListener<String>() {
+        public void listen(String action) {
+           if (action.equals("close")) { fnCloseEditPanel(); }
+        }
+    });
+    editPanel = editorPane;
     SLConfig mainCfg = new SLConfig(sLPanel2)
 			.gap(0, 0)
 			.row(1f)
@@ -99,22 +119,40 @@ public class PanelKriteria extends javax.swing.JPanel {
                  UtilsStatic.LOGGER.info("Inner Panel Slickback TS2");
               }})).play();
             }});
+        this.fnOpenEditPanel();
         
+        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("images/icons8-plus-64.png");
+        jButton1.setIcon(iconLogo);
     }
     
-    private void fnTransition() {
+    private void fnCloseEditPanel() {
         SLConfig mainCfg = new SLConfig(sLPanel2)
 			.gap(0, 0)
 			.row(1f)
                             .col(1f)
 			 .place(0, 0, kGradientPanel1);
         
-     sLPanel2.createTransition()
+        sLPanel2.createTransition()
              .push(new SLKeyframe(mainCfg, 1f)
-              
              .setCallback(new SLKeyframe.Callback() {@Override public void done() {
-                 UtilsStatic.LOGGER.info("Finish Transition");
+                 UtilsStatic.LOGGER.info("Finish Close");
               }})).play();   
+    }
+   
+    
+       private void fnOpenEditPanel() {
+        SLConfig mainCfg = new SLConfig(sLPanel2)
+			.gap(0, 0)
+			.row(1f)
+                            .col(1f).col(200)// to 60
+			 .place(0, 0, kGradientPanel1)
+			 .place(0, 1, editPanel);
+        
+        sLPanel2.createTransition()
+             .push(new SLKeyframe(mainCfg, 1f)
+             .setCallback(new SLKeyframe.Callback() {@Override public void done() {
+                 UtilsStatic.LOGGER.info("Finish Open");
+              }})).play();
     }
 
     /**
@@ -137,6 +175,7 @@ public class PanelKriteria extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -161,9 +200,12 @@ public class PanelKriteria extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "", "No", "ID Kriteria", "Nama Kriteria", "Sifat"
+                "", "ID", "Nama Kriteria", "Sifat", "Satuan"
             }
         ));
+        jTable1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        jTable1.setPreferredSize(new java.awt.Dimension(305, 200));
+        jTable1.setRowHeight(40);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -177,7 +219,12 @@ public class PanelKriteria extends javax.swing.JPanel {
 
         kGradientPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Tambah");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         kGradientPanel1.add(jButton1, java.awt.BorderLayout.PAGE_START);
 
         sLPanel2.add(kGradientPanel1);
@@ -195,13 +242,32 @@ public class PanelKriteria extends javax.swing.JPanel {
 
         add(sLPanel2);
         sLPanel2.getAccessibleContext().setAccessibleDescription("");
+
+        jPanel2.setMaximumSize(new java.awt.Dimension(0, 1000));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1, 1000));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        add(jPanel2);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        fnTransition();
-        UtilsStatic.LOGGER.info("Waaaawww");
+        fnOpenEditPanel();
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -210,6 +276,7 @@ public class PanelKriteria extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

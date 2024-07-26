@@ -4,6 +4,7 @@
  */
 package app.netlify.spkisp_ramdani.panels;
 
+import app.netlify.spkisp_ramdani.forms.FormPengaturan;
 import app.netlify.spkisp_ramdani.models.ModelExternalListener;
 import app.netlify.spkisp_ramdani.models.ModelMenuPage;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
@@ -58,6 +59,9 @@ public class PanelMenu extends javax.swing.JPanel {
         pProfil = new javax.swing.JPanel();
         iProfil = new javax.swing.JLabel();
         bProfil = new com.k33ptoo.components.KButton();
+        pHamburger = new javax.swing.JPanel();
+        iHamburger = new javax.swing.JLabel();
+        iSetelan = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -86,7 +90,7 @@ public class PanelMenu extends javax.swing.JPanel {
         pBeranda.add(bBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pBeranda);
-        pBeranda.setBounds(30, 20, 200, 80);
+        pBeranda.setBounds(30, 70, 200, 80);
 
         pAlternatif.setBackground(new java.awt.Color(204, 255, 153));
         pAlternatif.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,7 +109,7 @@ public class PanelMenu extends javax.swing.JPanel {
         pAlternatif.add(bAlternatif, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pAlternatif);
-        pAlternatif.setBounds(30, 110, 200, 80);
+        pAlternatif.setBounds(30, 160, 200, 80);
 
         pKriteria.setBackground(new java.awt.Color(204, 255, 153));
         pKriteria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -119,7 +123,7 @@ public class PanelMenu extends javax.swing.JPanel {
         pKriteria.add(bKriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pKriteria);
-        pKriteria.setBounds(30, 200, 200, 80);
+        pKriteria.setBounds(30, 250, 200, 80);
 
         pProsesData.setBackground(new java.awt.Color(204, 255, 153));
         pProsesData.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -138,7 +142,7 @@ public class PanelMenu extends javax.swing.JPanel {
         pProsesData.add(bProsesData, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pProsesData);
-        pProsesData.setBounds(30, 290, 200, 80);
+        pProsesData.setBounds(30, 340, 200, 80);
 
         pLaporan.setBackground(new java.awt.Color(204, 255, 153));
         pLaporan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -157,7 +161,7 @@ public class PanelMenu extends javax.swing.JPanel {
         pLaporan.add(bLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pLaporan);
-        pLaporan.setBounds(30, 380, 200, 80);
+        pLaporan.setBounds(30, 430, 200, 80);
 
         pProfil.setBackground(new java.awt.Color(204, 255, 153));
         pProfil.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -176,24 +180,63 @@ public class PanelMenu extends javax.swing.JPanel {
         pProfil.add(bProfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pProfil);
-        pProfil.setBounds(30, 470, 200, 80);
+        pProfil.setBounds(30, 520, 200, 80);
+
+        pHamburger.setBackground(new java.awt.Color(204, 255, 153));
+
+        iHamburger.setText("Ikon");
+        iHamburger.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iHamburgerMouseClicked(evt);
+            }
+        });
+
+        iSetelan.setText("Ikon");
+        iSetelan.setToolTipText("Ubah Tema");
+        iSetelan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iSetelanMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pHamburgerLayout = new javax.swing.GroupLayout(pHamburger);
+        pHamburger.setLayout(pHamburgerLayout);
+        pHamburgerLayout.setHorizontalGroup(
+            pHamburgerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pHamburgerLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(iHamburger, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(iSetelan, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        pHamburgerLayout.setVerticalGroup(
+            pHamburgerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pHamburgerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pHamburgerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(iHamburger, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iSetelan, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        sLPanel1.add(pHamburger);
+        pHamburger.setBounds(30, 10, 200, 50);
 
         add(sLPanel1);
-
-        jLabel1.setMinimumSize(new java.awt.Dimension(0, 0));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(576, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addContainerGap(603, Short.MAX_VALUE))
         );
 
         add(jPanel1);
@@ -225,6 +268,16 @@ public class PanelMenu extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_bProfilActionPerformed
 
+    private void iHamburgerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iHamburgerMouseClicked
+        // TODO add your handling code here:
+        extListener.listen("_menu");
+    }//GEN-LAST:event_iHamburgerMouseClicked
+
+    private void iSetelanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iSetelanMouseClicked
+        // TODO add your handling code here:
+        (new FormPengaturan()).setVisible(true);
+    }//GEN-LAST:event_iSetelanMouseClicked
+
     private void decorateWindow() {
     SLConfig mainCfg = new SLConfig(sLPanel1)
 			.gap(1, 0)
@@ -239,20 +292,33 @@ public class PanelMenu extends javax.swing.JPanel {
         sLPanel1.setTweenManager(SLAnimator.createTweenManager());
         sLPanel1.initialize(mainCfg);
     
+        fnPrepareActions();
         
-        fnRegisterMenu(new ModelMenuPage(bBeranda.getText(), "Beranda", "", bBeranda, pBeranda, iBeranda));
-        fnRegisterMenu(new ModelMenuPage(bAlternatif.getText(), "Alternatif", "", bAlternatif, pAlternatif, iAlternatif));
-        fnRegisterMenu(new ModelMenuPage(bKriteria.getText(), "Kriteria", "", bKriteria, pKriteria, iKriteria));
-        fnRegisterMenu(new ModelMenuPage(bProsesData.getText(), "Proses Data", "", bProsesData, pProsesData, iProsesData));
-        fnRegisterMenu(new ModelMenuPage(bLaporan.getText(), "Laporan", "", bLaporan, pLaporan, iLaporan));
-        fnRegisterMenu(new ModelMenuPage(bProfil.getText(), "Profil", "", bProfil, pProfil, iProfil));
+        fnRegisterMenu(new ModelMenuPage(bBeranda.getText(), "Beranda", "logo.png", bBeranda, pBeranda, iBeranda));
+        fnRegisterMenu(new ModelMenuPage(bAlternatif.getText(), "Alternatif", "images/icons8-plus-64.png", bAlternatif, pAlternatif, iAlternatif));
+        fnRegisterMenu(new ModelMenuPage(bKriteria.getText(), "Kriteria", "images/icons8-about-64.png", bKriteria, pKriteria, iKriteria));
+        fnRegisterMenu(new ModelMenuPage(bProsesData.getText(), "Proses Data", "images/icons8-refresh-blue.png", bProsesData, pProsesData, iProsesData));
+        fnRegisterMenu(new ModelMenuPage(bLaporan.getText(), "Laporan", "images/icons8-document-60.png", bLaporan, pLaporan, iLaporan));
+        fnRegisterMenu(new ModelMenuPage(bProfil.getText(), "Profil", "images/icons8-about-64.png", bProfil, pProfil, iProfil));
         
         fnSelectMenu("Beranda");
     }
     
+    private void fnPrepareActions() {
+        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("images/icons8-menu-64.png");
+//        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("background.png");
+        iHamburger.setIcon(iconLogo);
+        iHamburger.setText("");
+        
+        javax.swing.ImageIcon setelanLogo = UtilsStatic.getResizedIcon("images/icons8-settings.gif");
+        iSetelan.setIcon(setelanLogo);
+        iSetelan.setText("");
+    }
+    
+    
     private void fnRegisterMenu(ModelMenuPage menuPage) {
         menuList.add(menuPage);
-        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
+        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon(menuPage.urlIkon);
         menuPage.elmLabel.setText("");
         menuPage.elmLabel.setIcon(iconLogo);
         menuPage.elmButton.addActionListener(new java.awt.event.ActionListener() {
@@ -289,7 +355,7 @@ public class PanelMenu extends javax.swing.JPanel {
                 UtilsStatic.LOGGER.info("Opening Inner Panel 1"); 
     }
        
-       private void fnSelectMenu(String menuName) {
+        private void fnSelectMenu(String menuName) {
            ModelMenuPage foundMenu = null;
            for (ModelMenuPage menuItem: menuList) {
                if (menuItem.id.equals(menuName)) {
@@ -317,7 +383,7 @@ public class PanelMenu extends javax.swing.JPanel {
                                 public void run() {
                                     SLConfig endCfg = fnBuildSlConfigA(menuItem, null);
                                     menuItem.elmPanel.setBackground(Color.GREEN);
-                                   sLPanel1.createTransition()
+                                    sLPanel1.createTransition()
                                     .push(new SLKeyframe(endCfg, 1f)
                                            .setStartSideForNewCmps(SLSide.RIGHT)
                                            .setEndSide(SLSide.RIGHT, emptyPanel)
@@ -325,6 +391,7 @@ public class PanelMenu extends javax.swing.JPanel {
                                         UtilsStatic.LOGGER.info("Inner Panel Slickback TS2");
                                         self.setLayout(new javax.swing.BoxLayout(self, javax.swing.BoxLayout.LINE_AXIS));
                                         self.invalidate();
+                                        self.validate();
                                         self.repaint();
                                      }})).play();
                                    UtilsStatic.LOGGER.info("[UPD] Inner Panel Setup Finish TS2");
@@ -337,18 +404,22 @@ public class PanelMenu extends javax.swing.JPanel {
        
     private SLConfig fnBuildSlConfigA(ModelMenuPage mnu, JPanel emptyPanel) {
         SLConfig showCfg = new SLConfig(sLPanel1).gap(0, 0);
+        showCfg = showCfg.row(30);
         for (ModelMenuPage menuList1 : menuList) {
             showCfg = showCfg.row(1f);
 //            if (emptyPanel == null) {
                 menuList1.elmPanel.setBackground(new java.awt.Color(204,255,153));
 //            }
         }
+        int shift = 1;
         showCfg = showCfg.col(200);
+        showCfg = showCfg.place(0,0, pHamburger);
+        
         for (int i=0; i < menuList.size(); i++) {
             ModelMenuPage menuItemLoop = menuList.get(i);
-            showCfg = showCfg.place(i,0, menuItemLoop.elmPanel);
+            showCfg = showCfg.place(i + shift,0, menuItemLoop.elmPanel);
             if (mnu.id.equals(menuItemLoop.id) && emptyPanel != null) {
-                showCfg = showCfg.place(i,0, emptyPanel);
+                showCfg = showCfg.place(i + shift,0, emptyPanel);
             }
         }
         return showCfg;
@@ -367,14 +438,17 @@ public class PanelMenu extends javax.swing.JPanel {
     private com.k33ptoo.components.KButton bProsesData;
     private javax.swing.JLabel iAlternatif;
     private javax.swing.JLabel iBeranda;
+    private javax.swing.JLabel iHamburger;
     private javax.swing.JLabel iKriteria;
     private javax.swing.JLabel iLaporan;
     private javax.swing.JLabel iProfil;
     private javax.swing.JLabel iProsesData;
+    private javax.swing.JLabel iSetelan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel pAlternatif;
     private javax.swing.JPanel pBeranda;
+    private javax.swing.JPanel pHamburger;
     private javax.swing.JPanel pKriteria;
     private javax.swing.JPanel pLaporan;
     private javax.swing.JPanel pProfil;

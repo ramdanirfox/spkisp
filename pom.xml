@@ -103,6 +103,11 @@
                             <filtering>false</filtering>
                         </resource>
                         <resource>
+                            <targetPath>${basedir/}/target/classes/app/netlify/spkisp_ramdani/assets/images</targetPath>
+                            <directory>src/main/java/app/netlify/spkisp_ramdani/assets/images</directory>
+                            <filtering>false</filtering>
+                        </resource>
+                        <resource>
                             <targetPath>${basedir/}/target/classes</targetPath>
                             <directory>src/main/java/app/netlify/spkisp_ramdani/assets/xml</directory>
                             <filtering>false</filtering>
