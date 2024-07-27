@@ -5,6 +5,7 @@
 package app.netlify.spkisp_ramdani.panels;
 
 import app.netlify.spkisp_ramdani.models.ModelExternalListener;
+import app.netlify.spkisp_ramdani.models.ModelInputAbstrak;
 import app.netlify.spkisp_ramdani.models.ModelMenuPage;
 import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
 import app.netlify.spkisp_ramdani.utils.UtilsKoneksi;
@@ -17,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,12 +29,20 @@ import javax.swing.table.DefaultTableModel;
  * @author iramd
  */
 public class PanelKriteria extends javax.swing.JPanel {
+    String[][] fDef;
+    ArrayList<ModelInputAbstrak> inputList;
     PanelEditData editPanel;
     private DefaultTableModel model;
     /**
      * Creates new form PanelKriteria
      */
     public PanelKriteria() {
+        this.fDef = new String[][]{
+            {"Kode", "id_kriteria", "text"},
+            {"Nama Prov", "nama_kriteria", "text"},
+            {"Sifat", "sifat_kriteria", "text"},
+            {"Satuan", "satuan_kriteria", "text"}
+        };
         initComponents();
         fnPerbaruiTabel();
         decorateWindow();
@@ -40,8 +50,8 @@ public class PanelKriteria extends javax.swing.JPanel {
     
     UtilsGlobal spkUtil = new UtilsGlobal();
     private void fnPerbaruiTabel() {
-        UtilsStatic.LOGGER.info("tabel" +  spkUtil.fnDapatkanKolom(jTable1.getModel()).toString());
-        model = new DefaultTableModel(new Object[][] {}, spkUtil.fnDapatkanKolom(jTable1.getModel())) {
+        UtilsStatic.LOGGER.info("tabel" +  spkUtil.fnDapatkanKolom(tbl.getModel()).toString());
+        model = new DefaultTableModel(new Object[][] {}, spkUtil.fnDapatkanKolom(tbl.getModel())) {
             @Override
             public Class getColumnClass(int column)
             {
@@ -55,7 +65,7 @@ public class PanelKriteria extends javax.swing.JPanel {
         
         model.getDataVector().removeAllElements();
         javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
-        int[][] infoKolom = spkUtil.fnDapatkanInfoKolom(jTable1);
+        int[][] infoKolom = spkUtil.fnDapatkanInfoKolom(tbl);
         
         try {
             PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement("SELECT * FROM kriteria");
@@ -77,16 +87,18 @@ public class PanelKriteria extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
         }
         
-        jTable1.setModel(model);
-        spkUtil.fnKembalikanInfoKolom(jTable1, infoKolom);
-        jTable1.setDefaultEditor(Object.class, null);
+        tbl.setModel(model);
+        spkUtil.fnKembalikanInfoKolom(tbl, infoKolom);
+        tbl.setDefaultEditor(Object.class, null);
     }
     
     private void decorateWindow() {
     PanelEditData editorPane = new PanelEditData();
+    inputList = editorPane.fnBuatForm(fDef);
     editorPane.listenAction(new ModelExternalListener<String>() {
         public void listen(String action) {
            if (action.equals("close")) { fnCloseEditPanel(); }
+           if (action.equals("add")) { fnAksiUpdateData(); }
         }
     });
     editPanel = editorPane;
@@ -136,7 +148,22 @@ public class PanelKriteria extends javax.swing.JPanel {
              .push(new SLKeyframe(mainCfg, 1f)
              .setCallback(new SLKeyframe.Callback() {@Override public void done() {
                  UtilsStatic.LOGGER.info("Finish Close");
-              }})).play();   
+              }})).play();
+    }
+    
+    
+    
+    private void fnAksiUpdateData() {
+        for (ModelInputAbstrak inp : inputList) {
+            System.out.println("Tolong Lakukan Query INSERT Value : " + inp.getValue());
+        }
+    }
+    
+    private void fnUpdateFormValue() {
+       int ti = tbl.getSelectedRow();
+       for (int i = 0; i < inputList.size() ; i++) {
+           inputList.get(i).setValue((String) model.getValueAt(ti, i+1));
+       }       
     }
    
     
@@ -171,7 +198,7 @@ public class PanelKriteria extends javax.swing.JPanel {
         sLPanel2 = new aurelienribon.slidinglayout.SLPanel();
         kGradientPanel1 = new com.k33ptoo.components.KGradientPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -192,7 +219,7 @@ public class PanelKriteria extends javax.swing.JPanel {
         kGradientPanel1.setMinimumSize(new java.awt.Dimension(100, 100));
         kGradientPanel1.setLayout(new java.awt.BorderLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -203,18 +230,18 @@ public class PanelKriteria extends javax.swing.JPanel {
                 "", "ID", "Nama Kriteria", "Sifat", "Satuan"
             }
         ));
-        jTable1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        jTable1.setPreferredSize(new java.awt.Dimension(305, 200));
-        jTable1.setRowHeight(40);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        tbl.setPreferredSize(new java.awt.Dimension(305, 200));
+        tbl.setRowHeight(40);
+        tbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tblMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(40);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(40);
+        jScrollPane1.setViewportView(tbl);
+        if (tbl.getColumnModel().getColumnCount() > 0) {
+            tbl.getColumnModel().getColumn(0).setMaxWidth(40);
+            tbl.getColumnModel().getColumn(1).setMaxWidth(40);
         }
 
         kGradientPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -260,10 +287,11 @@ public class PanelKriteria extends javax.swing.JPanel {
         add(jPanel2);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
         // TODO add your handling code here:
+        fnUpdateFormValue();
         fnOpenEditPanel();
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_tblMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -279,9 +307,9 @@ public class PanelKriteria extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private com.k33ptoo.components.KGradientPanel kGradientPanel1;
     private aurelienribon.slidinglayout.SLPanel sLPanel2;
+    private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables
 }

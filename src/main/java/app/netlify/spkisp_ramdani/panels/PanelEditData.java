@@ -9,6 +9,7 @@ import app.netlify.spkisp_ramdani.models.ModelInputAbstrak;
 import app.netlify.spkisp_ramdani.models.ModelNotifikasi;
 import app.netlify.spkisp_ramdani.utils.UtilsAutoCompleteExtension;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -59,6 +60,11 @@ public class PanelEditData extends javax.swing.JPanel {
         });
 
         kButton2.setText("Tambah");
+        kButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton2ActionPerformed(evt);
+            }
+        });
 
         kButton3.setText("Hapus");
         kButton3.setkEndColor(new java.awt.Color(255, 255, 204));
@@ -160,6 +166,11 @@ public class PanelEditData extends javax.swing.JPanel {
         broadcastAction("close");
     }//GEN-LAST:event_kButton7ActionPerformed
 
+    private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
+        // TODO add your handling code here:
+        broadcastAction("add");
+    }//GEN-LAST:event_kButton2ActionPerformed
+
     public void listenAction(ModelExternalListener<String> l) {
         extListener = l;
     }
@@ -170,24 +181,54 @@ public class PanelEditData extends javax.swing.JPanel {
     
     private void putCmps() {
         for (int i = 0; i < 9 ; i++) {
-            javax.swing.JTextField iText = new JTextField();
-            new UtilsAutoCompleteExtension(iText, new String[]{"Uhh", "Huyy"});
-            javax.swing.JLabel iLabel = new JLabel();
-            iLabel.setText("Field " + i);
-            iText.setPreferredSize(new java.awt.Dimension(180, 20));
-            iLabel.setPreferredSize(new java.awt.Dimension(180, 20));
-            kGradientPanel2.add(iLabel);
-            kGradientPanel2.add(iText);
+//            javax.swing.JTextField iText = new JTextField();
+//            new UtilsAutoCompleteExtension(iText, new String[]{"Uhh", "Huyy"});
+//            javax.swing.JLabel iLabel = new JLabel();
+//            iLabel.setText("Field " + i);
+//            iText.setPreferredSize(new java.awt.Dimension(180, 20));
+//            iLabel.setPreferredSize(new java.awt.Dimension(180, 20));
+//            kGradientPanel2.add(iLabel);
+//            kGradientPanel2.add(iText);
         }
         
-        ModelInputAbstrak i1 = new ModelInputAbstrak("text", "Tulisan", "field1", "Field Satu");
-        kGradientPanel2.add(i1.getIText());
-        ModelInputAbstrak i2 = new ModelInputAbstrak("autocomplete", "Halo", "field2", "Field Dua");
-        i2.initPilihan(new String[]{"Halo", "Dunia"}, new String[]{"satu", "dua"});
-        kGradientPanel2.add(i2.getIText());
-        ModelInputAbstrak i3 = new ModelInputAbstrak("select", "Ipsum", "field3", "Field Tiga");
-        i3.initPilihan(new String[]{"Lorem", "Ipsum"}, new String[]{"lor", "sum"});
-        kGradientPanel2.add(i3.getISelect());
+//        ModelInputAbstrak i1 = new ModelInputAbstrak("text", "Tulisan", "field1", "Field Satu");
+//        kGradientPanel2.add(i1.getIText());
+//        ModelInputAbstrak i2 = new ModelInputAbstrak("autocomplete", "Halo", "field2", "Field Dua");
+//        i2.initPilihan(new String[]{"Halo", "Dunia"}, new String[]{"satu", "dua"});
+//        kGradientPanel2.add(i2.getIText());
+//        ModelInputAbstrak i3 = new ModelInputAbstrak("select", "Ipsum", "field3", "Field Tiga");
+//        i3.initPilihan(new String[]{"Lorem", "Ipsum"}, new String[]{"lor", "sum"});
+//        kGradientPanel2.add(i3.getISelect());
+    }
+    
+    public ArrayList<ModelInputAbstrak> fnBuatForm(String[][] pCfg) {
+       ArrayList<ModelInputAbstrak> listInput = new ArrayList();
+       for (String[] pCfg_1 : pCfg) {
+           // 1 : Label
+           // 2 : Field
+           // 3 : Jenis
+           
+           javax.swing.JLabel iLabel = new JLabel();
+           iLabel.setText(pCfg_1[0]);
+           kGradientPanel2.add(iLabel);
+           
+           if (pCfg_1[2].equals("text") || pCfg_1[2].equals("autocomplete")) {
+               ModelInputAbstrak i1 = new ModelInputAbstrak("text", pCfg_1[0], pCfg_1[1], pCfg_1[0]);
+               kGradientPanel2.add(i1.getIText());
+               listInput.add(i1);
+           }
+           else if (pCfg_1[2].equals("select")) {
+               ModelInputAbstrak i1 = new ModelInputAbstrak("select", pCfg_1[0], pCfg_1[1], pCfg_1[0]);
+               kGradientPanel2.add(i1.getISelect());
+               listInput.add(i1);
+           }
+           else {
+               ModelInputAbstrak i1 = new ModelInputAbstrak("text", "(Tidak Diketahui)", "_", "_");
+               kGradientPanel2.add(i1.getIText());
+               listInput.add(i1);
+           }
+       }
+       return listInput;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
