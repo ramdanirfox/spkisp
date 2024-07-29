@@ -150,15 +150,18 @@ public class PanelEditData extends javax.swing.JPanel {
 
     private void kButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton1ActionPerformed
         // TODO add your handling code here:
+        broadcastAction("reset");
     }//GEN-LAST:event_kButton1ActionPerformed
 
     private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
             // TODO add your handling code here:
             UtilsStatic.pushNotification(new ModelNotifikasi("Menghapus.." + Math.random(), "delete", 1000));
+            broadcastAction("delete");
     }//GEN-LAST:event_kButton3ActionPerformed
 
     private void kButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton4ActionPerformed
         // TODO add your handling code here:
+        broadcastAction("update");
     }//GEN-LAST:event_kButton4ActionPerformed
 
     private void kButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton7ActionPerformed
@@ -210,6 +213,7 @@ public class PanelEditData extends javax.swing.JPanel {
            
            javax.swing.JLabel iLabel = new JLabel();
            iLabel.setText(pCfg_1[0]);
+           iLabel.setPreferredSize(new java.awt.Dimension(180, 20));
            kGradientPanel2.add(iLabel);
            
            if (pCfg_1[2].equals("text") || pCfg_1[2].equals("autocomplete")) {

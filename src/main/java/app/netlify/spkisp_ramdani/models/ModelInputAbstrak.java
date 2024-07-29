@@ -93,6 +93,70 @@ public class ModelInputAbstrak {
         }
     }
     
+    public String getValueId() {
+         switch (jenis) {
+            case "text":
+                return this.getIText().getText();
+            case "autocomplete":
+                String sample = this.getIText().getText();
+                int match = this.findIndex(sample, pilihanValue);
+                if (match == -1) {
+                    int match2 = this.findIndex(sample, pilihanId);
+                    if (match2 == -1) {
+                        return "";
+                    }
+                    else {
+                        return pilihanId[match2] + "";
+                    }
+                }
+                else {
+                    return pilihanId[match] + "";
+                }
+            case "select":
+                 int pos = (int) this.getISelect().getSelectedIndex();
+                 return pilihanId[pos] + "";
+            default:
+                return "";
+        }
+    }
+    
+        public String getValueText() {
+         switch (jenis) {
+            case "text":
+                return this.getIText().getText();
+            case "autocomplete":
+                String sample = this.getIText().getText();
+                int match = this.findIndex(sample, pilihanValue);
+                if (match == -1) {
+                    int match2 = this.findIndex(sample, pilihanId);
+                    if (match2 == -1) {
+                        return "";
+                    }
+                    else {
+                        return pilihanValue[match2] + "";
+                    }
+                }
+                else {
+                    return pilihanValue[match] + "";
+                }
+            case "select":
+                 int pos = (int) this.getISelect().getSelectedIndex();
+                 return pilihanValue[pos] + "";
+            default:
+                return "";
+        }
+    }
+    
+    private int findIndex(String content, Object[] list) {
+        for (int i = 0; i < list.length; i++) {
+            String ct = "" + i;
+            if (ct.equals(content)) {
+                return i;
+            }
+        }
+        return -1; // Return -1 if no match found
+    }
+    
     public void setValue(String value) {
         switch (jenis) {
             case "text":

@@ -38,10 +38,10 @@ public class PanelKriteria extends javax.swing.JPanel {
      */
     public PanelKriteria() {
         this.fDef = new String[][]{
-            {"Kode", "id_kriteria", "text"},
-            {"Nama Prov", "nama_kriteria", "text"},
-            {"Sifat", "sifat_kriteria", "text"},
-            {"Satuan", "satuan_kriteria", "text"}
+            {"ID Kriteria", "id_kriteria", "text", ""},
+            {"Nama Kriteria", "nama_kriteria", "text", ""},
+            {"Sifat", "sifat_kriteria", "select", "Benefit"},
+            {"Satuan", "satuan_kriteria", "text", ""}
         };
         initComponents();
         fnPerbaruiTabel();
@@ -95,10 +95,14 @@ public class PanelKriteria extends javax.swing.JPanel {
     private void decorateWindow() {
     PanelEditData editorPane = new PanelEditData();
     inputList = editorPane.fnBuatForm(fDef);
+    inputList.get(2).initPilihan(new String[]{"Benefit", "Biaya"}, new String[]{"Benefit", "Biaya"});
     editorPane.listenAction(new ModelExternalListener<String>() {
         public void listen(String action) {
            if (action.equals("close")) { fnCloseEditPanel(); }
-           if (action.equals("add")) { fnAksiUpdateData(); }
+           if (action.equals("add")) { fnAksiInsertData(); }
+           if (action.equals("delete")) { fnAksiHapusData(); }
+           if (action.equals("reset")) { fnAksiResetData(); }
+           if (action.equals("update")) { fnAksiUpdateData(); }
         }
     });
     editPanel = editorPane;
@@ -152,10 +156,27 @@ public class PanelKriteria extends javax.swing.JPanel {
     }
     
     
+    private void fnAksiInsertData() {
+        for (ModelInputAbstrak inp : inputList) {
+            System.out.println("Tolong Lakukan Query INSERT Value : " + inp.getValue());
+        }
+    }
     
     private void fnAksiUpdateData() {
         for (ModelInputAbstrak inp : inputList) {
-            System.out.println("Tolong Lakukan Query INSERT Value : " + inp.getValue());
+            System.out.println("Tolong Lakukan Query UPDATE Value : " + inp.getValue());
+        }
+    }
+    
+    private void fnAksiHapusData() {
+        for (ModelInputAbstrak inp : inputList) {
+            System.out.println("Tolong Lakukan Query DELETE Value : " + inp.getValue());
+        }
+    }
+    
+    private void fnAksiResetData() {
+        for (ModelInputAbstrak inp : inputList) {
+            inp.setValue("");
         }
     }
     
@@ -163,7 +184,7 @@ public class PanelKriteria extends javax.swing.JPanel {
        int ti = tbl.getSelectedRow();
        for (int i = 0; i < inputList.size() ; i++) {
            inputList.get(i).setValue((String) model.getValueAt(ti, i+1));
-       }       
+       }
     }
    
     
