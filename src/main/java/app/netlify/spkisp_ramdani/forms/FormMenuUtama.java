@@ -12,6 +12,7 @@ import app.netlify.spkisp_ramdani.panels.PanelKriteria;
 import app.netlify.spkisp_ramdani.panels.PanelLaporan;
 import app.netlify.spkisp_ramdani.panels.PanelMenu;
 import app.netlify.spkisp_ramdani.panels.PanelProsesData;
+import app.netlify.spkisp_ramdani.panels.PanelProvider;
 import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
 import aurelienribon.slidinglayout.SLAnimator;
@@ -451,6 +452,7 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 UtilsStatic.LOGGER.info("Tes Call " + param);
                 if (param.equals("Alternatif")) { fnGantiMenu(new PanelAlternatif()); }
                 else if (param.equals("Beranda")) { fnGantiMenu(new PanelBeranda()); }
+                else if (param.equals("Provider")) { fnGantiMenu(new PanelProvider()); }
                 else if (param.equals("Kriteria")) { fnGantiMenu(new PanelKriteria()); }
                 else if (param.equals("Proses Data")) { fnGantiMenu(new PanelProsesData()); }
                 else if (param.equals("Laporan")) {  fnGantiMenu(new PanelLaporan()); }

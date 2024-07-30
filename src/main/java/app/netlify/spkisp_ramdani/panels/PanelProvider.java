@@ -29,10 +29,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author iramd
  */
-public class PanelKriteria extends javax.swing.JPanel {
+public class PanelProvider extends javax.swing.JPanel {
     String[][] fDef;
-    String fTableName = "kriteria";
-    String fPK = "id_kriteria";
+    String fTableName = "provider";
+    String fPK = "id_provider";
     
     String tblUrutan = "ASC";
     String tblCari = "";
@@ -43,12 +43,10 @@ public class PanelKriteria extends javax.swing.JPanel {
     /**
      * Creates new form PanelKriteria
      */
-    public PanelKriteria() {
+    public PanelProvider() {
         this.fDef = new String[][]{
-            {"ID Kriteria", "id_kriteria", "text", ""},
-            {"Nama Kriteria", "nama_kriteria", "text", ""},
-            {"Jenis", "jenis_kriteria", "select", "Benefit"},
-            {"Satuan", "satuan_kriteria", "text", ""}
+            {"ID Provider", "id_provider", "text", ""},
+            {"Nama Provider", "nama_provider", "text", ""}
         };
         initComponents();
         fnPerbaruiTabel();
@@ -105,8 +103,8 @@ public class PanelKriteria extends javax.swing.JPanel {
                 obj[0] = iconLogo;
                 obj[1] = rs.getString(1);
                 obj[2] = rs.getString(2);
-                obj[3] = rs.getString(3);
-                obj[4] = rs.getString(4);
+//                obj[3] = rs.getString(3);
+//                obj[4] = rs.getString(4);
                 model.addRow(obj);
 //                System.out.println();
             }
@@ -124,7 +122,7 @@ public class PanelKriteria extends javax.swing.JPanel {
     private void decorateWindow() {
     PanelEditData editorPane = new PanelEditData();
     inputList = editorPane.fnBuatForm(fDef);
-    inputList.get(2).initPilihan(new String[]{"Benefit", "Biaya"}, new String[]{"Benefit", "Biaya"});
+//    inputList.get(2).initPilihan(new String[]{"Benefit", "Biaya"}, new String[]{"Benefit", "Biaya"});
     editorPane.listenAction(new ModelExternalListener<String>() {
         public void listen(String action) {
            if (action.equals("close")) { fnCloseEditPanel(); }
@@ -145,7 +143,7 @@ public class PanelKriteria extends javax.swing.JPanel {
 //        SLAnimator.start();
         sLPanel2.setTweenManager(SLAnimator.createTweenManager());
         sLPanel2.initialize(mainCfg);
-        PanelKriteria self = this;
+        PanelProvider self = this;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                  jPanel1.removeAll();
@@ -355,13 +353,13 @@ public class PanelKriteria extends javax.swing.JPanel {
 
         tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "", "ID", "Nama Kriteria", "Sifat", "Satuan"
+                "", "ID", "Nama Provider"
             }
         ));
         tbl.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -404,7 +402,6 @@ public class PanelKriteria extends javax.swing.JPanel {
 
         bUrutan.setText("^");
         bUrutan.setMinimumSize(new java.awt.Dimension(11, 22));
-        bUrutan.setPreferredSize(new java.awt.Dimension(22, 22));
         bUrutan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bUrutanActionPerformed(evt);
