@@ -86,6 +86,7 @@ public class PanelEditData extends javax.swing.JPanel {
 
         kButton7.setText("X");
         kButton7.setkHoverEndColor(new java.awt.Color(255, 51, 153));
+        kButton7.setkHoverStartColor(new java.awt.Color(255, 153, 153));
         kButton7.setkStartColor(new java.awt.Color(255, 102, 102));
         kButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,7 +156,6 @@ public class PanelEditData extends javax.swing.JPanel {
 
     private void kButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton3ActionPerformed
             // TODO add your handling code here:
-            UtilsStatic.pushNotification(new ModelNotifikasi("Menghapus.." + Math.random(), "delete", 1000));
             broadcastAction("delete");
     }//GEN-LAST:event_kButton3ActionPerformed
 

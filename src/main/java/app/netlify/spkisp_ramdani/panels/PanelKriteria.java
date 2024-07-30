@@ -7,6 +7,7 @@ package app.netlify.spkisp_ramdani.panels;
 import app.netlify.spkisp_ramdani.models.ModelExternalListener;
 import app.netlify.spkisp_ramdani.models.ModelInputAbstrak;
 import app.netlify.spkisp_ramdani.models.ModelMenuPage;
+import app.netlify.spkisp_ramdani.models.ModelNotifikasi;
 import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
 import app.netlify.spkisp_ramdani.utils.UtilsKoneksi;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
@@ -40,12 +41,13 @@ public class PanelKriteria extends javax.swing.JPanel {
         this.fDef = new String[][]{
             {"ID Kriteria", "id_kriteria", "text", ""},
             {"Nama Kriteria", "nama_kriteria", "text", ""},
-            {"Sifat", "sifat_kriteria", "select", "Benefit"},
+            {"Jenis", "jenis_kriteria", "select", "Benefit"},
             {"Satuan", "satuan_kriteria", "text", ""}
         };
         initComponents();
         fnPerbaruiTabel();
         decorateWindow();
+        fnInitOpsi();
     }
     
     UtilsGlobal spkUtil = new UtilsGlobal();
@@ -90,6 +92,7 @@ public class PanelKriteria extends javax.swing.JPanel {
         tbl.setModel(model);
         spkUtil.fnKembalikanInfoKolom(tbl, infoKolom);
         tbl.setDefaultEditor(Object.class, null);
+        tbl.clearSelection();
     }
     
     private void decorateWindow() {
@@ -157,20 +160,55 @@ public class PanelKriteria extends javax.swing.JPanel {
     
     
     private void fnAksiInsertData() {
-        for (ModelInputAbstrak inp : inputList) {
-            System.out.println("Tolong Lakukan Query INSERT Value : " + inp.getValue());
+        String fInsert = "";
+        String fValue = "";
+        for (String[] fElm : fDef) {
+            if (!fInsert.equals("")) { fInsert += ","; }
+            if (!fElm[1].equals("id_kriteria")) { fInsert += fElm[1]; }
         }
+        for (ModelInputAbstrak inp : inputList) {
+            if (!fValue.equals("")) { fValue += ","; }
+            if (!inp.field.equals("id_kriteria")) {
+                fValue += "'" + inp.getValueId() + "'";
+            }
+            System.out.println("Tolong Lakukan Query INSERT Value : " + inp.getValueId());
+        }
+        String sql = "INSERT INTO kriteria ("+fInsert+") VALUES ("+fValue+")";
+        UtilsStatic.LOGGER.info("Menginsert " + sql);
+        UtilsStatic.connUtil.sqlUpdate(sql, null);
+        UtilsStatic.pushNotification(new ModelNotifikasi("Data Baru Tersimpan", "save", 1000));
+        fnPerbaruiTabel();
     }
     
     private void fnAksiUpdateData() {
+        String fUpd = "";
+        String fWhere = "";
         for (ModelInputAbstrak inp : inputList) {
+            if (!inp.field.equals("id_kriteria")) {
+                if (!fUpd.equals("")) { fUpd += ","; }
+                fUpd += inp.field + "=" + "'" + inp.getValueId() + "'";
+            }
+            else {
+                fWhere += inp.field + "=" + inp.getValueId();
+            }
             System.out.println("Tolong Lakukan Query UPDATE Value : " + inp.getValue());
         }
+        String sql = "UPDATE kriteria SET "+fUpd+" WHERE "+fWhere;
+        UtilsStatic.LOGGER.info(sql);
+        UtilsStatic.connUtil.sqlUpdate(sql, null);
+        UtilsStatic.pushNotification(new ModelNotifikasi("Data " + fWhere + " telah diperbarui", "update", 1000));
+        fnPerbaruiTabel();
     }
     
     private void fnAksiHapusData() {
         for (ModelInputAbstrak inp : inputList) {
-            System.out.println("Tolong Lakukan Query DELETE Value : " + inp.getValue());
+            if (inp.field.equals("id_kriteria")) {
+                String sql = "DELETE FROM kriteria WHERE id_kriteria = '" + inp.getValueId() + "'";
+                UtilsStatic.LOGGER.info("Menghapus " + sql);
+                UtilsStatic.connUtil.sqlUpdate(sql, null);
+                UtilsStatic.pushNotification(new ModelNotifikasi("Data "+inp.getValue()+" Terhapus", "delete", 1000));
+                fnPerbaruiTabel();
+            }
         }
     }
     
@@ -182,8 +220,11 @@ public class PanelKriteria extends javax.swing.JPanel {
     
     private void fnUpdateFormValue() {
        int ti = tbl.getSelectedRow();
-       for (int i = 0; i < inputList.size() ; i++) {
-           inputList.get(i).setValue((String) model.getValueAt(ti, i+1));
+       if (ti != -1) {
+           for (int i = 0; i < inputList.size() ; i++) {
+                inputList.get(i).setValue((String) model.getValueAt(ti, i+1));
+           }
+           fnOpenEditPanel();
        }
     }
    
@@ -201,6 +242,19 @@ public class PanelKriteria extends javax.swing.JPanel {
              .setCallback(new SLKeyframe.Callback() {@Override public void done() {
                  UtilsStatic.LOGGER.info("Finish Open");
               }})).play();
+    }
+       
+    private void fnInitOpsi() {
+        String[] opsiUrut = new String[fDef.length + 1];
+        int j = 0;
+        for (int i = 0; i < fDef.length; i++) {
+            String[] fElm = fDef[i];
+            opsiUrut[i] = fElm[0];
+            j = i;
+        }
+        opsiUrut[j+1] = "(Tidak Urut)";
+        iPilihUrut.setModel(new javax.swing.DefaultComboBoxModel<>(opsiUrut));
+        iPilihUrut.setSelectedIndex(j+1);
     }
 
     /**
@@ -220,7 +274,13 @@ public class PanelKriteria extends javax.swing.JPanel {
         kGradientPanel1 = new com.k33ptoo.components.KGradientPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        iPilihUrut = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        iPencarian = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -273,7 +333,55 @@ public class PanelKriteria extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        kGradientPanel1.add(jButton1, java.awt.BorderLayout.PAGE_START);
+
+        iPilihUrut.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel2.setText("Urut");
+
+        iPencarian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iPencarianActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Menaik");
+
+        jButton3.setText("Cari");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(iPilihUrut, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addComponent(iPencarian, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(iPilihUrut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(iPencarian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap())
+        );
+
+        kGradientPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
         sLPanel2.add(kGradientPanel1);
         kGradientPanel1.setBounds(10, 10, 550, 520);
@@ -311,21 +419,31 @@ public class PanelKriteria extends javax.swing.JPanel {
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
         // TODO add your handling code here:
         fnUpdateFormValue();
-        fnOpenEditPanel();
     }//GEN-LAST:event_tblMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        fnOpenEditPanel();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void iPencarianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iPencarianActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_iPencarianActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.k33ptoo.utils.ComponentMoverUtil componentMoverUtil1;
+    private javax.swing.JTextField iPencarian;
+    private javax.swing.JComboBox<String> iPilihUrut;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;

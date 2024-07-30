@@ -62,13 +62,12 @@ public class UtilsKoneksi {
         }
     }
     
-    public void sqlQuery(String qry, ModelExternalListener<ResultSet> fnRs) {
+    public void sqlUpdate(String qry, ModelExternalListener<Integer> fnRs) {
         try {
             PreparedStatement ps = connRef.prepareStatement(qry);
-//            ps.setString(1, "dede");
-            ResultSet rs = ps.executeQuery();
-            rs.getMetaData().getColumnCount();
-            fnRs.listen(rs);
+            int i = ps.executeUpdate();
+//            rs.getMetaData().getColumnCount();
+            if (fnRs != null) { fnRs.listen(i); }
         }
         catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
