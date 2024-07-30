@@ -98,7 +98,7 @@ public class PanelMenu extends javax.swing.JPanel {
         iAlternatif.setText("Ikon");
         pAlternatif.add(iAlternatif, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
-        bAlternatif.setText("Alternatif");
+        bAlternatif.setText("Provider");
         bAlternatif.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         bAlternatif.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         bAlternatif.addActionListener(new java.awt.event.ActionListener() {
@@ -236,7 +236,7 @@ public class PanelMenu extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(603, Short.MAX_VALUE))
+                .addContainerGap(678, Short.MAX_VALUE))
         );
 
         add(jPanel1);

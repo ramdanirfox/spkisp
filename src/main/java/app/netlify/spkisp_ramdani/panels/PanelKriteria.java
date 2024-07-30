@@ -31,6 +31,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PanelKriteria extends javax.swing.JPanel {
     String[][] fDef;
+    String tblUrutan = "ASC";
+    String tblCari = "";
+    
     ArrayList<ModelInputAbstrak> inputList;
     PanelEditData editPanel;
     private DefaultTableModel model;
@@ -69,8 +72,28 @@ public class PanelKriteria extends javax.swing.JPanel {
         javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
         int[][] infoKolom = spkUtil.fnDapatkanInfoKolom(tbl);
         
+        String fWhere = "";
+        String fOrder = "";
+        if (!iPencarian.getText().equals("")) {
+            fWhere += " WHERE ";
+            String fCmp = "";
+            for (String[] fElm: fDef) {
+                if (!fCmp.equals("")) { fCmp += " OR ";}
+                fCmp += fElm[1] + " like " + " '%"+iPencarian.getText()+"%' ";
+            }
+            fWhere += fCmp;
+        }
+        if (!iPilihUrut.getSelectedItem().equals("(Tidak Urut)")) {
+            bUrutan.setEnabled(true);
+            fOrder += " ORDER BY " + fnGetValueByName(iPilihUrut.getSelectedItem() + "", 1) + " " + tblUrutan + " ";
+        }
+        else {
+            bUrutan.setEnabled(false);
+        }
         try {
-            PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement("SELECT * FROM kriteria");
+            String sql = "SELECT * FROM kriteria " + fWhere + fOrder;
+            UtilsStatic.LOGGER.info("mengambil "+sql);
+            PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
 //            ps.setString(1, "dede");
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsm = rs.getMetaData();
@@ -171,7 +194,6 @@ public class PanelKriteria extends javax.swing.JPanel {
             if (!inp.field.equals("id_kriteria")) {
                 fValue += "'" + inp.getValueId() + "'";
             }
-            System.out.println("Tolong Lakukan Query INSERT Value : " + inp.getValueId());
         }
         String sql = "INSERT INTO kriteria ("+fInsert+") VALUES ("+fValue+")";
         UtilsStatic.LOGGER.info("Menginsert " + sql);
@@ -191,7 +213,6 @@ public class PanelKriteria extends javax.swing.JPanel {
             else {
                 fWhere += inp.field + "=" + inp.getValueId();
             }
-            System.out.println("Tolong Lakukan Query UPDATE Value : " + inp.getValue());
         }
         String sql = "UPDATE kriteria SET "+fUpd+" WHERE "+fWhere;
         UtilsStatic.LOGGER.info(sql);
@@ -256,6 +277,27 @@ public class PanelKriteria extends javax.swing.JPanel {
         iPilihUrut.setModel(new javax.swing.DefaultComboBoxModel<>(opsiUrut));
         iPilihUrut.setSelectedIndex(j+1);
     }
+    
+    private String fnGetValueByName(String field,int fIdx) {
+        for (int i = 0; i < fDef.length; i++) {
+            String[] fElm = fDef[i];
+            if (fElm[0].equals(field)) {
+                return fElm[fIdx];
+            }
+        }
+        return "";
+    }
+    
+    private void fnUpdateTblOrder() {
+        if (bUrutan.getText().equals("Menaik")) {
+            bUrutan.setText("Menurun");
+            tblUrutan = "DESC";
+        }
+        else {
+            bUrutan.setText("Menaik");
+            tblUrutan = "ASC";
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -279,8 +321,9 @@ public class PanelKriteria extends javax.swing.JPanel {
         iPilihUrut = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         iPencarian = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        bUrutan = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -334,7 +377,12 @@ public class PanelKriteria extends javax.swing.JPanel {
             }
         });
 
-        iPilihUrut.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        iPilihUrut.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Tidak Urut)", "Item 2", "Item 3", "Item 4" }));
+        iPilihUrut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iPilihUrutActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Urut");
 
@@ -344,9 +392,16 @@ public class PanelKriteria extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("Menaik");
+        bUrutan.setText("Menaik");
+        bUrutan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bUrutanActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Cari");
+        jButton3.setText("x");
+
+        jLabel3.setText("Cari");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -358,8 +413,10 @@ public class PanelKriteria extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(iPilihUrut, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addComponent(bUrutan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(iPencarian, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
@@ -376,8 +433,9 @@ public class PanelKriteria extends javax.swing.JPanel {
                     .addComponent(iPilihUrut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(iPencarian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(bUrutan)
+                    .addComponent(jButton3)
+                    .addComponent(jLabel3))
                 .addContainerGap())
         );
 
@@ -428,19 +486,32 @@ public class PanelKriteria extends javax.swing.JPanel {
 
     private void iPencarianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iPencarianActionPerformed
         // TODO add your handling code here:
+        fnPerbaruiTabel();
     }//GEN-LAST:event_iPencarianActionPerformed
+
+    private void iPilihUrutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iPilihUrutActionPerformed
+        // TODO add your handling code here:
+        this.fnPerbaruiTabel();
+    }//GEN-LAST:event_iPilihUrutActionPerformed
+
+    private void bUrutanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUrutanActionPerformed
+        // TODO add your handling code here:
+        fnUpdateTblOrder();
+        fnPerbaruiTabel();
+    }//GEN-LAST:event_bUrutanActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bUrutan;
     private com.k33ptoo.utils.ComponentMoverUtil componentMoverUtil1;
     private javax.swing.JTextField iPencarian;
     private javax.swing.JComboBox<String> iPilihUrut;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
