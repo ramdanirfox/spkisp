@@ -365,7 +365,7 @@ public class PanelKriteria extends javax.swing.JPanel {
             }
         ));
         tbl.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        tbl.setPreferredSize(new java.awt.Dimension(305, 200));
+        tbl.setPreferredSize(null);
         tbl.setRowHeight(40);
         tbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -404,7 +404,6 @@ public class PanelKriteria extends javax.swing.JPanel {
 
         bUrutan.setText("^");
         bUrutan.setMinimumSize(new java.awt.Dimension(11, 22));
-        bUrutan.setPreferredSize(new java.awt.Dimension(22, 22));
         bUrutan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bUrutanActionPerformed(evt);

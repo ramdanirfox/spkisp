@@ -216,8 +216,8 @@ public class PanelEditData extends javax.swing.JPanel {
            iLabel.setPreferredSize(new java.awt.Dimension(180, 20));
            kGradientPanel2.add(iLabel);
            
-           if (pCfg_1[2].equals("text") || pCfg_1[2].equals("autocomplete")) {
-               ModelInputAbstrak i1 = new ModelInputAbstrak("text", pCfg_1[0], pCfg_1[1], pCfg_1[0]);
+           if (pCfg_1[2].equals("autocomplete")) {
+               ModelInputAbstrak i1 = new ModelInputAbstrak("autocomplete", pCfg_1[0], pCfg_1[1], pCfg_1[0]);
                kGradientPanel2.add(i1.getIText());
                listInput.add(i1);
            }
@@ -227,7 +227,7 @@ public class PanelEditData extends javax.swing.JPanel {
                listInput.add(i1);
            }
            else {
-               ModelInputAbstrak i1 = new ModelInputAbstrak("text", "(Tidak Diketahui)", "_", "_");
+               ModelInputAbstrak i1 = new ModelInputAbstrak("text", pCfg_1[0], pCfg_1[1], pCfg_1[0]);
                kGradientPanel2.add(i1.getIText());
                listInput.add(i1);
            }

@@ -149,7 +149,7 @@ public class ModelInputAbstrak {
     
     private int findIndex(String content, Object[] list) {
         for (int i = 0; i < list.length; i++) {
-            String ct = "" + i;
+            String ct = "" + list[i];
             if (ct.equals(content)) {
                 return i;
             }

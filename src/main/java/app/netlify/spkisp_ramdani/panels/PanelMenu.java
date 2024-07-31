@@ -68,6 +68,9 @@ public class PanelMenu extends javax.swing.JPanel {
         pBobot = new javax.swing.JPanel();
         iBobot = new javax.swing.JLabel();
         bBobot = new com.k33ptoo.components.KButton();
+        pNilaiKriteria = new javax.swing.JPanel();
+        iNilaiKriteria = new javax.swing.JLabel();
+        bNilaiKriteria = new com.k33ptoo.components.KButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -148,7 +151,7 @@ public class PanelMenu extends javax.swing.JPanel {
         pProsesData.add(bProsesData, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pProsesData);
-        pProsesData.setBounds(30, 490, 200, 80);
+        pProsesData.setBounds(30, 560, 200, 80);
 
         pLaporan.setBackground(new java.awt.Color(204, 255, 153));
         pLaporan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -167,7 +170,7 @@ public class PanelMenu extends javax.swing.JPanel {
         pLaporan.add(bLaporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pLaporan);
-        pLaporan.setBounds(30, 580, 200, 80);
+        pLaporan.setBounds(30, 650, 200, 80);
 
         pProfil.setBackground(new java.awt.Color(204, 255, 153));
         pProfil.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -186,7 +189,7 @@ public class PanelMenu extends javax.swing.JPanel {
         pProfil.add(bProfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
 
         sLPanel1.add(pProfil);
-        pProfil.setBounds(30, 670, 200, 80);
+        pProfil.setBounds(30, 740, 200, 80);
 
         pHamburger.setBackground(new java.awt.Color(204, 255, 153));
 
@@ -266,6 +269,20 @@ public class PanelMenu extends javax.swing.JPanel {
 
         sLPanel1.add(pBobot);
         pBobot.setBounds(30, 320, 200, 60);
+
+        pNilaiKriteria.setBackground(new java.awt.Color(204, 255, 153));
+        pNilaiKriteria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        iNilaiKriteria.setText("Ikon");
+        pNilaiKriteria.add(iNilaiKriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
+        bNilaiKriteria.setText("Nilai Kriteria");
+        bNilaiKriteria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bNilaiKriteria.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        pNilaiKriteria.add(bNilaiKriteria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 40));
+
+        sLPanel1.add(pNilaiKriteria);
+        pNilaiKriteria.setBounds(30, 490, 200, 60);
 
         add(sLPanel1);
 
@@ -356,7 +373,8 @@ public class PanelMenu extends javax.swing.JPanel {
         fnRegisterMenu(new ModelMenuPage(bAlternatif.getText(), "Provider", "images/icons8-plus-64.png", bAlternatif, pAlternatif, iAlternatif));
         fnRegisterMenu(new ModelMenuPage(bAlternatif.getText(), "Paket Layanan", "images/icons8-plus-64.png", bAlternatif1, pAlternatif1, iAlternatif1));
         fnRegisterMenu(new ModelMenuPage(bKriteria.getText(), "Kriteria", "images/icons8-about-64.png", bKriteria, pKriteria, iKriteria));
-        fnRegisterMenu(new ModelMenuPage(bKriteria.getText(), "Bobot", "images/icons8-about-64.png", bBobot, pBobot, iBobot));
+        fnRegisterMenu(new ModelMenuPage(bNilaiKriteria.getText(), "Nilai Kriteria", "images/icons8-about-64.png", bNilaiKriteria, pNilaiKriteria, iNilaiKriteria));
+        fnRegisterMenu(new ModelMenuPage(bBobot.getText(), "Bobot", "images/icons8-about-64.png", bBobot, pBobot, iBobot));
         fnRegisterMenu(new ModelMenuPage(bProsesData.getText(), "Proses Data", "images/icons8-refresh-blue.png", bProsesData, pProsesData, iProsesData));
         fnRegisterMenu(new ModelMenuPage(bLaporan.getText(), "Laporan", "images/icons8-document-60.png", bLaporan, pLaporan, iLaporan));
         fnRegisterMenu(new ModelMenuPage(bProfil.getText(), "Profil", "images/icons8-about-64.png", bProfil, pProfil, iProfil));
@@ -496,6 +514,7 @@ public class PanelMenu extends javax.swing.JPanel {
     private com.k33ptoo.components.KButton bBobot;
     private com.k33ptoo.components.KButton bKriteria;
     private com.k33ptoo.components.KButton bLaporan;
+    private com.k33ptoo.components.KButton bNilaiKriteria;
     private com.k33ptoo.components.KButton bProfil;
     private com.k33ptoo.components.KButton bProsesData;
     private javax.swing.JLabel iAlternatif;
@@ -505,6 +524,7 @@ public class PanelMenu extends javax.swing.JPanel {
     private javax.swing.JLabel iHamburger;
     private javax.swing.JLabel iKriteria;
     private javax.swing.JLabel iLaporan;
+    private javax.swing.JLabel iNilaiKriteria;
     private javax.swing.JLabel iProfil;
     private javax.swing.JLabel iProsesData;
     private javax.swing.JLabel iSetelan;
@@ -517,6 +537,7 @@ public class PanelMenu extends javax.swing.JPanel {
     private javax.swing.JPanel pHamburger;
     private javax.swing.JPanel pKriteria;
     private javax.swing.JPanel pLaporan;
+    private javax.swing.JPanel pNilaiKriteria;
     private javax.swing.JPanel pProfil;
     private javax.swing.JPanel pProsesData;
     private aurelienribon.slidinglayout.SLPanel sLPanel1;

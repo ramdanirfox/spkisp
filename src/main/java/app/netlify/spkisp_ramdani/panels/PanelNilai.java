@@ -20,6 +20,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,13 +31,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author iramd
  */
-public class PanelProvider extends javax.swing.JPanel {
+public class PanelNilai extends javax.swing.JPanel {
     String[][] fDef;
-    String fTableName = "provider";
-    String fPK = "id_provider";
+    String fTableName = "nilai";
+    String fPK = "id_nilai";
     
     String tblUrutan = "ASC";
     String tblCari = "";
+    
+    ArrayList<String[]> kolomExt = new ArrayList<>();
     
     ArrayList<ModelInputAbstrak> inputList;
     PanelEditData editPanel;
@@ -43,21 +47,19 @@ public class PanelProvider extends javax.swing.JPanel {
     /**
      * Creates new form PanelKriteria
      */
-    public PanelProvider() {
-        this.fDef = new String[][]{
-            {"ID Provider", "id_provider", "text", ""},
-            {"Nama Provider", "nama_provider", "text", ""}
-        };
+    public PanelNilai() {
+        this.fDef = new String[][]{};
         initComponents();
-        fnPerbaruiTabel();
+        fnPerbaruiFDef();
         decorateWindow();
         fnInitOpsi();
+        fnPerbaruiTabel();
     }
     
     UtilsGlobal spkUtil = new UtilsGlobal();
     private void fnPerbaruiTabel() {
         UtilsStatic.LOGGER.info("tabel" +  spkUtil.fnDapatkanKolom(tbl.getModel()).toString());
-        model = new DefaultTableModel(new Object[][] {}, spkUtil.fnDapatkanKolom(tbl.getModel())) {
+        model = new DefaultTableModel(new Object[][] {}, fnKolomEkstensi(new String[]{""})) {
             @Override
             public Class getColumnClass(int column)
             {
@@ -92,17 +94,22 @@ public class PanelProvider extends javax.swing.JPanel {
             bUrutan.setEnabled(false);
         }
         try {
-            String sql = "SELECT * FROM "+fTableName+" " + fWhere + fOrder;
+            String sql = "SELECT * FROM v_"+fTableName+" " + fWhere + fOrder;
             UtilsStatic.LOGGER.info("mengambil "+sql);
             PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
 //            ps.setString(1, "dede");
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsm = rs.getMetaData();
             while (rs.next()) {
-                Object[] obj = new Object[5];
+                Object[] obj = new Object[rsm.getColumnCount()+1];
                 obj[0] = iconLogo;
-                obj[1] = rs.getString(1);
-                obj[2] = rs.getString(2);
+                for (int i = 0; i < fDef.length; i++) {
+                    obj[i+1] = rs.getString(i+1);
+//                    tbl.getColumnModel().getColumn(i+1).setMinWidth(300);
+//                    tbl.getColumnModel().getColumn(i+1).setPreferredWidth(300);
+                }
+//                obj[1] = rs.getString(1);
+//                obj[2] = rs.getString(2);
 //                obj[3] = rs.getString(3);
 //                obj[4] = rs.getString(4);
                 model.addRow(obj);
@@ -114,15 +121,21 @@ public class PanelProvider extends javax.swing.JPanel {
         }
         
         tbl.setModel(model);
-        spkUtil.fnKembalikanInfoKolom(tbl, infoKolom);
+        tbl.getColumnModel().getColumn(0).setPreferredWidth(100);
+        for (int i = 0; i < fDef.length; i++) {
+                    tbl.getColumnModel().getColumn(i).setMinWidth(50);
+                    tbl.getColumnModel().getColumn(i).sizeWidthToFit();
+        }
+//        spkUtil.fnKembalikanInfoKolom(tbl, infoKolom);
         tbl.setDefaultEditor(Object.class, null);
         tbl.clearSelection();
+        tbl.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     }
     
     private void decorateWindow() {
     PanelEditData editorPane = new PanelEditData();
     inputList = editorPane.fnBuatForm(fDef);
-//    inputList.get(2).initPilihan(new String[]{"Benefit", "Biaya"}, new String[]{"Benefit", "Biaya"});
+    inputList.get(2).initPilihan(new String[]{"Benefit", "Biaya"}, new String[]{"Benefit", "Biaya"});
     editorPane.listenAction(new ModelExternalListener<String>() {
         public void listen(String action) {
            if (action.equals("close")) { fnCloseEditPanel(); }
@@ -143,7 +156,7 @@ public class PanelProvider extends javax.swing.JPanel {
 //        SLAnimator.start();
         sLPanel2.setTweenManager(SLAnimator.createTweenManager());
         sLPanel2.initialize(mainCfg);
-        PanelProvider self = this;
+        PanelNilai self = this;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                  jPanel1.removeAll();
@@ -306,6 +319,44 @@ public class PanelProvider extends javax.swing.JPanel {
             tblUrutan = "ASC";
         }
     }
+    
+    private void fnPerbaruiFDef() {
+        UtilsStatic.connUtil.sqlUpdate("DROP VIEW IF EXISTS v_nilai", null);
+        String viewSql = "CREATE VIEW v_nilai AS SELECT nama_paket AS id_paket, ";
+        String ksql = "";
+        try {
+            String sql = "SELECT id_kriteria, nama_kriteria FROM kriteria";
+            UtilsStatic.LOGGER.info("mengambil "+sql);
+            kolomExt = new ArrayList<>();
+            PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsm = rs.getMetaData();
+            kolomExt.add(new String[]{"Paket", "id_paket", "text", "0"});
+            while (rs.next()) {
+              String namaKrt = rs.getString("nama_kriteria");
+              String idKrt = "C" + rs.getString("id_kriteria");
+              kolomExt.add(new String[]{namaKrt, idKrt, "text", "0"});
+              if (!ksql.equals("")) { ksql += " , "; }
+              ksql += "MAX(CASE WHEN nama_kriteria='"+namaKrt+"' THEN nilai ELSE null END) AS "+idKrt;
+            }
+            viewSql += ksql + " FROM nilai INNER JOIN paket p ON p.id_paket = nilai.id_paket INNER JOIN kriteria k ON k.id_kriteria = nilai.id_kriteria group by p.id_paket";
+            UtilsStatic.LOGGER.info("viewnya " + viewSql);
+            UtilsStatic.connUtil.sqlUpdate(viewSql, null);
+            fDef = kolomExt.toArray(new String[0][0]);
+        }
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());   
+        }
+    }
+    
+    private Object[] fnKolomEkstensi(Object[] sebelum) {
+       ArrayList<Object> hasil = new ArrayList<>();
+       hasil.addAll(Arrays.asList(sebelum));
+       for (String[] fElm:fDef) {
+           hasil.add(fElm[0]);
+       }
+       return hasil.toArray();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -353,13 +404,13 @@ public class PanelProvider extends javax.swing.JPanel {
 
         tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "", "ID", "Nama Provider"
+                ""
             }
         ));
         tbl.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -373,7 +424,6 @@ public class PanelProvider extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tbl);
         if (tbl.getColumnModel().getColumnCount() > 0) {
             tbl.getColumnModel().getColumn(0).setMaxWidth(40);
-            tbl.getColumnModel().getColumn(1).setMaxWidth(40);
         }
 
         kGradientPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);

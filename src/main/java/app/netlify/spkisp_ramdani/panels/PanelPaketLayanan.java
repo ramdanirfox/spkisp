@@ -29,10 +29,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author iramd
  */
-public class PanelProvider extends javax.swing.JPanel {
+public class PanelPaketLayanan extends javax.swing.JPanel {
     String[][] fDef;
-    String fTableName = "provider";
-    String fPK = "id_provider";
+    String fTableName = "paket";
+    String fPK = "id_paket";
     
     String tblUrutan = "ASC";
     String tblCari = "";
@@ -43,10 +43,12 @@ public class PanelProvider extends javax.swing.JPanel {
     /**
      * Creates new form PanelKriteria
      */
-    public PanelProvider() {
+    public PanelPaketLayanan() {
         this.fDef = new String[][]{
-            {"ID Provider", "id_provider", "text", ""},
-            {"Nama Provider", "nama_provider", "text", ""}
+            {"ID", "id_paket", "text", ""},
+            {"Provider", "id_provider", "autocomplete", ""},
+            {"Nama Paket", "nama_paket", "text", ""},
+            {"Keterangan", "keterangan_paket", "text", ""}
         };
         initComponents();
         fnPerbaruiTabel();
@@ -75,6 +77,7 @@ public class PanelProvider extends javax.swing.JPanel {
         
         String fWhere = "";
         String fOrder = "";
+        // repl 
         if (!iPencarian.getText().equals("")) {
             fWhere += " WHERE ";
             String fCmp = "";
@@ -92,7 +95,7 @@ public class PanelProvider extends javax.swing.JPanel {
             bUrutan.setEnabled(false);
         }
         try {
-            String sql = "SELECT * FROM "+fTableName+" " + fWhere + fOrder;
+            String sql = "SELECT * FROM v_"+fTableName+" " + fWhere + fOrder;
             UtilsStatic.LOGGER.info("mengambil "+sql);
             PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
 //            ps.setString(1, "dede");
@@ -103,8 +106,8 @@ public class PanelProvider extends javax.swing.JPanel {
                 obj[0] = iconLogo;
                 obj[1] = rs.getString(1);
                 obj[2] = rs.getString(2);
-//                obj[3] = rs.getString(3);
-//                obj[4] = rs.getString(4);
+                obj[3] = rs.getString(3);
+                obj[4] = rs.getString(4);
                 model.addRow(obj);
 //                System.out.println();
             }
@@ -122,7 +125,7 @@ public class PanelProvider extends javax.swing.JPanel {
     private void decorateWindow() {
     PanelEditData editorPane = new PanelEditData();
     inputList = editorPane.fnBuatForm(fDef);
-//    inputList.get(2).initPilihan(new String[]{"Benefit", "Biaya"}, new String[]{"Benefit", "Biaya"});
+    fnInitOpsiInput();
     editorPane.listenAction(new ModelExternalListener<String>() {
         public void listen(String action) {
            if (action.equals("close")) { fnCloseEditPanel(); }
@@ -143,7 +146,7 @@ public class PanelProvider extends javax.swing.JPanel {
 //        SLAnimator.start();
         sLPanel2.setTweenManager(SLAnimator.createTweenManager());
         sLPanel2.initialize(mainCfg);
-        PanelProvider self = this;
+        PanelPaketLayanan self = this;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                  jPanel1.removeAll();
@@ -306,6 +309,24 @@ public class PanelProvider extends javax.swing.JPanel {
             tblUrutan = "ASC";
         }
     }
+    
+    private void fnInitOpsiInput() {
+        try {
+            PreparedStatement stmt = UtilsStatic.connUtil.connRef.prepareStatement("SELECT id_provider, nama_provider FROM provider");
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<String> id = new ArrayList<>();
+            ArrayList<String> label = new ArrayList<>();
+            while (rs.next()) {
+                id.add(rs.getString("id_provider"));
+                label.add(rs.getString("nama_provider"));
+            }
+            inputList.get(1).initPilihan(label.toArray(new String[id.size()]), id.toArray());
+            UtilsStatic.LOGGER.info("Daftar Pilihan " + label.toString());
+        }
+        catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, "Kesalahan SQL : " + err.getMessage());
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -351,15 +372,17 @@ public class PanelProvider extends javax.swing.JPanel {
         kGradientPanel1.setMinimumSize(new java.awt.Dimension(100, 100));
         kGradientPanel1.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
         tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "", "ID", "Nama Provider"
+                "", "ID", "Provider", "Nama Paket", "Keterangan"
             }
         ));
         tbl.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));

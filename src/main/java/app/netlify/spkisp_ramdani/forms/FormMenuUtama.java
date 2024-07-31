@@ -11,6 +11,8 @@ import app.netlify.spkisp_ramdani.panels.PanelBeranda;
 import app.netlify.spkisp_ramdani.panels.PanelKriteria;
 import app.netlify.spkisp_ramdani.panels.PanelLaporan;
 import app.netlify.spkisp_ramdani.panels.PanelMenu;
+import app.netlify.spkisp_ramdani.panels.PanelNilai;
+import app.netlify.spkisp_ramdani.panels.PanelPaketLayanan;
 import app.netlify.spkisp_ramdani.panels.PanelProsesData;
 import app.netlify.spkisp_ramdani.panels.PanelProvider;
 import app.netlify.spkisp_ramdani.utils.UtilsGlobal;
@@ -453,11 +455,13 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 if (param.equals("Alternatif")) { fnGantiMenu(new PanelAlternatif()); }
                 else if (param.equals("Beranda")) { fnGantiMenu(new PanelBeranda()); }
                 else if (param.equals("Provider")) { fnGantiMenu(new PanelProvider()); }
+                else if (param.equals("Paket Layanan")) { fnGantiMenu(new PanelPaketLayanan()); }
                 else if (param.equals("Kriteria")) { fnGantiMenu(new PanelKriteria()); }
+                else if (param.equals("Nilai Kriteria")) { fnGantiMenu(new PanelNilai()); }
                 else if (param.equals("Proses Data")) { fnGantiMenu(new PanelProsesData()); }
                 else if (param.equals("Laporan")) {  fnGantiMenu(new PanelLaporan()); }
                 else if (param.equals("Profil")) {  openNotificationPanel("Coba"); }
-                else if (param.equals("_menu")) {  closePanel(); }
+                else if (param.equals("_menu")) {  if (sLPanelState.equals("open")) {closePanel(); } else { openPanel(); } }
                 else  { UtilsStatic.LOGGER.info("Menu Tidak Diketahui : " + param); }
             }
         });

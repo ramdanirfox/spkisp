@@ -75,6 +75,9 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+              <Properties>
+                <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -92,9 +95,9 @@
                       <Table columnCount="5" rowCount="4">
                         <Column editable="true" title="" type="java.lang.Object"/>
                         <Column editable="true" title="ID" type="java.lang.Object"/>
-                        <Column editable="true" title="Nama Kriteria" type="java.lang.Object"/>
-                        <Column editable="true" title="Sifat" type="java.lang.Object"/>
-                        <Column editable="true" title="Satuan" type="java.lang.Object"/>
+                        <Column editable="true" title="Provider" type="java.lang.Object"/>
+                        <Column editable="true" title="Nama Paket" type="java.lang.Object"/>
+                        <Column editable="true" title="Keterangan" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
