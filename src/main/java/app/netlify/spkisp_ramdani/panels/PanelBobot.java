@@ -20,8 +20,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,15 +29,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author iramd
  */
-public class PanelNilai extends javax.swing.JPanel {
+public class PanelBobot extends javax.swing.JPanel {
     String[][] fDef;
-    String fTableName = "nilai";
-    String fPK = "id_paket";
+    String fTableName = "bobot";
+    String fPK = "id_bobot";
     
     String tblUrutan = "ASC";
     String tblCari = "";
-    
-    ArrayList<String[]> kolomExt = new ArrayList<>();
     
     ArrayList<ModelInputAbstrak> inputList;
     PanelEditData editPanel;
@@ -47,19 +43,22 @@ public class PanelNilai extends javax.swing.JPanel {
     /**
      * Creates new form PanelKriteria
      */
-    public PanelNilai() {
-        this.fDef = new String[][]{};
+    public PanelBobot() {
+        this.fDef = new String[][]{
+            {"ID", "id_bobot", "text", ""},
+            {"Kriteria", "id_kriteria", "autocomplete", ""},
+            {"Nilai Bobot", "nilai_bobot", "text", ""}
+        };
         initComponents();
-        fnPerbaruiFDef();
+        fnPerbaruiTabel();
         decorateWindow();
         fnInitOpsi();
-        fnPerbaruiTabel();
     }
     
     UtilsGlobal spkUtil = new UtilsGlobal();
     private void fnPerbaruiTabel() {
         UtilsStatic.LOGGER.info("tabel" +  spkUtil.fnDapatkanKolom(tbl.getModel()).toString());
-        model = new DefaultTableModel(new Object[][] {}, fnKolomEkstensi(new String[]{""})) {
+        model = new DefaultTableModel(new Object[][] {}, spkUtil.fnDapatkanKolom(tbl.getModel())) {
             @Override
             public Class getColumnClass(int column)
             {
@@ -101,17 +100,11 @@ public class PanelNilai extends javax.swing.JPanel {
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsm = rs.getMetaData();
             while (rs.next()) {
-                Object[] obj = new Object[rsm.getColumnCount()+1];
+                Object[] obj = new Object[5];
                 obj[0] = iconLogo;
-                for (int i = 0; i < fDef.length; i++) {
-                    obj[i+1] = rs.getString(i+1);
-//                    tbl.getColumnModel().getColumn(i+1).setMinWidth(300);
-//                    tbl.getColumnModel().getColumn(i+1).setPreferredWidth(300);
-                }
-//                obj[1] = rs.getString(1);
-//                obj[2] = rs.getString(2);
-//                obj[3] = rs.getString(3);
-//                obj[4] = rs.getString(4);
+                obj[1] = rs.getString(1);
+                obj[2] = rs.getString(2);
+                obj[3] = rs.getString(3);
                 model.addRow(obj);
 //                System.out.println();
             }
@@ -121,28 +114,23 @@ public class PanelNilai extends javax.swing.JPanel {
         }
         
         tbl.setModel(model);
-        tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
-        for (int i = 1; i < fDef.length; i++) {
-                    tbl.getColumnModel().getColumn(i+1).setMinWidth(fDef[i][0].length() * 8);
-//                    tbl.getColumnModel().getColumn(i).sizeWidthToFit();
-        }
-//        spkUtil.fnKembalikanInfoKolom(tbl, infoKolom);
+        spkUtil.fnKembalikanInfoKolom(tbl, infoKolom);
         tbl.setDefaultEditor(Object.class, null);
         tbl.clearSelection();
-        tbl.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     }
     
     private void decorateWindow() {
     PanelEditData editorPane = new PanelEditData();
     inputList = editorPane.fnBuatForm(fDef);
+//    inputList.get(2).initPilihan(new String[]{"Benefit", "Biaya"}, new String[]{"Benefit", "Biaya"});
     fnInitOpsiInput();
     editorPane.listenAction(new ModelExternalListener<String>() {
         public void listen(String action) {
            if (action.equals("close")) { fnCloseEditPanel(); }
-           if (action.equals("add")) { fnAksiUpsertData(); }
+           if (action.equals("add")) { fnAksiInsertData(); }
            if (action.equals("delete")) { fnAksiHapusData(); }
            if (action.equals("reset")) { fnAksiResetData(); }
-           if (action.equals("update")) { fnAksiUpsertData(); }
+           if (action.equals("update")) { fnAksiUpdateData(); }
         }
     });
     editPanel = editorPane;
@@ -156,7 +144,7 @@ public class PanelNilai extends javax.swing.JPanel {
 //        SLAnimator.start();
         sLPanel2.setTweenManager(SLAnimator.createTweenManager());
         sLPanel2.initialize(mainCfg);
-        PanelNilai self = this;
+        PanelBobot self = this;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                  jPanel1.removeAll();
@@ -184,6 +172,8 @@ public class PanelNilai extends javax.swing.JPanel {
         lUrut.setIcon(UtilsStatic.getResizedIcon("images/icons8-descending-sorting-48.png"));
         bUrutan.setText("");
         bUrutan.setIcon(UtilsStatic.getResizedIcon("images/icons8-up-48.png"));
+        bHapusPrasetel.setIcon(UtilsStatic.getResizedIcon("images/icons8-trash-48.png"));
+        bUbahPrasetel.setIcon(UtilsStatic.getResizedIcon("images/icons8-edit-64.png"));
     }
     
     private void fnCloseEditPanel() {
@@ -200,67 +190,43 @@ public class PanelNilai extends javax.swing.JPanel {
               }})).play();
     }
     
-    private void fnAksiUpsertData() {
-        for (ModelInputAbstrak inp : inputList) {
-            if (inp.field.equals(this.fPK)) {
-                String idPktValue = inp.getValueId();
-                String rs = UtilsStatic.connUtil.sqlQueryOne("SELECT COUNT(*) AS hasil FROM nilai WHERE id_paket="+idPktValue);
-                if (rs.equals("") || rs.equals("0")) {
-                    this.fnAksiInsertData();
-                }
-                else {
-                    this.fnAksiUpdateData();
-                }
-            }
-        }
-    }
     
     private void fnAksiInsertData() {
-        String fInsert = "id_paket,id_kriteria,nilai";
+        String fInsert = "";
         String fValue = "";
-        String idPktValue = "";
-        String idKrtValue = "";
-        String idPktText = "";
+        for (String[] fElm : fDef) {
+            if (!fInsert.equals("")) { fInsert += ","; }
+            if (!fElm[1].equals(this.fPK)) { fInsert += fElm[1]; }
+        }
         for (ModelInputAbstrak inp : inputList) {
             if (!fValue.equals("")) { fValue += ","; }
-            if (inp.field.equals(this.fPK)) {
-                idPktValue = inp.getValueId();
-                idPktText = inp.getValueText();
-            }
-            else {
-                idKrtValue = inp.field.replace("C", "");
-                fValue += "("+idPktValue+","+idKrtValue+"," + inp.getValueId() + ")";
+            if (!inp.field.equals(this.fPK)) {
+                fValue += "'" + inp.getValueId() + "'";
             }
         }
-        String sql = "INSERT INTO "+fTableName+" ("+fInsert+") VALUES "+fValue+"";
+        String sql = "INSERT INTO "+fTableName+" ("+fInsert+") VALUES ("+fValue+")";
         UtilsStatic.LOGGER.info("Menginsert " + sql);
         UtilsStatic.connUtil.sqlUpdate(sql, null);
-        UtilsStatic.pushNotification(new ModelNotifikasi("Data Nilai Paket "+idPktText+" Tersimpan", "save", 1000));
+        UtilsStatic.pushNotification(new ModelNotifikasi("Data Baru Tersimpan", "save", 1000));
         fnPerbaruiTabel();
     }
     
     private void fnAksiUpdateData() {
         String fUpd = "";
         String fWhere = "";
-        String idPktValue = "";
-        String idKrtValue = "";
-        String idPktText = "";
         for (ModelInputAbstrak inp : inputList) {
-            if (inp.field.equals(fPK)) {
-                idPktValue = inp.getValueId();
-                idPktText = inp.getValueText();
+            if (!inp.field.equals(fPK)) {
+                if (!fUpd.equals("")) { fUpd += ","; }
+                fUpd += inp.field + "=" + "'" + inp.getValueId() + "'";
             }
             else {
-                idKrtValue = inp.field.replace("C", "");
-                fUpd = "nilai="+inp.getValueId();
-                fWhere = " id_kriteria=" + idKrtValue + " AND id_paket=" + idPktValue;
-                String sql = "UPDATE "+fTableName+" SET "+fUpd+" WHERE "+fWhere;
-                UtilsStatic.LOGGER.info(sql);
-                UtilsStatic.connUtil.sqlUpdate(sql, null);
-            }            
+                fWhere += inp.field + "=" + inp.getValueId();
+            }
         }
-        
-        UtilsStatic.pushNotification(new ModelNotifikasi("Debugging Data " + fWhere + " telah diperbarui", "update", 1000));
+        String sql = "UPDATE "+fTableName+" SET "+fUpd+" WHERE "+fWhere;
+        UtilsStatic.LOGGER.info(sql);
+        UtilsStatic.connUtil.sqlUpdate(sql, null);
+        UtilsStatic.pushNotification(new ModelNotifikasi("Data " + fWhere + " telah diperbarui", "update", 1000));
         fnPerbaruiTabel();
     }
     
@@ -344,47 +310,9 @@ public class PanelNilai extends javax.swing.JPanel {
         }
     }
     
-    private void fnPerbaruiFDef() {
-        UtilsStatic.connUtil.sqlUpdate("DROP VIEW IF EXISTS v_nilai", null);
-        String viewSql = "CREATE VIEW v_nilai AS SELECT nama_paket AS id_paket, ";
-        String ksql = "";
-        try {
-            String sql = "SELECT id_kriteria, nama_kriteria FROM kriteria";
-            UtilsStatic.LOGGER.info("mengambil "+sql);
-            kolomExt = new ArrayList<>();
-            PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            ResultSetMetaData rsm = rs.getMetaData();
-            kolomExt.add(new String[]{"Paket", "id_paket", "autocomplete", ""});
-            while (rs.next()) {
-              String namaKrt = rs.getString("nama_kriteria");
-              String idKrt = "C" + rs.getString("id_kriteria");
-              kolomExt.add(new String[]{namaKrt, idKrt, "text", "0"});
-              if (!ksql.equals("")) { ksql += " , "; }
-              ksql += "MAX(CASE WHEN nama_kriteria='"+namaKrt+"' THEN nilai ELSE null END) AS "+idKrt;
-            }
-            viewSql += ksql + " FROM nilai INNER JOIN paket p ON p.id_paket = nilai.id_paket INNER JOIN kriteria k ON k.id_kriteria = nilai.id_kriteria group by p.id_paket";
-            UtilsStatic.LOGGER.info("viewnya " + viewSql);
-            UtilsStatic.connUtil.sqlUpdate(viewSql, null);
-            fDef = kolomExt.toArray(new String[0][0]);
-        }
-        catch(SQLException e) {
-            JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());   
-        }
-    }
-    
-    private Object[] fnKolomEkstensi(Object[] sebelum) {
-       ArrayList<Object> hasil = new ArrayList<>();
-       hasil.addAll(Arrays.asList(sebelum));
-       for (String[] fElm:fDef) {
-           hasil.add(fElm[0]);
-       }
-       return hasil.toArray();
-    }
-    
     private void fnInitOpsiInput() {
         try {
-            PreparedStatement stmt = UtilsStatic.connUtil.connRef.prepareStatement("SELECT id_paket AS id, nama_paket AS nama FROM paket");
+            PreparedStatement stmt = UtilsStatic.connUtil.connRef.prepareStatement("SELECT id_kriteria AS id, nama_kriteria AS nama FROM kriteria");
             ResultSet rs = stmt.executeQuery();
             ArrayList<String> id = new ArrayList<>();
             ArrayList<String> label = new ArrayList<>();
@@ -392,7 +320,7 @@ public class PanelNilai extends javax.swing.JPanel {
                 id.add(rs.getString("id"));
                 label.add(rs.getString("nama"));
             }
-            inputList.get(0).initPilihan(label.toArray(new String[id.size()]), id.toArray());
+            inputList.get(1).initPilihan(label.toArray(new String[id.size()]), id.toArray());
             UtilsStatic.LOGGER.info("Daftar Pilihan " + label.toString());
         }
         catch (SQLException err) {
@@ -425,6 +353,10 @@ public class PanelNilai extends javax.swing.JPanel {
         bUrutan = new javax.swing.JButton();
         bClear = new javax.swing.JButton();
         lCari = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        bHapusPrasetel = new javax.swing.JButton();
+        bUbahPrasetel = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -446,17 +378,16 @@ public class PanelNilai extends javax.swing.JPanel {
 
         tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                ""
+                "", "ID", "Kriteria", "Bobot"
             }
         ));
         tbl.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        tbl.setPreferredSize(null);
         tbl.setRowHeight(40);
         tbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -466,6 +397,7 @@ public class PanelNilai extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tbl);
         if (tbl.getColumnModel().getColumnCount() > 0) {
             tbl.getColumnModel().getColumn(0).setMaxWidth(40);
+            tbl.getColumnModel().getColumn(1).setMaxWidth(40);
         }
 
         kGradientPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -510,31 +442,66 @@ public class PanelNilai extends javax.swing.JPanel {
 
         lCari.setText("Cari");
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prasetel 1", "(Buat Baru)" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Prasetel");
+
+        bHapusPrasetel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        bHapusPrasetel.setText("Hapus Prasetel");
+
+        bUbahPrasetel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        bUbahPrasetel.setText("Ubah Nama Prasetel");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(lUrut)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(iPilihUrut, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bUrutan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-                .addComponent(lCari)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(iPencarian, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lUrut)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(iPilihUrut, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bUrutan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                        .addComponent(lCari)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(iPencarian, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bUbahPrasetel, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bHapusPrasetel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(bHapusPrasetel)
+                    .addComponent(bUbahPrasetel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(iPilihUrut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -543,7 +510,7 @@ public class PanelNilai extends javax.swing.JPanel {
                     .addComponent(bUrutan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lCari))
-                .addContainerGap())
+                .addGap(6, 6, 6))
         );
 
         kGradientPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
@@ -613,16 +580,26 @@ public class PanelNilai extends javax.swing.JPanel {
         fnPerbaruiTabel();
     }//GEN-LAST:event_bClearActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        String nama = JOptionPane.showInputDialog("Masukkan Nama Prasetel :");
+        UtilsStatic.LOGGER.info(nama);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bClear;
+    private javax.swing.JButton bHapusPrasetel;
+    private javax.swing.JButton bUbahPrasetel;
     private javax.swing.JButton bUrutan;
     private com.k33ptoo.utils.ComponentMoverUtil componentMoverUtil1;
     private javax.swing.JTextField iPencarian;
     private javax.swing.JComboBox<String> iPilihUrut;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

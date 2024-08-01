@@ -33,9 +33,7 @@ public class PanelBeranda extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane(panelKriteria);
+        jScrollPane1 = new javax.swing.JScrollPane(panelStatistik);
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -58,19 +56,6 @@ public class PanelBeranda extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         add(jLabel3, gridBagConstraints);
-
-        jLabel4.setText("Silakan Mengisi Kriteria dan Bobot");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        add(jLabel4, gridBagConstraints);
-
-        jLabel5.setText("Terlebih Dahulu");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        add(jLabel5, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -83,7 +68,7 @@ public class PanelBeranda extends javax.swing.JPanel {
         add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    JPanel panelKriteria = new PanelKriteria();
+    JPanel panelStatistik = new PanelStatistik();
     private void prepareScroll() {
 //        jScrollPane1.add(panelKriteria);
           jScrollPane1.setSize(50, 400);
@@ -92,8 +77,6 @@ public class PanelBeranda extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

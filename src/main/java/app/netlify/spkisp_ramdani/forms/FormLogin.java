@@ -58,7 +58,7 @@ public class FormLogin extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -204,6 +204,7 @@ public class FormLogin extends javax.swing.JFrame {
     private void kButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton1ActionPerformed
         // TODO add your handling code here:
         new FormMenuUtama().setVisible(true);
+        dispose();
         UtilsStatic.populateDockablePanels();
     }//GEN-LAST:event_kButton1ActionPerformed
 

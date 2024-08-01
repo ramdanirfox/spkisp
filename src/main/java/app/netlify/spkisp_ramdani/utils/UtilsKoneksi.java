@@ -73,4 +73,21 @@ public class UtilsKoneksi {
             JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
         }
     }
+    
+    public String sqlQueryOne(String query) {
+       try {
+           String sql = query;
+           PreparedStatement st;
+           st = (PreparedStatement) connRef.prepareStatement(sql);
+            ResultSet res = st.executeQuery();
+            Object[] obj = new Object[1];
+            while(res.next()){
+                obj[0] = res.getString("hasil");
+            }
+            return obj[0] == null ? "" : (String)obj[0];
+        }catch(SQLException err){
+            JOptionPane.showMessageDialog(null, err.getMessage());
+            return "";
+        }
+    }
 }

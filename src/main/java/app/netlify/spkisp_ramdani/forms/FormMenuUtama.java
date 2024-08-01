@@ -8,6 +8,7 @@ import app.netlify.spkisp_ramdani.models.ModelExternalListener;
 import app.netlify.spkisp_ramdani.models.ModelNotifikasi;
 import app.netlify.spkisp_ramdani.panels.PanelAlternatif;
 import app.netlify.spkisp_ramdani.panels.PanelBeranda;
+import app.netlify.spkisp_ramdani.panels.PanelBobot;
 import app.netlify.spkisp_ramdani.panels.PanelKriteria;
 import app.netlify.spkisp_ramdani.panels.PanelLaporan;
 import app.netlify.spkisp_ramdani.panels.PanelMenu;
@@ -74,8 +75,13 @@ public class FormMenuUtama extends javax.swing.JFrame {
         cNotif = new javax.swing.JLabel();
         iNotif = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistem Pendukung Keputusan ISP");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -367,6 +373,11 @@ public class FormMenuUtama extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2MouseClicked
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        (new FormLogin()).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
     /**
      * @param args the command line arguments
      */
@@ -458,10 +469,11 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 else if (param.equals("Paket Layanan")) { fnGantiMenu(new PanelPaketLayanan()); }
                 else if (param.equals("Kriteria")) { fnGantiMenu(new PanelKriteria()); }
                 else if (param.equals("Nilai Kriteria")) { fnGantiMenu(new PanelNilai()); }
+                else if (param.equals("Bobot")) { fnGantiMenu(new PanelBobot()); }
                 else if (param.equals("Proses Data")) { fnGantiMenu(new PanelProsesData()); }
                 else if (param.equals("Laporan")) {  fnGantiMenu(new PanelLaporan()); }
                 else if (param.equals("Profil")) {  openNotificationPanel("Coba"); }
-                else if (param.equals("_menu")) {  if (sLPanelState.equals("open")) {closePanel(); } else { openPanel(); } }
+                else if (param.equals("_menu")) {  if (sLPanelState.contains("open") ) {closePanel(); } else { openPanel(); } }
                 else  { UtilsStatic.LOGGER.info("Menu Tidak Diketahui : " + param); }
             }
         });
