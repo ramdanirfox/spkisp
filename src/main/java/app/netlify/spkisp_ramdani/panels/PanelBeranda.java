@@ -34,6 +34,7 @@ public class PanelBeranda extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane(panelStatistik);
+        jLabel4 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -51,10 +52,10 @@ public class PanelBeranda extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(jLabel2, gridBagConstraints);
 
-        jLabel3.setText("Metode Simple Additive Weighting");
+        jLabel3.setText(".");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         add(jLabel3, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -63,9 +64,15 @@ public class PanelBeranda extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 84;
         gridBagConstraints.ipady = 84;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
-        gridBagConstraints.weightx = 0.2;
-        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         add(jScrollPane1, gridBagConstraints);
+
+        jLabel4.setText("Metode Simple Additive Weighting");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        add(jLabel4, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     JPanel panelStatistik = new PanelStatistik();
@@ -77,6 +84,7 @@ public class PanelBeranda extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

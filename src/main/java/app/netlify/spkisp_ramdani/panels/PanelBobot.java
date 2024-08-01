@@ -36,6 +36,9 @@ public class PanelBobot extends javax.swing.JPanel {
     
     String tblUrutan = "ASC";
     String tblCari = "";
+    ModelInputAbstrak iPrasetel;
+    boolean prasetelListenUpdate = false;
+    String prasetelSebelum = "(Buat Baru)";
     
     ArrayList<ModelInputAbstrak> inputList;
     PanelEditData editPanel;
@@ -50,7 +53,6 @@ public class PanelBobot extends javax.swing.JPanel {
             {"Nilai Bobot", "nilai_bobot", "text", ""}
         };
         initComponents();
-        fnPerbaruiTabel();
         decorateWindow();
         fnInitOpsi();
     }
@@ -77,7 +79,7 @@ public class PanelBobot extends javax.swing.JPanel {
         String fWhere = "";
         String fOrder = "";
         if (!iPencarian.getText().equals("")) {
-            fWhere += " WHERE ";
+            fWhere += " WHERE (";
             String fCmp = "";
             for (String[] fElm: fDef) {
                 if (!fCmp.equals("")) { fCmp += " OR ";}
@@ -85,6 +87,14 @@ public class PanelBobot extends javax.swing.JPanel {
             }
             fWhere += fCmp;
         }
+        
+        if (fWhere.equals("")) {
+            fWhere += "WHERE id_prasetel=" + iPrasetel.getValueId();
+        }
+        else {
+            fWhere += " ) AND id_prasetel=" + iPrasetel.getValueId();
+        }
+        
         if (!iPilihUrut.getSelectedItem().equals("(Tidak Urut)")) {
             bUrutan.setEnabled(true);
             fOrder += " ORDER BY " + fnGetValueByName(iPilihUrut.getSelectedItem() + "", 1) + " " + tblUrutan + " ";
@@ -124,6 +134,7 @@ public class PanelBobot extends javax.swing.JPanel {
     inputList = editorPane.fnBuatForm(fDef);
 //    inputList.get(2).initPilihan(new String[]{"Benefit", "Biaya"}, new String[]{"Benefit", "Biaya"});
     fnInitOpsiInput();
+    
     editorPane.listenAction(new ModelExternalListener<String>() {
         public void listen(String action) {
            if (action.equals("close")) { fnCloseEditPanel(); }
@@ -198,12 +209,14 @@ public class PanelBobot extends javax.swing.JPanel {
             if (!fInsert.equals("")) { fInsert += ","; }
             if (!fElm[1].equals(this.fPK)) { fInsert += fElm[1]; }
         }
+        fInsert += ",id_prasetel";
         for (ModelInputAbstrak inp : inputList) {
             if (!fValue.equals("")) { fValue += ","; }
             if (!inp.field.equals(this.fPK)) {
                 fValue += "'" + inp.getValueId() + "'";
             }
         }
+        fValue += ","+iPrasetel.getValueId();
         String sql = "INSERT INTO "+fTableName+" ("+fInsert+") VALUES ("+fValue+")";
         UtilsStatic.LOGGER.info("Menginsert " + sql);
         UtilsStatic.connUtil.sqlUpdate(sql, null);
@@ -310,7 +323,53 @@ public class PanelBobot extends javax.swing.JPanel {
         }
     }
     
+    private void fnUpdatePrasetel() {
+        String namaPrasetel = JOptionPane.showInputDialog(null, "Ubah Nama Prasetel \""+iPrasetel.getValueText()+"\" Menjadi :", "Ubah Nama Prasetel", JOptionPane.QUESTION_MESSAGE);
+        if (namaPrasetel != null && !namaPrasetel.equals("")) {
+            UtilsStatic.LOGGER.info("Merubah " + iPrasetel.getValueText());
+            UtilsStatic.connUtil.sqlUpdate("UPDATE bobot_prasetel SET nama_prasetel='"+namaPrasetel+"' WHERE id_prasetel="+iPrasetel.getValueId(), null);
+            fnPrasetelBerubah();
+        }
+    }
+    
+    private void fnHapusPrasetel() {
+        int hapusKonfirm = JOptionPane.showConfirmDialog(null, "Yakin Hapus Prasetel "+iPrasetel.getValueText(), "Hapus Prasetel", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (hapusKonfirm == JOptionPane.YES_OPTION) {
+            UtilsStatic.LOGGER.info("Menghapus");
+            UtilsStatic.connUtil.sqlUpdate("DELETE FROM bobot WHERE id_prasetel="+iPrasetel.getValueId(), null);
+            UtilsStatic.connUtil.sqlUpdate("DELETE FROM bobot_prasetel WHERE id_prasetel="+iPrasetel.getValueId(), null);
+            iPrasetel.getISelect().setSelectedIndex(0);
+            fnPrasetelBerubah();
+        }
+    }
+    
+    private void fnPrasetelBerubah() {
+        if ("(Buat Baru)".equals(iPrasetel.getValueText())) {
+            String namaPrasetel = JOptionPane.showInputDialog("Masukkan Nama Prasetel :");
+            if (namaPrasetel != null && !namaPrasetel.equals("")) {
+                UtilsStatic.LOGGER.info(namaPrasetel);    
+                UtilsStatic.connUtil.sqlUpdate("UPDATE bobot_prasetel SET digunakan=0 WHERE digunakan=1", null);
+                String sql = "INSERT INTO bobot_prasetel (nama_prasetel, digunakan) VALUES ('"+namaPrasetel+"',1)";
+                UtilsStatic.LOGGER.info("Awal Insert Prasetel" + sql);
+                UtilsStatic.connUtil.sqlUpdate(sql, null);
+                fnInitOpsiInput();
+            }
+            else {
+                iPrasetel.setValue(prasetelSebelum);
+            }
+        }
+        else {
+            UtilsStatic.connUtil.sqlUpdate("UPDATE bobot_prasetel SET digunakan=0 WHERE digunakan=1", null);
+            UtilsStatic.LOGGER.info("Prasetel Berubah " + iPrasetel.getValueId() + iPrasetel.getValueText());    
+            UtilsStatic.connUtil.sqlUpdate("UPDATE bobot_prasetel SET digunakan=1 WHERE id_prasetel="+iPrasetel.getValueId(), null);
+            fnInitOpsiInput();
+        }
+        prasetelSebelum = iPrasetel.getValueText();
+    }
+    
     private void fnInitOpsiInput() {
+        iPrasetel = new ModelInputAbstrak("select", "", "id_prasetel", "Prasetel");
+        iPrasetel.input = comboPrasetel;
         try {
             PreparedStatement stmt = UtilsStatic.connUtil.connRef.prepareStatement("SELECT id_kriteria AS id, nama_kriteria AS nama FROM kriteria");
             ResultSet rs = stmt.executeQuery();
@@ -324,8 +383,47 @@ public class PanelBobot extends javax.swing.JPanel {
             UtilsStatic.LOGGER.info("Daftar Pilihan " + label.toString());
         }
         catch (SQLException err) {
-            JOptionPane.showMessageDialog(null, "Kesalahan SQL : " + err.getMessage());
+            JOptionPane.showMessageDialog(null, "Kesalahan SQL 1: " + err.getMessage());
         }
+        
+        try {
+            PreparedStatement stmt = UtilsStatic.connUtil.connRef.prepareStatement("SELECT id_prasetel AS id, nama_prasetel AS nama FROM bobot_prasetel");
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<String> id = new ArrayList<>();
+            ArrayList<String> label = new ArrayList<>();
+            while (rs.next()) {
+                id.add(rs.getString("id"));
+                label.add(rs.getString("nama"));
+            }
+            id.add("0");
+            label.add("(Buat Baru)");
+            UtilsStatic.LOGGER.info("Daftar Pilihan " + label.toString());
+            iPrasetel.initPilihan(label.toArray(new String[id.size()]), id.toArray());
+            
+            String nm = UtilsStatic.connUtil.sqlQueryOne("SELECT nama_prasetel AS hasil FROM bobot_prasetel WHERE digunakan = 1");
+            if (nm.equals("")) {
+                String namaPrasetel = JOptionPane.showInputDialog(null, "Buat Prasetel Bobot Baru Dengan Nama : ", "Prasetel Bobot Baru", JOptionPane.QUESTION_MESSAGE);
+                if (namaPrasetel != null && !namaPrasetel.equals("")) {
+                    String sql = "INSERT INTO bobot_prasetel (nama_prasetel, digunakan) VALUES ('"+namaPrasetel+"',1)";
+                    UtilsStatic.LOGGER.info("Awal Insert Prasetel" + sql);   
+                    UtilsStatic.connUtil.sqlUpdate(sql, null);
+                    fnInitOpsiInput();
+                }
+                else {
+                    fnInitOpsiInput();
+                }
+            }
+            else {
+                prasetelListenUpdate = false;
+                iPrasetel.setValue(nm);
+                prasetelListenUpdate = true;
+                UtilsStatic.LOGGER.info("Terpilih Prasetel " + iPrasetel.getValueId() + iPrasetel.getValueText());
+            }
+        }
+        catch(SQLException err) {
+            JOptionPane.showMessageDialog(null, "Kesalahan SQL 2: " + err.getMessage());
+        }
+        fnPerbaruiTabel();
     }
 
     /**
@@ -353,7 +451,7 @@ public class PanelBobot extends javax.swing.JPanel {
         bUrutan = new javax.swing.JButton();
         bClear = new javax.swing.JButton();
         lCari = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboPrasetel = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         bHapusPrasetel = new javax.swing.JButton();
         bUbahPrasetel = new javax.swing.JButton();
@@ -442,10 +540,10 @@ public class PanelBobot extends javax.swing.JPanel {
 
         lCari.setText("Cari");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prasetel 1", "(Buat Baru)" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        comboPrasetel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prasetel 1", "(Buat Baru)" }));
+        comboPrasetel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                comboPrasetelActionPerformed(evt);
             }
         });
 
@@ -453,9 +551,19 @@ public class PanelBobot extends javax.swing.JPanel {
 
         bHapusPrasetel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         bHapusPrasetel.setText("Hapus Prasetel");
+        bHapusPrasetel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bHapusPrasetelActionPerformed(evt);
+            }
+        });
 
         bUbahPrasetel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         bUbahPrasetel.setText("Ubah Nama Prasetel");
+        bUbahPrasetel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bUbahPrasetelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -467,7 +575,7 @@ public class PanelBobot extends javax.swing.JPanel {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(comboPrasetel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lUrut)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -497,7 +605,7 @@ public class PanelBobot extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(8, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboPrasetel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(bHapusPrasetel)
                     .addComponent(bUbahPrasetel))
@@ -580,11 +688,22 @@ public class PanelBobot extends javax.swing.JPanel {
         fnPerbaruiTabel();
     }//GEN-LAST:event_bClearActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void comboPrasetelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPrasetelActionPerformed
         // TODO add your handling code here:
-        String nama = JOptionPane.showInputDialog("Masukkan Nama Prasetel :");
-        UtilsStatic.LOGGER.info(nama);
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        if (prasetelListenUpdate) {
+            fnPrasetelBerubah();
+        }
+    }//GEN-LAST:event_comboPrasetelActionPerformed
+
+    private void bUbahPrasetelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUbahPrasetelActionPerformed
+        // TODO add your handling code here:
+        fnUpdatePrasetel();
+    }//GEN-LAST:event_bUbahPrasetelActionPerformed
+
+    private void bHapusPrasetelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bHapusPrasetelActionPerformed
+        // TODO add your handling code here:
+        fnHapusPrasetel();
+    }//GEN-LAST:event_bHapusPrasetelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -592,11 +711,11 @@ public class PanelBobot extends javax.swing.JPanel {
     private javax.swing.JButton bHapusPrasetel;
     private javax.swing.JButton bUbahPrasetel;
     private javax.swing.JButton bUrutan;
+    private javax.swing.JComboBox<String> comboPrasetel;
     private com.k33ptoo.utils.ComponentMoverUtil componentMoverUtil1;
     private javax.swing.JTextField iPencarian;
     private javax.swing.JComboBox<String> iPilihUrut;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
