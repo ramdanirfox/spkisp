@@ -33,6 +33,10 @@ public class UtilsAutoCompleteExtension {
         cities = opsi;
     }
 //------------------------------------------------------------------------------
+    public void perbaruiDaftarPilihan(String[] opsi) {
+        cities = opsi;
+    }
+    
     public void initiateSearch(String lookFor){
         Vector<String> matches = new Vector<>();
         lookFor = lookFor.toLowerCase();

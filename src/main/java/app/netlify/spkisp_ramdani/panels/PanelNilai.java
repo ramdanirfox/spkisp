@@ -122,9 +122,9 @@ public class PanelNilai extends javax.swing.JPanel {
         
         tbl.setModel(model);
         tbl.getColumnModel().getColumn(0).setPreferredWidth(30);
-        for (int i = 1; i < fDef.length; i++) {
-                    tbl.getColumnModel().getColumn(i+1).setMinWidth(fDef[i][0].length() * 8);
-//                    tbl.getColumnModel().getColumn(i).sizeWidthToFit();
+        tbl.getColumnModel().getColumn(1).setPreferredWidth(160);
+        for (int i = 2; i < fDef.length; i++) {
+                        tbl.getColumnModel().getColumn(i+1).setPreferredWidth(fDef[i][0].length() * 8);
         }
 //        spkUtil.fnKembalikanInfoKolom(tbl, infoKolom);
         tbl.setDefaultEditor(Object.class, null);
@@ -260,7 +260,7 @@ public class PanelNilai extends javax.swing.JPanel {
             }            
         }
         
-        UtilsStatic.pushNotification(new ModelNotifikasi("Debugging Data " + fWhere + " telah diperbarui", "update", 1000));
+        UtilsStatic.pushNotification(new ModelNotifikasi("Data " + fWhere + " telah diperbarui", "update", 1000));
         fnPerbaruiTabel();
     }
     
@@ -349,7 +349,7 @@ public class PanelNilai extends javax.swing.JPanel {
         String viewSql = "CREATE VIEW v_nilai AS SELECT nama_paket AS id_paket, ";
         String ksql = "";
         try {
-            String sql = "SELECT id_kriteria, nama_kriteria FROM kriteria";
+            String sql = "SELECT id_kriteria, nama_kriteria, satuan_kriteria FROM kriteria";
             UtilsStatic.LOGGER.info("mengambil "+sql);
             kolomExt = new ArrayList<>();
             PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
@@ -357,13 +357,18 @@ public class PanelNilai extends javax.swing.JPanel {
             ResultSetMetaData rsm = rs.getMetaData();
             kolomExt.add(new String[]{"Paket", "id_paket", "autocomplete", ""});
             while (rs.next()) {
+              String satuanKrt = rs.getString("satuan_kriteria");
               String namaKrt = rs.getString("nama_kriteria");
               String idKrt = "C" + rs.getString("id_kriteria");
-              kolomExt.add(new String[]{namaKrt, idKrt, "text", "0"});
+              kolomExt.add(new String[]{namaKrt + " (" + satuanKrt + ")", idKrt, "text", "0"});
               if (!ksql.equals("")) { ksql += " , "; }
               ksql += "MAX(CASE WHEN nama_kriteria='"+namaKrt+"' THEN nilai ELSE null END) AS "+idKrt;
             }
-            viewSql += ksql + " FROM nilai INNER JOIN paket p ON p.id_paket = nilai.id_paket INNER JOIN kriteria k ON k.id_kriteria = nilai.id_kriteria group by p.id_paket";
+            ksql += " ,p2.nama_provider AS nama_provider_alt, " +
+                              " p.keterangan_paket AS keterangan_paket_alt," +
+                              " nilai.id_paket AS id_paket_no," +
+                              " p2.id_provider AS id_provider_no ";
+            viewSql += ksql + " FROM nilai INNER JOIN paket p ON p.id_paket = nilai.id_paket INNER JOIN kriteria k ON k.id_kriteria = nilai.id_kriteria INNER JOIN provider p2 ON p2.id_provider = p.id_provider group by p.id_paket";
             UtilsStatic.LOGGER.info("viewnya " + viewSql);
             UtilsStatic.connUtil.sqlUpdate(viewSql, null);
             fDef = kolomExt.toArray(new String[0][0]);

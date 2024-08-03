@@ -4,23 +4,22 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ispspk"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<queryString>
-		<![CDATA[SELECT * FroM akun]]>
+		<![CDATA[SELECT 'Caca'  AS nama_provider, 'Mawar' AS nama_paket;]]>
 	</queryString>
-	<field name="nama_provider" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="nama"/>
-		<property name="com.jaspersoft.studio.field.label" value="nama"/>
+	<field name="nama_provider" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="nama_provider"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_provider"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="akun"/>
 		<property name="net.sf.jasperreports.sql.field.column.name" value="nama"/>
 		<property name="net.sf.jasperreports.sql.field.column.label" value="nama"/>
 	</field>
-	<field name="nama_paket" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="sandi"/>
-		<property name="com.jaspersoft.studio.field.label" value="sandi"/>
+	<field name="nama_paket" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="nama_paket"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_paket"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="akun"/>
 		<property name="net.sf.jasperreports.sql.field.column.name" value="sandi"/>
 		<property name="net.sf.jasperreports.sql.field.column.label" value="sandi"/>
 	</field>
-	<field name="nama" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

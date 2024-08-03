@@ -45,6 +45,7 @@ public class ModelInputAbstrak {
             case "autocomplete":
                 this.input = new JTextField();
                 this.getIText().setPreferredSize(new java.awt.Dimension(180, 20));
+                this.acInstance = new UtilsAutoCompleteExtension(this.getIText(), new String[]{});
                 break;
             case "select":
                 this.input = new JComboBox<>();
@@ -60,7 +61,7 @@ public class ModelInputAbstrak {
          this.pilihanId = ppilihanId;
          switch (jenis) {
             case "autocomplete":
-                this.acInstance = new UtilsAutoCompleteExtension(this.getIText(), this.pilihanValue);
+                this.acInstance.perbaruiDaftarPilihan(this.pilihanValue);
                 this.getIText().setText(this.initialValue);
                 break;
             case "select":
