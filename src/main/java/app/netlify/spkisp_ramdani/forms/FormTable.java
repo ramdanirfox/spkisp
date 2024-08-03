@@ -134,7 +134,7 @@ public class FormTable extends javax.swing.JFrame {
         }
         
         try{
-            File reprt = new File(spkUtil.getReport("Blank_A4.jrxml"));
+            File reprt = new File(spkUtil.getReport("LaporanRanking.jrxml"));
             jasperDesign = JRXmlLoader.load(reprt);
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
             jasperPrint = JasperFillManager.fillReport(jasperReport,param,spkKoneksi.connRef);

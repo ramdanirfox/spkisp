@@ -4,12 +4,30 @@
  */
 package app.netlify.spkisp_ramdani.panels;
 
+import app.netlify.spkisp_ramdani.utils.UtilsStatic;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author iramd
  */
 public class PanelProsesData extends javax.swing.JPanel {
-
+    String[][] fDef; 
+    
+    private DefaultTableModel modelNilai;
+    private DefaultTableModel modelNormal;
+    private DefaultTableModel modelBobot;
+    
+    ArrayList<String[]> kolomExt = new ArrayList<>();
+    
     /**
      * Creates new form PanelProsesData
      */
@@ -28,21 +46,23 @@ public class PanelProsesData extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblNilai = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        tblRank = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblNormal = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        bMulaiProses = new com.k33ptoo.components.KButton();
 
         setLayout(new java.awt.GridBagLayout());
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(600, 80));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblNilai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -53,16 +73,16 @@ public class PanelProsesData extends javax.swing.JPanel {
                 "", "ID Alternatif", "Provider", "C1", "C2", "C3", "C4"
             }
         ));
-        jTable1.setIntercellSpacing(new java.awt.Dimension(5, 5));
-        jTable1.setMinimumSize(new java.awt.Dimension(600, 80));
-        jTable1.setName(""); // NOI18N
-        jTable1.setPreferredSize(new java.awt.Dimension(600, 80));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(40);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(90);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
+        tblNilai.setIntercellSpacing(new java.awt.Dimension(5, 5));
+        tblNilai.setMinimumSize(new java.awt.Dimension(600, 80));
+        tblNilai.setName(""); // NOI18N
+        tblNilai.setPreferredSize(new java.awt.Dimension(600, 200));
+        jScrollPane1.setViewportView(tblNilai);
+        if (tblNilai.getColumnModel().getColumnCount() > 0) {
+            tblNilai.getColumnModel().getColumn(0).setMaxWidth(40);
+            tblNilai.getColumnModel().getColumn(1).setMaxWidth(90);
+            tblNilai.getColumnModel().getColumn(4).setResizable(false);
+            tblNilai.getColumnModel().getColumn(5).setResizable(false);
         }
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -80,7 +100,7 @@ public class PanelProsesData extends javax.swing.JPanel {
 
         jScrollPane2.setPreferredSize(new java.awt.Dimension(600, 80));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblRank.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -91,15 +111,15 @@ public class PanelProsesData extends javax.swing.JPanel {
                 "", "ID Alternatif", "Provider", "C1", "C2", "C3", "C4"
             }
         ));
-        jTable2.setIntercellSpacing(new java.awt.Dimension(5, 5));
-        jTable2.setMinimumSize(new java.awt.Dimension(600, 80));
-        jTable2.setPreferredSize(new java.awt.Dimension(600, 80));
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setMaxWidth(40);
-            jTable2.getColumnModel().getColumn(1).setMaxWidth(90);
-            jTable2.getColumnModel().getColumn(4).setResizable(false);
-            jTable2.getColumnModel().getColumn(5).setResizable(false);
+        tblRank.setIntercellSpacing(new java.awt.Dimension(5, 5));
+        tblRank.setMinimumSize(new java.awt.Dimension(600, 80));
+        tblRank.setPreferredSize(null);
+        jScrollPane2.setViewportView(tblRank);
+        if (tblRank.getColumnModel().getColumnCount() > 0) {
+            tblRank.getColumnModel().getColumn(0).setMaxWidth(40);
+            tblRank.getColumnModel().getColumn(1).setMaxWidth(90);
+            tblRank.getColumnModel().getColumn(4).setResizable(false);
+            tblRank.getColumnModel().getColumn(5).setResizable(false);
         }
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -110,13 +130,7 @@ public class PanelProsesData extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.5;
         add(jScrollPane2, gridBagConstraints);
 
-        jLabel2.setText("Matriks Kriteria");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        add(jLabel2, gridBagConstraints);
-
-        jLabel3.setText("Pengalian Bobot");
+        jLabel3.setText("Pengalian Bobot dan Ranking");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -124,7 +138,7 @@ public class PanelProsesData extends javax.swing.JPanel {
 
         jScrollPane3.setPreferredSize(new java.awt.Dimension(600, 80));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblNormal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -135,15 +149,15 @@ public class PanelProsesData extends javax.swing.JPanel {
                 "", "ID Alternatif", "Provider", "C1", "C2", "C3", "C4"
             }
         ));
-        jTable3.setIntercellSpacing(new java.awt.Dimension(5, 5));
-        jTable3.setMinimumSize(new java.awt.Dimension(600, 80));
-        jTable3.setPreferredSize(new java.awt.Dimension(600, 80));
-        jScrollPane3.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setMaxWidth(40);
-            jTable3.getColumnModel().getColumn(1).setMaxWidth(90);
-            jTable3.getColumnModel().getColumn(4).setResizable(false);
-            jTable3.getColumnModel().getColumn(5).setResizable(false);
+        tblNormal.setIntercellSpacing(new java.awt.Dimension(5, 5));
+        tblNormal.setMinimumSize(new java.awt.Dimension(600, 80));
+        tblNormal.setPreferredSize(new java.awt.Dimension(600, 200));
+        jScrollPane3.setViewportView(tblNormal);
+        if (tblNormal.getColumnModel().getColumnCount() > 0) {
+            tblNormal.getColumnModel().getColumn(0).setMaxWidth(40);
+            tblNormal.getColumnModel().getColumn(1).setMaxWidth(90);
+            tblNormal.getColumnModel().getColumn(4).setResizable(false);
+            tblNormal.getColumnModel().getColumn(5).setResizable(false);
         }
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -154,18 +168,168 @@ public class PanelProsesData extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.5;
         add(jScrollPane3, gridBagConstraints);
+
+        jLabel2.setText("Matriks Nilai Kriteria");
+
+        bMulaiProses.setText("Mulai");
+        bMulaiProses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bMulaiProsesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(250, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                .addComponent(bMulaiProses, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bMulaiProses, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)))
+        );
+
+        add(jPanel1, new java.awt.GridBagConstraints());
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bMulaiProsesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMulaiProsesActionPerformed
+        // TODO add your handling code here:
+        fnMulaiProses();
+    }//GEN-LAST:event_bMulaiProsesActionPerformed
+
+    private void fnMulaiProses() {
+        this.fnPerbaruiFDef();
+        this.fnPerbaruiTabel();
+    }
+    
+    private void fnPerbaruiFDef() {
+        UtilsStatic.connUtil.sqlUpdate("DROP VIEW IF EXISTS v_proses_normalisasi", null);
+        UtilsStatic.connUtil.sqlUpdate("DROP VIEW IF EXISTS v_proses_terbobot", null);
+        String viewSql = "CREATE VIEW v_proses_normalisasi AS SELECT CAST(id_paket AS TEXT) AS id_paket, ";
+        String viewSqlBobot = "CREATE VIEW v_proses_terbobot AS SELECT CAST(id_paket AS TEXT) AS id_paket, ";
+        String ksql = "";
+        String ksqlBobot = "";
+        try {
+            String sql = "SELECT id_kriteria, nama_kriteria, satuan_kriteria FROM kriteria";
+            UtilsStatic.LOGGER.info("mengambil "+sql);
+            kolomExt = new ArrayList<>();
+            PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsm = rs.getMetaData();
+            kolomExt.add(new String[]{"Paket", "id_paket", "autocomplete", ""});
+            while (rs.next()) {
+              String satuanKrt = rs.getString("satuan_kriteria");
+              String namaKrt = rs.getString("nama_kriteria");
+              String idKrt = "C" + rs.getString("id_kriteria");
+              kolomExt.add(new String[]{namaKrt, idKrt, "text", "0"});
+              
+              if (!ksql.equals("")) { ksql += " , "; }
+              ksql += " CASE WHEN (SELECT jenis_kriteria FROM kriteria WHERE id_kriteria = "+rs.getString("id_kriteria")+") = 'Biaya' THEN" +
+              " ((SELECT MIN("+idKrt+") FROM v_nilai) / CAST("+idKrt+" AS FLOAT)) " +
+              " ELSE (CAST("+idKrt+" AS FLOAT) / (SELECT MAX("+idKrt+") FROM v_nilai)) END AS "+idKrt+" ";
+              
+              if (!ksqlBobot.equals("")) { ksqlBobot += " , "; }
+              ksqlBobot += " ((SELECT nilai_bobot FROM bobot WHERE id_kriteria="+rs.getString("id_kriteria")+" AND id_prasetel = (SELECT id_prasetel FROM bobot_prasetel WHERE digunakan = 1))) " +
+                           " * "+idKrt+" AS "+idKrt+" ";
+            }
+            String colExtras = " ,nama_provider_alt, keterangan_paket_alt, id_paket_no, id_provider_no ";
+            ksql += colExtras; ksqlBobot += colExtras;
+            viewSql += ksql + " FROM v_nilai";
+            viewSqlBobot += ksqlBobot + " FROM v_proses_normalisasi";
+            UtilsStatic.LOGGER.info("viewnya " + viewSql);
+            UtilsStatic.LOGGER.info("viewbobot " + viewSqlBobot);
+            UtilsStatic.connUtil.sqlUpdate(viewSql, null);
+            UtilsStatic.connUtil.sqlUpdate(viewSqlBobot, null);
+            fDef = kolomExt.toArray(new String[0][0]);
+        }
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());   
+        }
+    }
+    
+      private void fnPerbaruiTabel() {
+        modelNilai = new DefaultTableModel(new Object[][] {}, fnKolomEkstensi(new String[]{""}, new String[]{"Skor", "Ranking"})) {
+            @Override
+            public Class getColumnClass(int column)
+            {
+                switch (column)
+                {
+                    case 0: return Icon.class;
+                    default: return super.getColumnClass(column);
+                }
+            }
+        };
+        
+        modelNilai.getDataVector().removeAllElements();
+        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
+        try {
+//            String sql = "SELECT * FROM v_"+fTableName+" " + fWhere + fOrder;
+            String sql = "SELECT *, C1+C2+C3+C4+C5 AS skor_saw FROM v_proses_terbobot ORDER BY skor_saw DESC";
+            UtilsStatic.LOGGER.info("mengambil "+sql);
+            PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
+//            ps.setString(1, "dede");
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsm = rs.getMetaData();
+            int ranking = 1;
+            while (rs.next()) {
+                Object[] obj = new Object[rsm.getColumnCount()+1];
+                obj[0] = iconLogo;
+                int lastI = 0;
+                for (int i = 0; i < fDef.length; i++) {
+                    obj[i+1] = rs.getString(i+1);
+                    lastI = i;
+                }
+                obj[lastI+2] = rs.getString("skor_saw");
+                obj[lastI+3] = ranking;
+                ranking++;
+                modelNilai.addRow(obj);
+            }
+        }
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
+        }
+        
+        tblRank.setModel(modelNilai);
+        tblRank.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tblRank.getColumnModel().getColumn(1).setPreferredWidth(160);
+        for (int i = 2; i < fDef.length; i++) {
+                tblRank.getColumnModel().getColumn(i+1).setPreferredWidth(fDef[i][0].length() * 8);
+        }
+        tblRank.setDefaultEditor(Object.class, null);
+        tblRank.clearSelection();
+        tblRank.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+    }
+      
+      private Object[] fnKolomEkstensi(Object[] sebelum, Object[] setelah) {
+       ArrayList<Object> hasil = new ArrayList<>();
+       hasil.addAll(Arrays.asList(sebelum));
+       for (String[] fElm:fDef) {
+           hasil.add(fElm[0]);
+       }
+       hasil.addAll(Arrays.asList(setelah));
+       return hasil.toArray();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.k33ptoo.components.KButton bMulaiProses;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable tblNilai;
+    private javax.swing.JTable tblNormal;
+    private javax.swing.JTable tblRank;
     // End of variables declaration//GEN-END:variables
 }

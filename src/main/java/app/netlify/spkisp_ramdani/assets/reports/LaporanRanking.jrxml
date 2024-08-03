@@ -4,21 +4,21 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ispspk"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<queryString>
-		<![CDATA[SELECT 'Caca'  AS nama_provider, 'Mawar' AS nama_paket;]]>
+		<![CDATA[SELECT nama_provider_alt, id_paket AS nama_paket, C1+C2+C3+C4+C5 AS skor_saw 
+FROM v_proses_terbobot ORDER BY skor_saw DESC]]>
 	</queryString>
-	<field name="nama_provider" class="java.lang.Object">
-		<property name="com.jaspersoft.studio.field.name" value="nama_provider"/>
-		<property name="com.jaspersoft.studio.field.label" value="nama_provider"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="akun"/>
-		<property name="net.sf.jasperreports.sql.field.column.name" value="nama"/>
-		<property name="net.sf.jasperreports.sql.field.column.label" value="nama"/>
+	<field name="nama_provider_alt" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="nama_provider_alt"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_provider_alt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="provider"/>
 	</field>
 	<field name="nama_paket" class="java.lang.Object">
-		<property name="com.jaspersoft.studio.field.name" value="nama_paket"/>
-		<property name="com.jaspersoft.studio.field.label" value="nama_paket"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="akun"/>
-		<property name="net.sf.jasperreports.sql.field.column.name" value="sandi"/>
-		<property name="net.sf.jasperreports.sql.field.column.label" value="sandi"/>
+		<property name="com.jaspersoft.studio.field.name" value="nama"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama"/>
+	</field>
+	<field name="skor_saw" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="skor_saw"/>
+		<property name="com.jaspersoft.studio.field.label" value="skor_saw"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -96,7 +96,7 @@ Website : www.braincodesolution.com]]></text>
 				<reportElement x="20" y="0" width="100" height="20" uuid="ed2c02c4-f3ed-496d-ac86-5a7ccb4dab42">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{nama_provider}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nama_provider_alt}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="250" y="0" width="100" height="18" uuid="b18d8839-3f1f-48ff-88ab-5d0e94f2ef44"/>
