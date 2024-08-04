@@ -76,7 +76,7 @@ public class PanelProsesData extends javax.swing.JPanel {
         tblNilai.setIntercellSpacing(new java.awt.Dimension(5, 5));
         tblNilai.setMinimumSize(new java.awt.Dimension(600, 80));
         tblNilai.setName(""); // NOI18N
-        tblNilai.setPreferredSize(new java.awt.Dimension(600, 200));
+        tblNilai.setPreferredSize(null);
         jScrollPane1.setViewportView(tblNilai);
         if (tblNilai.getColumnModel().getColumnCount() > 0) {
             tblNilai.getColumnModel().getColumn(0).setMaxWidth(40);
@@ -93,6 +93,7 @@ public class PanelProsesData extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.5;
         add(jScrollPane1, gridBagConstraints);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Matriks Normalisasi");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 2;
@@ -113,7 +114,6 @@ public class PanelProsesData extends javax.swing.JPanel {
         ));
         tblRank.setIntercellSpacing(new java.awt.Dimension(5, 5));
         tblRank.setMinimumSize(new java.awt.Dimension(600, 80));
-        tblRank.setPreferredSize(null);
         jScrollPane2.setViewportView(tblRank);
         if (tblRank.getColumnModel().getColumnCount() > 0) {
             tblRank.getColumnModel().getColumn(0).setMaxWidth(40);
@@ -130,6 +130,7 @@ public class PanelProsesData extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.5;
         add(jScrollPane2, gridBagConstraints);
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Pengalian Bobot dan Ranking");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -151,7 +152,8 @@ public class PanelProsesData extends javax.swing.JPanel {
         ));
         tblNormal.setIntercellSpacing(new java.awt.Dimension(5, 5));
         tblNormal.setMinimumSize(new java.awt.Dimension(600, 80));
-        tblNormal.setPreferredSize(new java.awt.Dimension(600, 200));
+        tblNormal.setPreferredSize(null);
+        tblNormal.setRequestFocusEnabled(false);
         jScrollPane3.setViewportView(tblNormal);
         if (tblNormal.getColumnModel().getColumnCount() > 0) {
             tblNormal.getColumnModel().getColumn(0).setMaxWidth(40);
@@ -169,6 +171,7 @@ public class PanelProsesData extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.5;
         add(jScrollPane3, gridBagConstraints);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Matriks Nilai Kriteria");
 
         bMulaiProses.setText("Mulai");
@@ -208,16 +211,22 @@ public class PanelProsesData extends javax.swing.JPanel {
 
     private void fnMulaiProses() {
         this.fnPerbaruiFDef();
-        this.fnPerbaruiTabel();
+        this.fnPerbaruiTabelRank();
+        this.fnPerbaruiTabelNilai();
+        this.fnPerbaruiTabelNormal();
     }
     
     private void fnPerbaruiFDef() {
         UtilsStatic.connUtil.sqlUpdate("DROP VIEW IF EXISTS v_proses_normalisasi", null);
         UtilsStatic.connUtil.sqlUpdate("DROP VIEW IF EXISTS v_proses_terbobot", null);
+        UtilsStatic.connUtil.sqlUpdate("DROP VIEW IF EXISTS v_proses_hasil", null);
+        
         String viewSql = "CREATE VIEW v_proses_normalisasi AS SELECT CAST(id_paket AS TEXT) AS id_paket, ";
         String viewSqlBobot = "CREATE VIEW v_proses_terbobot AS SELECT CAST(id_paket AS TEXT) AS id_paket, ";
+        String viewSqlHasil = "CREATE VIEW v_proses_hasil AS SELECT *, ";
         String ksql = "";
         String ksqlBobot = "";
+        String ksqlSumHasil = "";
         try {
             String sql = "SELECT id_kriteria, nama_kriteria, satuan_kriteria FROM kriteria";
             UtilsStatic.LOGGER.info("mengambil "+sql);
@@ -240,15 +249,21 @@ public class PanelProsesData extends javax.swing.JPanel {
               if (!ksqlBobot.equals("")) { ksqlBobot += " , "; }
               ksqlBobot += " ((SELECT nilai_bobot FROM bobot WHERE id_kriteria="+rs.getString("id_kriteria")+" AND id_prasetel = (SELECT id_prasetel FROM bobot_prasetel WHERE digunakan = 1))) " +
                            " * "+idKrt+" AS "+idKrt+" ";
+              
+              if (!ksqlSumHasil.equals("")) { ksqlSumHasil += "+"; }
+              ksqlSumHasil += idKrt;
             }
             String colExtras = " ,nama_provider_alt, keterangan_paket_alt, id_paket_no, id_provider_no ";
             ksql += colExtras; ksqlBobot += colExtras;
             viewSql += ksql + " FROM v_nilai";
             viewSqlBobot += ksqlBobot + " FROM v_proses_normalisasi";
+            viewSqlHasil += ksqlSumHasil + " AS skor_saw FROM v_proses_terbobot";
             UtilsStatic.LOGGER.info("viewnya " + viewSql);
             UtilsStatic.LOGGER.info("viewbobot " + viewSqlBobot);
+            UtilsStatic.LOGGER.info("viewhasil " + viewSqlHasil);
             UtilsStatic.connUtil.sqlUpdate(viewSql, null);
             UtilsStatic.connUtil.sqlUpdate(viewSqlBobot, null);
+            UtilsStatic.connUtil.sqlUpdate(viewSqlHasil, null);
             fDef = kolomExt.toArray(new String[0][0]);
         }
         catch(SQLException e) {
@@ -256,8 +271,8 @@ public class PanelProsesData extends javax.swing.JPanel {
         }
     }
     
-      private void fnPerbaruiTabel() {
-        modelNilai = new DefaultTableModel(new Object[][] {}, fnKolomEkstensi(new String[]{""}, new String[]{"Skor", "Ranking"})) {
+      private void fnPerbaruiTabelRank() {
+        modelBobot = new DefaultTableModel(new Object[][] {}, fnKolomEkstensi(new String[]{""}, new String[]{"Skor", "Ranking"})) {
             @Override
             public Class getColumnClass(int column)
             {
@@ -269,11 +284,11 @@ public class PanelProsesData extends javax.swing.JPanel {
             }
         };
         
-        modelNilai.getDataVector().removeAllElements();
+        modelBobot.getDataVector().removeAllElements();
         javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
         try {
 //            String sql = "SELECT * FROM v_"+fTableName+" " + fWhere + fOrder;
-            String sql = "SELECT *, C1+C2+C3+C4+C5 AS skor_saw FROM v_proses_terbobot ORDER BY skor_saw DESC";
+            String sql = "SELECT * FROM v_proses_hasil ORDER BY skor_saw DESC";
             UtilsStatic.LOGGER.info("mengambil "+sql);
             PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
 //            ps.setString(1, "dede");
@@ -291,14 +306,14 @@ public class PanelProsesData extends javax.swing.JPanel {
                 obj[lastI+2] = rs.getString("skor_saw");
                 obj[lastI+3] = ranking;
                 ranking++;
-                modelNilai.addRow(obj);
+                modelBobot.addRow(obj);
             }
         }
         catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
         }
         
-        tblRank.setModel(modelNilai);
+        tblRank.setModel(modelBobot);
         tblRank.getColumnModel().getColumn(0).setPreferredWidth(30);
         tblRank.getColumnModel().getColumn(1).setPreferredWidth(160);
         for (int i = 2; i < fDef.length; i++) {
@@ -306,7 +321,107 @@ public class PanelProsesData extends javax.swing.JPanel {
         }
         tblRank.setDefaultEditor(Object.class, null);
         tblRank.clearSelection();
-        tblRank.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        tblRank.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+    }
+      
+    private void fnPerbaruiTabelNilai() {
+        modelNilai = new DefaultTableModel(new Object[][] {}, fnKolomEkstensi(new String[]{""}, new String[]{})) {
+            @Override
+            public Class getColumnClass(int column)
+            {
+                switch (column)
+                {
+                    case 0: return Icon.class;
+                    default: return super.getColumnClass(column);
+                }
+            }
+        };
+        
+        modelNilai.getDataVector().removeAllElements();
+        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
+        try {
+            String sql = "SELECT * FROM v_nilai";
+            UtilsStatic.LOGGER.info("mengambil "+sql);
+            PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsm = rs.getMetaData();
+            int ranking = 1;
+            while (rs.next()) {
+                Object[] obj = new Object[rsm.getColumnCount()+1];
+                obj[0] = iconLogo;
+                int lastI = 0;
+                for (int i = 0; i < fDef.length; i++) {
+                    obj[i+1] = rs.getString(i+1);
+                    lastI = i;
+                }
+//                obj[lastI+2] = rs.getString("skor_saw");
+//                obj[lastI+3] = ranking;
+                ranking++;
+                modelNilai.addRow(obj);
+            }
+        }
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
+        }
+        
+        tblNilai.setModel(modelNilai);
+        tblNilai.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tblNilai.getColumnModel().getColumn(1).setPreferredWidth(160);
+        for (int i = 2; i < fDef.length; i++) {
+                tblNilai.getColumnModel().getColumn(i+1).setPreferredWidth(fDef[i][0].length() * 8);
+        }
+        tblNilai.setDefaultEditor(Object.class, null);
+        tblNilai.clearSelection();
+        tblNilai.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+    }
+    
+    private void fnPerbaruiTabelNormal() {
+        modelNormal = new DefaultTableModel(new Object[][]{}, fnKolomEkstensi(new String[]{""}, new String[]{})) {
+            @Override
+            public Class getColumnClass(int column)
+            {
+                switch (column)
+                {
+                    case 0: return Icon.class;
+                    default: return super.getColumnClass(column);
+                }
+            }
+        };
+        
+        modelNormal.getDataVector().removeAllElements();
+        javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon("logo.png");
+        try {
+            String sql = "SELECT * FROM v_proses_normalisasi";
+            UtilsStatic.LOGGER.info("mengambil "+sql);
+            PreparedStatement ps = UtilsStatic.connUtil.connRef.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsm = rs.getMetaData();
+            int ranking = 1;
+            while (rs.next()) {
+                Object[] obj = new Object[rsm.getColumnCount()+1];
+                obj[0] = iconLogo;
+                int lastI = 0;
+                for (int i = 0; i < fDef.length; i++) {
+                    obj[i+1] = rs.getString(i+1);
+                    lastI = i;
+                }
+                ranking++;
+                modelNormal.addRow(obj);
+            }
+        }
+        catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
+        }
+        
+        tblNormal.setModel(modelNormal);
+        tblNormal.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tblNormal.getColumnModel().getColumn(1).setPreferredWidth(160);
+        for (int i = 2; i < fDef.length; i++) {
+                tblNormal.getColumnModel().getColumn(i+1).setPreferredWidth(fDef[i][0].length() * 8);
+        }
+        tblNormal.setDefaultEditor(Object.class, null);
+        tblNormal.clearSelection();
+        tblNormal.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     }
       
       private Object[] fnKolomEkstensi(Object[] sebelum, Object[] setelah) {
