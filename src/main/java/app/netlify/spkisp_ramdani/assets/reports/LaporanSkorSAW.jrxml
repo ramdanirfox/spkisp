@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 5.5.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0eef9bb9-bc9c-40ca-a0eb-e5d46ee95fa3">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ispspk"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<subDataset name="DatasetSkor" uuid="9a9541e3-0956-4c38-a10d-eb32b6baec57">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ispspk"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT id_paket, skor_saw FROM v_proses_hasil GROUP BY id_paket ORDER BY skor_saw DESC;]]>
+		</queryString>
+		<field name="id_paket" class="java.lang.Object">
+			<property name="com.jaspersoft.studio.field.name" value="id_paket"/>
+			<property name="com.jaspersoft.studio.field.label" value="id_paket"/>
+		</field>
+		<field name="skor_saw" class="java.lang.Object">
+			<property name="com.jaspersoft.studio.field.name" value="skor_saw"/>
+			<property name="com.jaspersoft.studio.field.label" value="skor_saw"/>
+		</field>
+		<group name="id_paket">
+			<groupExpression><![CDATA[$F{id_paket}]]></groupExpression>
+		</group>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT * FROM v_proses_hasil GROUP BY id_paket ORDER BY skor_saw DESC]]>
+	</queryString>
+	<field name="id_paket" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_paket"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_paket"/>
+	</field>
+	<field name="C1" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="C1"/>
+		<property name="com.jaspersoft.studio.field.label" value="C1"/>
+	</field>
+	<field name="C2" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="C2"/>
+		<property name="com.jaspersoft.studio.field.label" value="C2"/>
+	</field>
+	<field name="C3" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="C3"/>
+		<property name="com.jaspersoft.studio.field.label" value="C3"/>
+	</field>
+	<field name="C4" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="C4"/>
+		<property name="com.jaspersoft.studio.field.label" value="C4"/>
+	</field>
+	<field name="C5" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="C5"/>
+		<property name="com.jaspersoft.studio.field.label" value="C5"/>
+	</field>
+	<field name="nama_provider_alt" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="nama_provider_alt"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_provider_alt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="provider"/>
+	</field>
+	<field name="keterangan_paket_alt" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="keterangan_paket_alt"/>
+		<property name="com.jaspersoft.studio.field.label" value="keterangan_paket_alt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paket"/>
+	</field>
+	<field name="id_paket_no" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="id_paket_no"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_paket_no"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="nilai"/>
+	</field>
+	<field name="id_provider_no" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="id_provider_no"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_provider_no"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="provider"/>
+	</field>
+	<field name="skor_saw" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.name" value="skor_saw"/>
+		<property name="com.jaspersoft.studio.field.label" value="skor_saw"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="4" width="168" height="16" uuid="73b4ea20-7e72-4533-9f1e-37fd1c031c60"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT. BRAINCODE SOLUTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="16" width="408" height="58" uuid="0d203eae-8ab0-4dc9-85f4-9823abd17f21"/>
+				<textElement>
+					<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+				</textElement>
+				<text><![CDATA[Prince Center Building, 5th Floor Suite 503. Jl Jenderal Sudirman
+Kavling 3-4, Karet, RT.10 /RW.1 Jakarta Barat
+Telp : (021) 5737326
+Website : www.braincodesolution.com]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-8" y="78" width="571" height="1" uuid="4a24d86f-339f-4b4b-8322-dbe5ff865b80"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="426" y="0" width="130" height="75" uuid="8e6eeac9-c834-4e87-b0a3-70940a9931f7"/>
+				<imageExpression><![CDATA["logo_bc.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="164" y="2" width="278" height="26" uuid="5622bb9a-c684-4652-b9f0-cebe2c19e41f"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[SKOR PENILAIAN PAKET LAYANAN]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="300" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<line>
+				<reportElement x="-8" y="-7" width="571" height="1" uuid="eed1bdc1-6d62-41d0-a1f9-93cc13ad5dfa"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement key="" x="40" y="20" width="480" height="280" uuid="56a9492f-10f2-4d4c-863b-ef20b2ca7528"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="DatasetSkor" uuid="804f9996-2832-470a-acfe-e6c1c5b3009c"/>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Nilai Skor SAW"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{id_paket}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{skor_saw}]]></valueExpression>
+						<labelExpression><![CDATA[String.format("%.3f", $F{skor_saw})]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true" isShowTickLabels="true" isShowTickMarks="true">
+					<plot orientation="Horizontal"/>
+					<itemLabel>
+						<font fontName="SansSerif"/>
+					</itemLabel>
+					<categoryAxisLabelExpression><![CDATA["Paket Layanan"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" tickLabelMask="" axisLineColor="#000000">
+							<labelFont>
+								<font isBold="true"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" tickLabelMask="" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="120" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="406" y="27" width="142" height="20" uuid="56ba040c-9b4d-4120-9787-1c4422939908"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE dd MMMM yyyy", new Locale("id", "ID")).format(new java.util.Date());]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="11" width="571" height="1" uuid="7d037e31-5e76-427f-aad9-0fb56b7339f6"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="300" y="27" width="100" height="20" uuid="e79cf63b-894d-4146-96e4-8607284102b6"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Jakarta, ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="85" width="100" height="20" uuid="32a71c1c-5757-4da2-9124-957d45b40519"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Dede Herman]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>
