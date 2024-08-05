@@ -111,7 +111,7 @@ public class PanelAkun extends javax.swing.JPanel {
                 obj[0] = iconLogo;
                 obj[1] = rs.getString(1);
                 obj[2] = rs.getString(2);
-                obj[3] = rs.getString(3);
+                obj[3] = "*****";
                 obj[4] = rs.getString(4);
                 obj[5] = rs.getString(5);
                 obj[6] = rs.getString(6);
