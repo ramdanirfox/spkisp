@@ -24,6 +24,7 @@ public class PanelStatistik extends javax.swing.JPanel {
         lKriteria.setText(UtilsStatic.connUtil.sqlQueryOne("SELECT COUNT(*) as hasil FROM kriteria"));
         lPaket.setText(UtilsStatic.connUtil.sqlQueryOne("SELECT COUNT(*) as hasil FROM paket"));
         lProvider.setText(UtilsStatic.connUtil.sqlQueryOne("SELECT COUNT(*) as hasil FROM provider"));
+        iNama.setText(UtilsStatic.connUtil.sqlQueryOne("SELECT nama_pengguna as hasil FROM akun WHERE id_akun=" + UtilsStatic.akun.get("id_akun")));
     }
 
     /**
@@ -51,7 +52,7 @@ public class PanelStatistik extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        iNama = new javax.swing.JLabel();
 
         kGradientPanel1.setkEndColor(new java.awt.Color(204, 204, 204));
         kGradientPanel1.setkStartColor(new java.awt.Color(255, 255, 255));
@@ -204,9 +205,9 @@ public class PanelStatistik extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Selamat Datang");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("admin");
+        iNama.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        iNama.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iNama.setText("admin");
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
@@ -220,7 +221,7 @@ public class PanelStatistik extends javax.swing.JPanel {
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel7)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(iNama, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                                 .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(38, 38, 38)
@@ -235,7 +236,7 @@ public class PanelStatistik extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(iNama)
                 .addGap(18, 18, 18)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(kGradientPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,6 +263,7 @@ public class PanelStatistik extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel iNama;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -269,7 +271,6 @@ public class PanelStatistik extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private com.k33ptoo.components.KGradientPanel kGradientPanel1;
     private com.k33ptoo.components.KGradientPanel kGradientPanel2;

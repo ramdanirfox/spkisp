@@ -35,23 +35,6 @@ public class UtilsKoneksi {
         {
           connRef = DriverManager.getConnection("jdbc:sqlite:ispspk.db");
           statement.setQueryTimeout(30);  // set timeout to 30 sec.
-
-          statement.executeUpdate("drop table if exists person");
-          statement.executeUpdate("create table person (id integer, name string)");
-          statement.executeUpdate("insert into person values(1, 'leo')");
-          statement.executeUpdate("insert into person values(2, 'yui')");
-          
-          
-          
-          ResultSet rs2 = statement.executeQuery("select * from akun");
-          while(rs2.next())
-          {
-            // read the result set
-            System.out.println("name = " + rs2.getString("nama"));
-            System.out.println("id = " + rs2.getInt("alamat"));
-          }
-          
-          statement.close();
           
         }
         catch(SQLException e)
@@ -68,6 +51,7 @@ public class UtilsKoneksi {
             int i = ps.executeUpdate();
 //            rs.getMetaData().getColumnCount();
             if (fnRs != null) { fnRs.listen(i); }
+            ps.close();
         }
         catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Kegagalan Query : " + e.getMessage());
@@ -84,6 +68,7 @@ public class UtilsKoneksi {
             while(res.next()){
                 obj[0] = res.getString("hasil");
             }
+            st.close();
             return obj[0] == null ? "" : (String)obj[0];
         }catch(SQLException err){
             JOptionPane.showMessageDialog(null, err.getMessage());

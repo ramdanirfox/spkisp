@@ -6,6 +6,7 @@ package app.netlify.spkisp_ramdani.forms;
 
 import app.netlify.spkisp_ramdani.models.ModelExternalListener;
 import app.netlify.spkisp_ramdani.models.ModelNotifikasi;
+import app.netlify.spkisp_ramdani.panels.PanelAkun;
 import app.netlify.spkisp_ramdani.panels.PanelAlternatif;
 import app.netlify.spkisp_ramdani.panels.PanelBeranda;
 import app.netlify.spkisp_ramdani.panels.PanelBobot;
@@ -472,7 +473,8 @@ public class FormMenuUtama extends javax.swing.JFrame {
                 else if (param.equals("Bobot")) { fnGantiMenu(new PanelBobot()); }
                 else if (param.equals("Proses Data")) { fnGantiMenu(new PanelProsesData()); }
                 else if (param.equals("Laporan")) {  fnGantiMenu(new PanelLaporan()); }
-                else if (param.equals("Profil")) {  openNotificationPanel("Coba"); }
+//                else if (param.equals("Profil")) {  openNotificationPanel("Coba"); }
+                else if (param.equals("Akun")) {  fnGantiMenu(new PanelAkun()); }
                 else if (param.equals("_menu")) {  if (sLPanelState.contains("open") ) {closePanel(); } else { openPanel(); } }
                 else  { UtilsStatic.LOGGER.info("Menu Tidak Diketahui : " + param); }
             }

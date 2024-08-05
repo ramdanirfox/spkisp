@@ -178,7 +178,7 @@ public class PanelMenu extends javax.swing.JPanel {
         iProfil.setText("Ikon");
         pProfil.add(iProfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
-        bProfil.setText("Profil");
+        bProfil.setText("Akun");
         bProfil.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         bProfil.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         bProfil.addActionListener(new java.awt.event.ActionListener() {
@@ -377,7 +377,7 @@ public class PanelMenu extends javax.swing.JPanel {
         fnRegisterMenu(new ModelMenuPage(bBobot.getText(), "Bobot", "images/icons8-about-64.png", bBobot, pBobot, iBobot));
         fnRegisterMenu(new ModelMenuPage(bProsesData.getText(), "Proses Data", "images/icons8-refresh-blue.png", bProsesData, pProsesData, iProsesData));
         fnRegisterMenu(new ModelMenuPage(bLaporan.getText(), "Laporan", "images/icons8-document-60.png", bLaporan, pLaporan, iLaporan));
-        fnRegisterMenu(new ModelMenuPage(bProfil.getText(), "Profil", "images/icons8-about-64.png", bProfil, pProfil, iProfil));
+        fnRegisterMenu(new ModelMenuPage(bProfil.getText(), "Akun", "images/icons8-about-64.png", bProfil, pProfil, iProfil));
         
         fnSelectMenu("Beranda");
     }

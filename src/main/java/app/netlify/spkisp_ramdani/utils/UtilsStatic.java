@@ -9,6 +9,7 @@ import app.netlify.spkisp_ramdani.models.ModelNotifikasi;
 import app.netlify.spkisp_ramdani.panels.PanelDocking;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class UtilsStatic {
     private static Connection conn;
+    public static HashMap<String, String> akun = new HashMap<String, String>();
     public static UtilsKoneksi connUtil;
     private static String logData = "";
     public static final Logger LOGGER = LoggerFactory.getLogger(UtilsStatic.class);
