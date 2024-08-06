@@ -4,6 +4,7 @@
  */
 package app.netlify.spkisp_ramdani.utils;
 
+import java.io.InputStream;
 import java.net.URL;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -16,6 +17,11 @@ public class UtilsGlobal {
     public URL getAsset(String assetPath) {
         UtilsStatic.LOGGER.info("Mengambil Asset : " + assetPath);
         return getClass().getResource("/app/netlify/spkisp_ramdani/assets/" + assetPath);
+    }
+    
+    public InputStream getAssetIOStream(String assetPath) {
+        UtilsStatic.LOGGER.info("Mengambil Asset : " + assetPath);
+        return getClass().getResourceAsStream("/app/netlify/spkisp_ramdani/assets/" + assetPath);
     }
     
     public String getReport(String reportName) {

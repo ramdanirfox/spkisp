@@ -7,6 +7,7 @@ package app.netlify.spkisp_ramdani.panels;
 import app.netlify.spkisp_ramdani.forms.FormTable;
 import app.netlify.spkisp_ramdani.utils.UtilsStatic;
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -46,7 +47,9 @@ public class PanelLaporan extends javax.swing.JPanel {
     
     private void fnCetakLaporan(String fileLaporanJRXML) {
         try {
-            File reprt = new File(UtilsStatic.gUtil.getReport(fileLaporanJRXML));
+//            File reprt = new File(UtilsStatic.gUtil.getAsset("reports/"+fileLaporanJRXML).toExternalForm());
+//            File reprt = new File(UtilsStatic.gUtil.getReport(fileLaporanJRXML));
+            InputStream reprt = UtilsStatic.gUtil.getAssetIOStream("reports/"+fileLaporanJRXML);
             jasperDesign = JRXmlLoader.load(reprt);
             jasperReport = JasperCompileManager.compileReport(jasperDesign);
             jasperPrint = JasperFillManager.fillReport(jasperReport,param,UtilsStatic.connUtil.connRef);

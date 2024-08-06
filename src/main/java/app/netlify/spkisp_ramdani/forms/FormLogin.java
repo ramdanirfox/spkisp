@@ -9,6 +9,9 @@ import app.netlify.spkisp_ramdani.utils.UtilsStatic;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -17,13 +20,15 @@ import javax.swing.JOptionPane;
  * @author iramd
  */
 public class FormLogin extends javax.swing.JFrame {
-
+    javax.swing.Timer pewaktu;
+    private static Statement st;
     /**
      * Creates new form login
      */
     public FormLogin() {
         initComponents();
         decorateWindow();
+        fnCekDB();
     }
 
     /**
@@ -272,6 +277,39 @@ public class FormLogin extends javax.swing.JFrame {
                 new FormLogin().setVisible(true);                
             }
         });
+    }
+    
+    private void fnCekDB() {
+        try {
+            String sql = "SELECT id_akun FROM akun LIMIT 1";
+            st = UtilsStatic.connUtil.connRef.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                String id = rs.getString(1);
+                UtilsStatic.LOGGER.info("DB Tersedia " + id);
+                return;
+            }
+            UtilsStatic.LOGGER.info("[DB] DB Tersedia tetapi akun kosong. Melakukan insert akun");
+            inisiasiMigrasiDB();
+        }
+        catch (SQLException e) {
+        UtilsStatic.LOGGER.info("[DB] Query Gagal " + e.getMessage());
+        UtilsStatic.LOGGER.info("[DB] Asumsi db belum tersedia. Melakukan migrasi " + e.getMessage());
+            // Asumsi memiliki akses tulis ke penyimpanan
+//            JOptionPane.showMessageDialog(null, "Tidak dapat membuat Database : " + e.getMessage());
+        inisiasiMigrasiDB();
+        }
+    }
+    
+    private void inisiasiMigrasiDB() {
+        pewaktu = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+                @Override
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        pewaktu.stop();
+                        (new FormLoadingDB()).setVisible(true);
+                    }
+        });
+        pewaktu.start();
     }
     
     UtilsGlobal spkUtil = new UtilsGlobal();
