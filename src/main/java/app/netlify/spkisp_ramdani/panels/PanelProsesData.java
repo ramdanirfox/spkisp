@@ -323,7 +323,7 @@ public class PanelProsesData extends javax.swing.JPanel {
         for (int i = 2; i < fDef.length; i++) {
                 tblRank.getColumnModel().getColumn(i+1).setPreferredWidth(fDef[i][0].length() * 8);
         }
-        tblRank.setDefaultEditor(Object.class, null);
+//        tblRank.setDefaultEditor(Object.class, null);
         tblRank.clearSelection();
         tblRank.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     }
@@ -374,7 +374,7 @@ public class PanelProsesData extends javax.swing.JPanel {
         for (int i = 2; i < fDef.length; i++) {
                 tblNilai.getColumnModel().getColumn(i+1).setPreferredWidth(fDef[i][0].length() * 8);
         }
-        tblNilai.setDefaultEditor(Object.class, null);
+//        tblNilai.setDefaultEditor(Object.class, null);
         tblNilai.clearSelection();
         tblNilai.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     }
@@ -423,7 +423,7 @@ public class PanelProsesData extends javax.swing.JPanel {
         for (int i = 2; i < fDef.length; i++) {
                 tblNormal.getColumnModel().getColumn(i+1).setPreferredWidth(fDef[i][0].length() * 8);
         }
-        tblNormal.setDefaultEditor(Object.class, null);
+//        tblNormal.setDefaultEditor(Object.class, null);
         tblNormal.clearSelection();
         tblNormal.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     }

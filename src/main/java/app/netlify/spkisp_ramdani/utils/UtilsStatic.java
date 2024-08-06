@@ -39,6 +39,11 @@ public class UtilsStatic {
         return gbrBackground;
     }
     
+    public static ImageIcon getResizedIconLarge(String iconPath) {
+        ImageIcon gbrBackground = new ImageIcon(new javax.swing.ImageIcon(gUtil.getAsset(iconPath)).getImage().getScaledInstance(32, 32, java.awt.Image.SCALE_DEFAULT));
+        return gbrBackground;
+    }
+    
     public static void registerNotificationListener(ModelExternalListener<ModelNotifikasi> listener) {
         notifListener = listener;
     }

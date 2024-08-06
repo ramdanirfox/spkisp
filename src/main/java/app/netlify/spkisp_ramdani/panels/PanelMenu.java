@@ -397,6 +397,9 @@ public class PanelMenu extends javax.swing.JPanel {
     private void fnRegisterMenu(ModelMenuPage menuPage) {
         menuList.add(menuPage);
         javax.swing.ImageIcon iconLogo = UtilsStatic.getResizedIcon(menuPage.urlIkon);
+        menuPage.elmButton.setkHoverStartColor(new java.awt.Color(0,161,128));
+        menuPage.elmButton.setkHoverEndColor(new java.awt.Color(0,126,165));
+        menuPage.elmButton.setkHoverForeGround(new java.awt.Color(255,255,255));
         menuPage.elmLabel.setText("");
         menuPage.elmLabel.setIcon(iconLogo);
         menuPage.elmButton.addActionListener(new java.awt.event.ActionListener() {

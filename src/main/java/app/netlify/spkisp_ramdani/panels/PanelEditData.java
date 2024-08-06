@@ -59,7 +59,7 @@ public class PanelEditData extends javax.swing.JPanel {
             }
         });
 
-        kButton2.setText("Tambah");
+        kButton2.setText("Simpan");
         kButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kButton2ActionPerformed(evt);
